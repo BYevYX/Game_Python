@@ -10,11 +10,11 @@ class Menu:
 
         self.MAX_FPS = 60
         self.clock = pygame.time.Clock()
-        self.cursor = pygame.image.load("image/UI/cursor/cursor.png")
+        self.cursor = pygame.image.load("image/UI/cursor/cursor.png").convert_alpha()
 
     WIDTH = screen_obj.width
     HEIGHT = screen_obj.height
-    main_background = pygame.transform.scale(pygame.image.load("image/UI/Panel/Window/Big.png"), (WIDTH, HEIGHT))
+    main_background = pygame.transform.scale(pygame.image.load("image/UI/Panel/Window/Big.png").convert_alpha(), (WIDTH, HEIGHT))
 
     @staticmethod
     def draw_menu(menu_obj, screen, game_on):

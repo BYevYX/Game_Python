@@ -7,11 +7,11 @@ class Label():
         self.font = pygame.font.Font(font_path, size)
         self.text_surface = self.font.render(text, True, color)
 
-        self.cursor = pygame.image.load("image/UI/cursor/cursor.png")
+        self.cursor = pygame.image.load("image/UI/cursor/cursor.png").convert_alpha()
 
 
         if background_path:
-            self.background = pygame.image.load(background_path)
+            self.background = pygame.image.load(background_path).convert_alpha()
             self.background_rect = self.text_surface.get_rect(topleft=((width - self.background.get_width()) / 2,
                                                                       (height - self.background.get_height()) / 2))
             self.rect = self.text_surface.get_rect(center=(width / 2, height / 2 - self.background.get_height() / 4))

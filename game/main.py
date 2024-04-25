@@ -21,10 +21,6 @@ text_surface = myfont.render('Long time ago...', True, 'orange')
 
 
 
-
-# создание персонажа
-player = Player()
-
 # создание npc
 blacksmith = npc.Blacksmith(270, 270)
 
@@ -36,8 +32,11 @@ main_menu = MainMenu()
 def game_on(screen):
     clock = pygame.time.Clock()
 
-    location = Locations('image/back.jpg', 'sound/bg-sound.mp3')
-    location.sound.play()
+    # создание персонажа
+    player = Player(screen_obj.width // 2, screen_obj.height * 0.8)
+
+    location = Locations('image/back.jpg', 'sound/bg-sound.mp3', (screen_obj.width, screen_obj.height))
+    location.sound.play(-1)
 
     ghost = pygame.image.load('image/ghost.png').convert_alpha()
     ghost_list = []
@@ -46,13 +45,19 @@ def game_on(screen):
     pygame.time.set_timer(ghost_timer, 5000)
 
     gameplay = True
+    pause = False
 
     lose_label = Label(screen_obj.width, screen_obj.height, None, 72, 'You Lose!', (193, 196, 199), "image/UI/Panel/Window/Medium.png")
+    pause_label = Label(screen_obj.width, screen_obj.height, None, 72, 'Pause', (193, 196, 199), "image/UI/Panel/Window/Medium.png")
+
     restart_button = Button((screen_obj.width - 450) / 2, screen_obj.height / 2, 200, 100, "image/UI/Buttons/PlayText/Default@3x.png", "Restart",
                             "image/UI/Buttons/PlayText/Hover@3x.png", "sound/japan.mp3")
 
+    continue_button = Button((screen_obj.width - 450) / 2, screen_obj.height / 2, 200, 100,
+                             "image/UI/Buttons/PlayText/Default@3x.png", "Continue", "image/UI/Buttons/PlayText/Hover@3x.png", "sound/japan.mp3")
+
     menu_defeat_button = Button((screen_obj.width + 50) / 2, screen_obj.height / 2, 200, 100, "image/UI/Buttons/PlayText/Default@3x.png",
-                            "Menu","image/UI/Buttons/PlayText/Hover@3x.png", "sound/japan.mp3")
+                                "Menu", "image/UI/Buttons/PlayText/Hover@3x.png", "sound/japan.mp3")
 
 
     bullets_left = 10
@@ -68,7 +73,7 @@ def game_on(screen):
         screen.blit(location.background, (location.background_x, 0))
         screen.blit(location.background, (location.background_x + 641, 0))
 
-        if gameplay:
+        if gameplay and not pause:
             player.change_rect()
 
             blacksmith.animation(screen)
@@ -89,37 +94,7 @@ def game_on(screen):
             if location.background_x == -639:
                 location.background_x = 0
 
-            keys = pygame.key.get_pressed()
-
-            if (keys[pygame.K_LEFT] or keys[pygame.K_a]) and player.x > 50:
-                player.x -= player.speed
-                if not player.is_jump:
-                    player.walk_left(screen)
-
-            elif (keys[pygame.K_RIGHT] or keys[pygame.K_d]) and player.x < 600:
-                player.x += player.speed
-                if not player.is_jump:
-                    player.walk_right(screen)
-
-            elif not player.is_jump:
-                player.stay(screen)
-
-            player.check_animation_count()
-
-            if not player.is_jump:
-                if keys[pygame.K_SPACE]:
-                    player.is_jump = True
-            else:
-                player.jump_right(screen)
-                if player.jump_height >= -7:
-                    if player.jump_height > 0:
-                        player.y -= (player.jump_height ** 2) / 2
-                    else:
-                        player.y += (player.jump_height ** 2) / 2
-                    player.jump_height -= 1
-                else:
-                    player.is_jump = False
-                    player.jump_height = 7
+            player.animate(screen_obj.screen)
 
             if bullets:
                 for (i, el) in enumerate(bullets):
@@ -137,16 +112,22 @@ def game_on(screen):
 
         else:
             location.sound.stop()
-            lose_label.draw(screen)
 
-            restart_button.draw(screen)
+            if pause:
+                pause_label.draw(screen)
+                continue_button.draw(screen)
+            else:
+                lose_label.draw(screen)
+                restart_button.draw(screen)
+
             menu_defeat_button.draw(screen)
 
-            for btn in [restart_button, menu_defeat_button]:
+            for btn in [restart_button, menu_defeat_button, continue_button]:
                 btn.check_hover(pygame.mouse.get_pos())
 
             lose_label.draw_cursor(screen)
-            MAX_FPS = 60
+
+
 
         pygame.display.update()
 
@@ -156,26 +137,37 @@ def game_on(screen):
                 pygame.quit()
                 sys.exit()
 
-            if event.type == pygame.USEREVENT and event.button == restart_button:
-                location.sound.play()
-                gameplay = True
-                player.x = 150
-                ghost_list.clear()
-                bullets.clear()
-                bullets_left = 10
-
-            if event.type == pygame.USEREVENT and event.button == menu_defeat_button:
-                gameplay = True
-                player.x = 150
-                ghost_list.clear()
-                bullets.clear()
-                bullets_left = 10
-
-                running = False
+            if gameplay and event.type == pygame.KEYUP and event.key == pygame.K_ESCAPE:
+                pause = True
 
 
-            for btn in [restart_button, menu_defeat_button]:
-                btn.handle_event(event)
+            if event.type == pygame.USEREVENT:
+                if event.button == restart_button:
+                    location.sound.play()
+                    gameplay = True
+                    player.x = screen_obj.width // 2
+                    ghost_list.clear()
+                    bullets.clear()
+                    bullets_left = 10
+
+                if event.button == menu_defeat_button:
+                    running = False
+                    gameplay = True
+                    player.x = screen_obj.width // 2
+                    ghost_list.clear()
+                    bullets.clear()
+                    bullets_left = 10
+
+                if event.button == continue_button:
+                    location.sound.play()
+                    pause = False
+
+            if pause:
+                for btn in [menu_defeat_button, continue_button]:
+                    btn.handle_event(event)
+            else:
+                for btn in [menu_defeat_button, restart_button]:
+                    btn.handle_event(event)
 
             if event.type == ghost_timer:
                 ghost_list.append(ghost.get_rect(topleft=(650, 300)))

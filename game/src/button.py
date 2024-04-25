@@ -9,12 +9,12 @@ class Button():
         self.height = height
         self.text = text
 
-        self.image = pygame.image.load(image_path)
+        self.image = pygame.image.load(image_path).convert_alpha()
         self.image = pygame.transform.scale(self.image, (width, height))
 
         self.hover_image = self.image
         if hover_image_path:
-            self.hover_image = pygame.image.load(hover_image_path)
+            self.hover_image = pygame.image.load(hover_image_path).convert_alpha()
             self.hover_image = pygame.transform.scale(self.hover_image, (width, height))
 
         self.rect = self.image.get_rect(topleft=(x, y))
