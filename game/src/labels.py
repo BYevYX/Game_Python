@@ -9,7 +9,6 @@ class Label():
 
         self.cursor = pygame.image.load("image/UI/cursor/cursor.png").convert_alpha()
 
-
         if background_path:
             self.background = pygame.image.load(background_path).convert_alpha()
             self.background_rect = self.text_surface.get_rect(topleft=((width - self.background.get_width()) / 2,

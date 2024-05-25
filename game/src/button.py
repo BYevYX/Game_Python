@@ -1,7 +1,7 @@
 import pygame
 
 
-class Button():
+class Button:
     def __init__(self, x, y, width, height, image_path, text=None, hover_image_path=None, sound_path=None):
         self.x = x
         self.y = y

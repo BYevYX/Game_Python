@@ -2,13 +2,14 @@ import pygame
 import sys
 from game.src.button import Button
 from game.src.screen import screen_obj
+import game.src.constants as constants
 
 
 class Menu:
 
     def __init__(self):
 
-        self.MAX_FPS = 60
+        self.MAX_FPS = constants.MAX_FPS
         self.clock = pygame.time.Clock()
         self.cursor = pygame.image.load("image/UI/cursor/cursor.png").convert_alpha()
 

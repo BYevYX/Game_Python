@@ -4,14 +4,16 @@ from game.src.menus import Menu, MainMenu
 from game.src.screen import screen_obj
 from game.src.button import Button
 from game.src.player import Player
-from game.src.locations import Locations
 from game.src.labels import Label
 from game.src import npc
+from game.src.platforms import MovingPlatform
+import game.src.constants as constants
+import game.src.creater as creater
 
 pygame.init()
 
 
-pygame.display.set_caption("Mega-Igra")
+pygame.display.set_caption("CS-3")
 pygame.display.set_icon(pygame.image.load("image/icon_game.webp"))
 
 
@@ -30,13 +32,19 @@ main_menu = MainMenu()
 
 
 def game_on(screen):
+    print(screen_obj.height, screen_obj.width, screen_obj.height_scale, screen_obj.width_scale)
     clock = pygame.time.Clock()
 
-    # создание персонажа
-    player = Player(screen_obj.width // 2, screen_obj.height * 0.8)
+    main_location, partial_backgrounds = creater.create_location()
+    platforms = creater.create_platforms()
+    enemies = creater.create_enemies()
 
-    location = Locations('image/back.jpg', 'sound/bg-sound.mp3', (screen_obj.width, screen_obj.height))
-    location.sound.play(-1)
+    creater.create_moving_platforms(platforms)
+
+    # создание персонажа
+    player = Player(screen_obj.width // 2, screen_obj.height - (40 + 60) * screen_obj.height_scale)
+
+    main_location.sound.play(-1)
 
     ghost = pygame.image.load('image/ghost.png').convert_alpha()
     ghost_list = []
@@ -60,24 +68,37 @@ def game_on(screen):
                                 "Menu", "image/UI/Buttons/PlayText/Hover@3x.png", "sound/japan.mp3")
 
 
+
+
     bullets_left = 10
     bullet = pygame.image.load('image/bullet.png').convert_alpha()
     bullets = []
 
-    MAX_FPS = 60
 
     running = True
 
     while running:
 
-        screen.blit(location.background, (location.background_x, 0))
-        screen.blit(location.background, (location.background_x + 641, 0))
+        main_location.draw_background(screen)
+
+        for part_back in partial_backgrounds:
+            part_back.draw(screen)
+
+        platforms.draw(screen)
+        for platform in platforms:
+            if isinstance(platform, MovingPlatform):
+                platform.slide()
 
         if gameplay and not pause:
-            player.change_rect()
 
             blacksmith.animation(screen)
             blacksmith.check_animation_count()
+
+
+            for enemy_group in enemies:
+                for enemy in enemy_group:
+                    enemy.update(screen, enemy_group)
+
 
             if ghost_list:
                 for (i, el) in enumerate(ghost_list):
@@ -90,11 +111,8 @@ def game_on(screen):
                     if player.rect.colliderect(el):
                         gameplay = False
 
-            location.background_x -= 3
-            if location.background_x == -639:
-                location.background_x = 0
+            player.update(screen, main_location, partial_backgrounds, platforms, enemies)
 
-            player.animate(screen_obj.screen)
 
             if bullets:
                 for (i, el) in enumerate(bullets):
@@ -111,7 +129,7 @@ def game_on(screen):
                                 bullets.pop(i)
 
         else:
-            location.sound.stop()
+            main_location.sound.stop()
 
             if pause:
                 pause_label.draw(screen)
@@ -142,24 +160,20 @@ def game_on(screen):
 
 
             if event.type == pygame.USEREVENT:
-                if event.button == restart_button:
-                    location.sound.play()
+                if event.button == restart_button or event.button == menu_defeat_button:
+                    main_location.sound.play()
                     gameplay = True
                     player.x = screen_obj.width // 2
+                    player.y = screen_obj.height - (40 + 60) * screen_obj.height_scale
                     ghost_list.clear()
                     bullets.clear()
                     bullets_left = 10
 
                 if event.button == menu_defeat_button:
                     running = False
-                    gameplay = True
-                    player.x = screen_obj.width // 2
-                    ghost_list.clear()
-                    bullets.clear()
-                    bullets_left = 10
 
                 if event.button == continue_button:
-                    location.sound.play()
+                    main_location.sound.play()
                     pause = False
 
             if pause:
@@ -176,11 +190,15 @@ def game_on(screen):
                 bullets.append(bullet.get_rect(topleft=(player.x + 15, player.y + 10)))
                 bullets_left -= 1
 
-        clock.tick(MAX_FPS)
+
+        pygame.time.delay(constants.DELAY)
+        clock.tick(constants.MAX_FPS)
 
         pygame.display.flip()
 
 
 
-Menu.draw_menu(main_menu, screen_obj.screen, game_on)
+
+if __name__ == "__main__":
+    Menu.draw_menu(main_menu, screen_obj.screen, game_on)
 
