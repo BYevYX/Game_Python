@@ -1,4 +1,5 @@
 import pygame
+import time
 from game.src.screen import screen_obj
 import game.src.constants as constants
 from game.src.enemies.enemies_base import Enemy
@@ -26,6 +27,10 @@ class Player(pygame.sprite.Sprite):
         self.last_attack_time = 0
         self.attack_range = constants.PLAYER_ATTACK_RANGE * screen_obj.width_scale
         self.attack_damage = constants.PLAYER_ATTACK_DAMAGE
+
+        self.invincible = False
+        self.invincibility_duration = 2  # В секундах
+        self.last_hit_time = 0
 
         self.is_jump = False
         self.on_ground = True
@@ -134,6 +139,8 @@ class Player(pygame.sprite.Sprite):
         )
 
         self.rect = self.run[0].get_rect(topleft=(self.x, self.y))
+        self.image = self.run[self.run_animation_count]
+
 
     def animate_hp(self, screen):
         for i in range(self.hp):
@@ -190,6 +197,47 @@ class Player(pygame.sprite.Sprite):
         else:
             self.x += 1
 
+    def take_damage(self, damage, enemy):
+        current_time = time.time()
+        if not self.invincible:
+            self.current_hp -= damage
+            self.invincible = True
+            self.last_hit_time = current_time
+
+
+            knockback_distance = constants.PLAYER_MAIN_KNOCKBACK
+            if self.rect.centerx < enemy.rect.centerx:
+                self.x -= knockback_distance
+            else:
+                self.x += knockback_distance
+
+            if self.rect.centery < enemy.rect.centery:
+                self.y -= knockback_distance
+            else:
+                self.y += knockback_distance
+
+    def check_invincibility(self):
+        current_time = time.time()
+        if self.invincible and (current_time - self.last_hit_time) > self.invincibility_duration:
+            self.invincible = False
+
+    def blink(self, image):
+        if self.invincible:
+            # Мерцание
+            current_time = time.time()
+            if int(current_time * 10) % 2 == 0:
+                image.set_alpha(255)  # Полностью видимый
+            else:
+                image.set_alpha(0)    # Полностью прозрачный
+        else:
+            image.set_alpha(255)      # Полностью видимый в обычном состоянии
+
+    def check_damage(self, enemies):
+        for group_enemies in enemies:
+            collided_enemy = pygame.sprite.spritecollideany(self, group_enemies)
+            if collided_enemy:
+                self.take_damage(1, collided_enemy)
+
     def attack(self, enemies):
         self.last_attack_time = pygame.time.get_ticks()
 
@@ -204,21 +252,35 @@ class Player(pygame.sprite.Sprite):
 
         if self.is_attacking:
             if self.attack_direction == 1:
-                screen.blit(self.attack_images[self.attack_animation_count], (self.x, self.y))
+                image = self.attack_images[self.attack_animation_count]
+                self.blink(image)
+                screen.blit(image, (self.x, self.y))
             else:
-                screen.blit(pygame.transform.flip(self.attack_images[self.attack_animation_count], True, False), (self.x, self.y))
+                image = pygame.transform.flip(self.attack_images[self.attack_animation_count], True, False)
+                self.blink(image)
+                screen.blit(image, (self.x, self.y))
         elif not self.is_jump:
             if (keys[pygame.K_LEFT] or keys[pygame.K_a]) and self.x > screen_obj.width * 0.03:
-                screen.blit(pygame.transform.flip(self.run[self.run_animation_count], True, False), (self.x, self.y))
+                image = pygame.transform.flip(self.run[self.run_animation_count], True, False)
+                self.blink(image)
+                screen.blit(image, (self.x, self.y))
             elif (keys[pygame.K_RIGHT] or keys[pygame.K_d]) and self.x < screen_obj.width * 0.97:
-                screen.blit(self.run[self.run_animation_count], (self.x, self.y))
+                image = self.run[self.run_animation_count]
+                self.blink(image)
+                screen.blit(image, (self.x, self.y))
             else:
-                screen.blit(self.stay_images[self.stay_animation_count], (self.x, self.y))
+                image = self.stay_images[self.stay_animation_count]
+                self.blink(image)
+                screen.blit(image, (self.x, self.y))
         else:
             if (keys[pygame.K_LEFT] or keys[pygame.K_a]) and self.x > screen_obj.width * 0.03:
-                screen.blit(pygame.transform.flip(self.jump[self.jump_animation_count], True, False), (self.x, self.y))
+                image = pygame.transform.flip(self.jump[self.jump_animation_count], True, False)
+                self.blink(image)
+                screen.blit(image, (self.x, self.y))
             else:
-                screen.blit(self.jump[self.jump_animation_count], (self.x, self.y))
+                image = self.jump[self.jump_animation_count]
+                self.blink(image)
+                screen.blit(image, (self.x, self.y))
 
         self.check_animation_count()
 
@@ -285,7 +347,6 @@ class Player(pygame.sprite.Sprite):
 
 
                 else:
-
                     # Определяем сторону столкновения
                     if self.x <= platform.rect.x:  # Столкновение с левой стороны платформы
                         if platform.rect.y < self.y + self.rect.height // 10:
@@ -302,5 +363,6 @@ class Player(pygame.sprite.Sprite):
         self.move(keys, main_location, partial_backgrounds, platforms, enemies)
         self.check_collisions(platforms)
         self.draw(screen, keys)
-
+        self.check_damage(enemies)
+        self.check_invincibility()
 

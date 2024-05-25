@@ -90,11 +90,11 @@ class MainMenu(Menu):
         super().__init__()
 
         self.start_button = Button(Menu.WIDTH / 2 - (252 / 2), 200, 252, 74, "image/UI/Buttons/PlayText/Default@3x.png",
-                                   "Play", "image/UI/Buttons/PlayText/Hover@3x.png", "sound/japan.mp3")
+                                   "Play", "image/UI/Buttons/PlayText/Hover@3x.png", "sound/knopka-schelchok.mp3")
         self.settings_button = Button(Menu.WIDTH / 2 - (252 / 2), 300, 252, 74, "image/UI/Buttons/PlayText/Default@3x.png",
-                                      "Settings", "image/UI/Buttons/PlayText/Hover@3x.png", "sound/japan.mp3")
+                                      "Settings", "image/UI/Buttons/PlayText/Hover@3x.png", "sound/knopka-schelchok.mp3")
         self.exit_button = Button(Menu.WIDTH / 2 - (252 / 2), 400, 252, 74, "image/UI/Buttons/PlayText/Default@3x.png",
-                                  "Exit", "image/UI/Buttons/PlayText/Hover@3x.png", "sound/japan.mp3")
+                                  "Exit", "image/UI/Buttons/PlayText/Hover@3x.png", "sound/knopka-schelchok.mp3")
         self.buttons = [self.start_button, self.settings_button, self.exit_button]
 
         self.title = "Menu"
@@ -125,11 +125,11 @@ class SettingsMenu(Menu):
         super().__init__()
 
         self.audio_button = Button(Menu.WIDTH / 2 - (252 / 2), 200, 252, 74, "image/UI/Buttons/PlayText/Default@3x.png",
-                                   "Audio", "image/UI/Buttons/PlayText/Hover@3x.png", "sound/japan.mp3")
+                                   "Audio", "image/UI/Buttons/PlayText/Hover@3x.png", "sound/knopka-schelchok.mp3")
         self.video_button = Button(Menu.WIDTH / 2 - (252 / 2), 300, 252, 74, "image/UI/Buttons/PlayText/Default@3x.png",
-                                   "Video", "image/UI/Buttons/PlayText/Hover@3x.png", "sound/japan.mp3")
+                                   "Video", "image/UI/Buttons/PlayText/Hover@3x.png", "sound/knopka-schelchok.mp3")
         self.back_button = Button(Menu.WIDTH / 2 - (252 / 2), 400, 252, 74, "image/UI/Buttons/PlayText/Default@3x.png",
-                                  "Back", "image/UI/Buttons/PlayText/Hover@3x.png", "sound/japan.mp3")
+                                  "Back", "image/UI/Buttons/PlayText/Hover@3x.png", "sound/knopka-schelchok.mp3")
         self.buttons = [self.audio_button, self.video_button, self.back_button]
 
         self.title = "Settings"
@@ -154,13 +154,13 @@ class VideoMenu(Menu):
         super().__init__()
 
         self.resolution1_button = Button(Menu.WIDTH / 2 - (252 / 2), 200, 252, 74, "image/UI/Buttons/PlayText/Default@3x.png",
-                                         "960x600", "image/UI/Buttons/PlayText/Hover@3x.png", "sound/japan.mp3")
+                                         "960x600", "image/UI/Buttons/PlayText/Hover@3x.png", "sound/knopka-schelchok.mp3")
         self.resolution2_button = Button(Menu.WIDTH / 2 - (252 / 2), 300, 252, 74, "image/UI/Buttons/PlayText/Default@3x.png",
-                                         "1280x800", "image/UI/Buttons/PlayText/Hover@3x.png", "sound/japan.mp3")
+                                         "1280x800", "image/UI/Buttons/PlayText/Hover@3x.png", "sound/knopka-schelchok.mp3")
         self.resolution3_button = Button(Menu.WIDTH / 2 - (252 / 2), 400, 252, 74, "image/UI/Buttons/PlayText/Default@3x.png",
-                                         "Full screen", "image/UI/Buttons/PlayText/Hover@3x.png", "sound/japan.mp3")
+                                         "Full screen", "image/UI/Buttons/PlayText/Hover@3x.png", "sound/knopka-schelchok.mp3")
         self.back_button = Button(self.WIDTH / 2 - (252 / 2), 500, 252, 74, "image/UI/Buttons/PlayText/Default@3x.png",
-                                  "Back", "image/UI/Buttons/PlayText/Hover@3x.png", "sound/japan.mp3")
+                                  "Back", "image/UI/Buttons/PlayText/Hover@3x.png", "sound/knopka-schelchok.mp3")
         self.buttons = [self.resolution1_button, self.resolution2_button, self.resolution3_button, self.back_button]
 
         self.title = "Video Settings"

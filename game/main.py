@@ -59,13 +59,13 @@ def game_on(screen):
     pause_label = Label(screen_obj.width, screen_obj.height, None, 72, 'Pause', (193, 196, 199), "image/UI/Panel/Window/Medium.png")
 
     restart_button = Button((screen_obj.width - 450) / 2, screen_obj.height / 2, 200, 100, "image/UI/Buttons/PlayText/Default@3x.png", "Restart",
-                            "image/UI/Buttons/PlayText/Hover@3x.png", "sound/japan.mp3")
+                            "image/UI/Buttons/PlayText/Hover@3x.png", "sound/knopka-schelchok.mp3")
 
     continue_button = Button((screen_obj.width - 450) / 2, screen_obj.height / 2, 200, 100,
-                             "image/UI/Buttons/PlayText/Default@3x.png", "Continue", "image/UI/Buttons/PlayText/Hover@3x.png", "sound/japan.mp3")
+                             "image/UI/Buttons/PlayText/Default@3x.png", "Continue", "image/UI/Buttons/PlayText/Hover@3x.png", "sound/knopka-schelchok.mp3")
 
     menu_defeat_button = Button((screen_obj.width + 50) / 2, screen_obj.height / 2, 200, 100, "image/UI/Buttons/PlayText/Default@3x.png",
-                                "Menu", "image/UI/Buttons/PlayText/Hover@3x.png", "sound/japan.mp3")
+                                "Menu", "image/UI/Buttons/PlayText/Hover@3x.png", "sound/knopka-schelchok.mp3")
 
 
 
@@ -91,13 +91,12 @@ def game_on(screen):
 
         if gameplay and not pause:
 
-            blacksmith.animation(screen)
-            blacksmith.check_animation_count()
+            # blacksmith.animation(screen)
+            # blacksmith.check_animation_count()
 
 
             for enemy_group in enemies:
-                for enemy in enemy_group:
-                    enemy.update(screen, enemy_group)
+                enemy_group.update(screen, enemy_group)
 
 
             if ghost_list:
@@ -108,8 +107,8 @@ def game_on(screen):
                     if el.x < -10:
                         ghost_list.pop(i)
 
-                    if player.rect.colliderect(el):
-                        gameplay = False
+            if player.current_hp <= 0:
+                gameplay = False
 
             player.update(screen, main_location, partial_backgrounds, platforms, enemies)
 
@@ -122,11 +121,11 @@ def game_on(screen):
                     if el.x > 641:
                         bullets.pop(i)
 
-                    if ghost_list:
-                        for (index, ghost_el) in enumerate(ghost_list):
-                            if el.colliderect(ghost_el):
-                                ghost_list.pop(index)
-                                bullets.pop(i)
+                    # if ghost_list:
+                    #     for (index, ghost_el) in enumerate(ghost_list):
+                    #         if el.colliderect(ghost_el):
+                    #             ghost_list.pop(index)
+                    #             bullets.pop(i)
 
         else:
             main_location.sound.stop()
@@ -165,6 +164,7 @@ def game_on(screen):
                     gameplay = True
                     player.x = screen_obj.width // 2
                     player.y = screen_obj.height - (40 + 60) * screen_obj.height_scale
+                    player.current_hp = 5
                     ghost_list.clear()
                     bullets.clear()
                     bullets_left = 10
@@ -183,8 +183,8 @@ def game_on(screen):
                 for btn in [menu_defeat_button, restart_button]:
                     btn.handle_event(event)
 
-            if event.type == ghost_timer:
-                ghost_list.append(ghost.get_rect(topleft=(650, 300)))
+            # if event.type == ghost_timer:
+            #     ghost_list.append(ghost.get_rect(topleft=(650, 300)))
 
             if gameplay and event.type == pygame.KEYUP and event.key == pygame.K_e and bullets_left > 0:
                 bullets.append(bullet.get_rect(topleft=(player.x + 15, player.y + 10)))
