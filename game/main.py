@@ -42,7 +42,7 @@ def game_on(screen):
     creater.create_moving_platforms(platforms)
 
     # создание персонажа
-    player = Player(screen_obj.width // 2, screen_obj.height - (40 + 60) * screen_obj.height_scale)
+    player = Player(screen_obj.width // 2, screen_obj.height - 120 * screen_obj.height_scale)
 
     main_location.sound.play(-1)
 

@@ -345,7 +345,6 @@ class Player(pygame.sprite.Sprite):
                     self.y = platform.rect.bottom
                     self.y_velocity = 0
 
-
                 else:
                     # Определяем сторону столкновения
                     if self.x <= platform.rect.x:  # Столкновение с левой стороны платформы

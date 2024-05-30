@@ -46,8 +46,21 @@ def create_location():
                                "image/locations/backgrounds/05 background.png"],
                               'sound/bg-sound.mp3', (screen_obj.width, screen_obj.height))
 
-    partial_backgrounds = [PartialBackground(start + screen_obj.width, 0, 200 * screen_obj.width_scale, 600 * screen_obj.height_scale),
-                           PartialBackground(start + screen_obj.width * 3 + 100 * screen_obj.width_scale, 0, screen_obj.width - 100 * screen_obj.width_scale, screen_obj.height, 'brown_brick_wall'),
+    partial_backgrounds = [PartialBackground(start + screen_obj.width, 0, 200 * screen_obj.width_scale,
+                                             600 * screen_obj.height_scale),
+
+                           PartialBackground(start + screen_obj.width * 3 + 100 * screen_obj.width_scale, 0,
+                                             screen_obj.width - 100 * screen_obj.width_scale, screen_obj.height,
+                                             'brown_brick_wall'),
+
+                           PartialBackground(200 * screen_obj.width_scale, screen_obj.height - 500 * screen_obj.height_scale,
+                                             300 * screen_obj.width_scale, 200 * screen_obj.height_scale,
+                                             "house_enter"),
+
+                           PartialBackground(start + screen_obj.width * 3 + 100 * screen_obj.width_scale, 0,
+                                             screen_obj.width - 100 * screen_obj.width_scale, screen_obj.height,
+                                             'brown_brick_wall'),
+
                            ]
 
     return [main_location, partial_backgrounds]

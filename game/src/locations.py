@@ -1,6 +1,8 @@
 import pygame
 from game.src.screen import screen_obj
 import game.src.constants as constants
+from game.src.cache import ImageCache
+
 
 pygame.mixer.init()
 
@@ -8,6 +10,7 @@ pygame.mixer.init()
 class Locations:
 
     def __init__(self, background_paths, sound_path, scale):
+
         self.backgrounds = [[pygame.transform.scale(pygame.image.load(background_path).convert_alpha(), scale), 0] for background_path in background_paths]
 
         self.background_speed = constants.BACKGROUND_SPEED * screen_obj.width_scale
@@ -37,11 +40,21 @@ class Locations:
 
 
 class PartialBackground:
-    basesImage = {"brick_wall": pygame.image.load("image/locations/backgrounds/brick background.png").convert_alpha(),
-                  "brown_brick_wall": pygame.image.load("image/locations/backgrounds/brick background with brown.png").convert_alpha(),}
 
     def __init__(self, x, y, width, height, image_name="brick_wall"):
-        self.background = pygame.transform.scale(PartialBackground.basesImage[image_name], (width, height))
+
+        bases_image_paths = {
+            "brick_wall": "image/locations/backgrounds/brick background.png",
+            "brown_brick_wall": "image/locations/backgrounds/brick background with brown.png",
+            "house_roof": "image/locations/house/house_roof.png",
+            "tube": "image/locations/house/house_tube.png",
+            "house_wall": "image/locations/house/house_tube.png",
+            "house_enter": "image/locations/house/house_wood_entrance.png",
+        }
+
+        image = ImageCache.get_images([bases_image_paths[image_name]])
+
+        self.background = pygame.transform.scale(image[0], (width, height))
         self.x = x
         self.y = y
         self.background_speed = constants.PARTIAL_BACKGROUND_SPEED * screen_obj.width_scale
@@ -54,6 +67,7 @@ class PartialBackground:
             self.x += -self.background_speed
         elif direction == 'left':
             self.x += self.background_speed
+
 
 
 
