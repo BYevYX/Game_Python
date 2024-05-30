@@ -1,4 +1,5 @@
 import pygame
+import sys
 import game.src.constants as constants
 from game.src.screen import screen_obj
 
@@ -19,6 +20,8 @@ class Npc(pygame.sprite.Sprite):
         self.rect = self.animation_images[0].get_rect()
         self.rect.x = x
         self.rect.y = y
+
+        self.has_shop = False
 
     def animation(self, screen):
         screen.blit(self.animation_images[self.animation_count], (self.rect.x, self.rect.y))
@@ -59,4 +62,47 @@ class Blacksmith(Npc):
         super().__init__(x, y)
 
         self.const_delay = 3
+
+        self.has_shop = True
+        self.shop_items = {
+            'Sword': 100,
+            'Shield': 150,
+            'Potion': 50,
+        }
+
+    def open_shop(self, screen, player):
+        font = pygame.font.Font(None, 36)
+        y_offset = 50
+        for item, price in self.shop_items.items():
+            item_text = font.render(f"{item}: {price} coins", True, (255, 255, 255))
+            screen.blit(item_text, (50, y_offset))
+            y_offset += 40
+
+        pygame.display.flip()
+
+        buying = True
+        while buying:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_e:
+                        buying = False
+                    elif event.key == pygame.K_1:
+                        self.buy_item(player, 'Sword')
+                    elif event.key == pygame.K_2:
+                        self.buy_item(player, 'Shield')
+                    elif event.key == pygame.K_3:
+                        self.buy_item(player, 'Potion')
+
+    def buy_item(self, player, item):
+        if item in self.shop_items:
+            price = self.shop_items[item]
+            if player.coins >= price:
+                player.coins -= price
+                player.inventory.append(item)
+                print(f"Bought {item} for {price} coins")
+            else:
+                print("Not enough coins")
 

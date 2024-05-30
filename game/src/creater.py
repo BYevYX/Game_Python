@@ -151,7 +151,7 @@ def create_platforms():
 
     return platforms
 
-def create_moving_platforms(platforms):
+def add_moving_platforms(platforms):
     start = screen_obj.width
 
     # движущиеся платформы в мини здании

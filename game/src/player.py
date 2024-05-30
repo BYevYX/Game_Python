@@ -41,6 +41,9 @@ class Player(pygame.sprite.Sprite):
         self.can_left = True
         self.can_right = True
 
+        self.coins = 200
+        self.inventory = []
+
         self.hp_image = (
             pygame.transform.scale(pygame.image.load('image/Hero/heart/Empty_heart.png').convert_alpha(),
                                    (16 * self.heart_scale, 15 * self.heart_scale)),

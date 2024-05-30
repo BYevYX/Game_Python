@@ -3,6 +3,7 @@ import sys
 from game.src.button import Button
 from game.src.screen import screen_obj
 import game.src.constants as constants
+from game.src.game_start import GameOn
 
 
 class Menu:
@@ -18,7 +19,7 @@ class Menu:
     main_background = pygame.transform.scale(pygame.image.load("image/UI/Panel/Window/Big.png").convert_alpha(), (WIDTH, HEIGHT))
 
     @staticmethod
-    def draw_menu(menu_obj, screen, game_on):
+    def draw_menu(menu_obj, screen):
 
         pygame.mouse.set_visible(False)
 
@@ -38,7 +39,7 @@ class Menu:
                     pygame.quit()
                     sys.exit()
 
-                menu_obj.handle_events(event, screen, running, game_on)
+                menu_obj.handle_events(event, screen, running)
 
                 for btn in menu_obj.buttons:
                     btn.handle_event(event)
@@ -101,7 +102,7 @@ class MainMenu(Menu):
 
         self.settings_menu = SettingsMenu()
 
-    def handle_events(self, event, screen, running, game_on):
+    def handle_events(self, event, screen, running):
 
         if event.type == pygame.USEREVENT:
 
@@ -112,11 +113,14 @@ class MainMenu(Menu):
 
             if event.button == self.settings_button:
                 self.fade(screen)
-                Menu.draw_menu(self.settings_menu, screen, game_on)
+                Menu.draw_menu(self.settings_menu, screen)
 
             if event.button == self.start_button:
                 self.fade(screen)
-                game_on(screen)
+
+                game = GameOn()
+                game.start(screen)
+
 
 
 class SettingsMenu(Menu):
@@ -136,7 +140,7 @@ class SettingsMenu(Menu):
 
         self.video_menu = VideoMenu()
 
-    def handle_events(self, event, screen, running, game_on):
+    def handle_events(self, event, screen, running):
 
         if (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE or
            event.type == pygame.USEREVENT and event.button == self.back_button):
@@ -145,7 +149,7 @@ class SettingsMenu(Menu):
 
         if event.type == pygame.USEREVENT and event.button == self.video_button:
             self.fade(screen)
-            Menu.draw_menu(self.video_menu, screen, game_on)
+            Menu.draw_menu(self.video_menu, screen)
 
 
 class VideoMenu(Menu):
@@ -165,7 +169,7 @@ class VideoMenu(Menu):
 
         self.title = "Video Settings"
 
-    def handle_events(self, event, screen, running, game_on):
+    def handle_events(self, event, screen, running):
 
         if (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE or
            event.type == pygame.USEREVENT and event.button == self.back_button):
