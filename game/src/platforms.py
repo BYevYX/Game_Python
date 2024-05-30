@@ -27,7 +27,7 @@ class Platform(pygame.sprite.Sprite):
         self.direction = "right"
 
 
-    def move_platforms(self, direction):
+    def move_platform(self, direction):
         if direction != self.direction:
             self.velocity *= -1
             self.direction = direction
@@ -57,7 +57,7 @@ class MovingPlatform(Platform):
                 self.slide_velocity *= -1
 
     def move_platforms(self, direction):
-        super().move_platforms(direction)
+        super().move_platform(direction)
 
         if self.slide_direction == 'x':
             self.up += self.velocity

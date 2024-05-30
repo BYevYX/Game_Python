@@ -24,7 +24,6 @@ text_surface = myfont.render('Long time ago...', True, 'orange')
 
 
 # создание npc
-blacksmith = npc.Blacksmith(270, 270)
 
 # создание меню
 main_menu = MainMenu()
@@ -32,7 +31,6 @@ main_menu = MainMenu()
 
 
 def game_on(screen):
-    print(screen_obj.height, screen_obj.width, screen_obj.height_scale, screen_obj.width_scale)
     clock = pygame.time.Clock()
 
     main_location, partial_backgrounds = creater.create_location()
@@ -43,6 +41,9 @@ def game_on(screen):
 
     # создание персонажа
     player = Player(screen_obj.width // 2, screen_obj.height - 120 * screen_obj.height_scale)
+
+    # создание npc
+    npcs = creater.create_npc()
 
     main_location.sound.play(-1)
 
@@ -91,12 +92,10 @@ def game_on(screen):
 
         if gameplay and not pause:
 
-            # blacksmith.animation(screen)
-            # blacksmith.check_animation_count()
-
-
             for enemy_group in enemies:
                 enemy_group.update(screen, enemy_group)
+
+            npcs.update(screen)
 
 
             if ghost_list:
@@ -110,7 +109,7 @@ def game_on(screen):
             if player.current_hp <= 0:
                 gameplay = False
 
-            player.update(screen, main_location, partial_backgrounds, platforms, enemies)
+            player.update(screen, main_location, partial_backgrounds, platforms, enemies, npcs)
 
 
             if bullets:

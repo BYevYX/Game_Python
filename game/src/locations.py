@@ -47,8 +47,8 @@ class PartialBackground:
             "brick_wall": "image/locations/backgrounds/brick background.png",
             "brown_brick_wall": "image/locations/backgrounds/brick background with brown.png",
             "house_roof": "image/locations/house/house_roof.png",
-            "tube": "image/locations/house/house_tube.png",
-            "house_wall": "image/locations/house/house_tube.png",
+            "house_tube": "image/locations/house/house_tube.png",
+            "house_wall": "image/locations/house/house_wall.png",
             "house_enter": "image/locations/house/house_wood_entrance.png",
         }
 

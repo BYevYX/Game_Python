@@ -5,6 +5,7 @@ from game.src.enemies.satyr import Satyr
 from game.src.enemies.snail import Snail
 from game.src.locations import Locations, PartialBackground
 from game.src.platforms import Platform, MovingPlatform
+from game.src.npc import Blacksmith
 
 
 
@@ -53,13 +54,38 @@ def create_location():
                                              screen_obj.width - 100 * screen_obj.width_scale, screen_obj.height,
                                              'brown_brick_wall'),
 
-                           PartialBackground(200 * screen_obj.width_scale, screen_obj.height - 500 * screen_obj.height_scale,
-                                             300 * screen_obj.width_scale, 200 * screen_obj.height_scale,
+                           # хата
+
+                           PartialBackground(0, screen_obj.height - 130 * screen_obj.height_scale,
+                                             450 * screen_obj.width_scale, 110 * screen_obj.height_scale,
                                              "house_enter"),
 
-                           PartialBackground(start + screen_obj.width * 3 + 100 * screen_obj.width_scale, 0,
-                                             screen_obj.width - 100 * screen_obj.width_scale, screen_obj.height,
-                                             'brown_brick_wall'),
+                           PartialBackground(0, screen_obj.height - 280 * screen_obj.height_scale,
+                                             225 * screen_obj.width_scale, 150 * screen_obj.height_scale,
+                                             "house_wall"),
+
+                           PartialBackground(225 * screen_obj.width_scale,
+                                             screen_obj.height - 280 * screen_obj.height_scale,
+                                             225 * screen_obj.width_scale, 150 * screen_obj.height_scale,
+                                             "house_wall"),
+
+                           PartialBackground(0, screen_obj.height - 380 * screen_obj.height_scale,
+                                             225 * screen_obj.width_scale, 100 * screen_obj.height_scale,
+                                             "house_roof"),
+
+                           PartialBackground(225 * screen_obj.width_scale,
+                                             screen_obj.height - 380 * screen_obj.height_scale,
+                                             225 * screen_obj.width_scale, 100 * screen_obj.height_scale,
+                                             "house_roof"),
+
+                           PartialBackground((225 - 40) * screen_obj.width_scale, screen_obj.height - 408 * screen_obj.height_scale,
+                                             20 * screen_obj.width_scale, 30 * screen_obj.height_scale,
+                                             "house_tube"),
+
+                           PartialBackground((225 + 40)* screen_obj.width_scale,
+                                             screen_obj.height - 408 * screen_obj.height_scale,
+                                             20 * screen_obj.width_scale, 30 * screen_obj.height_scale,
+                                             "house_tube"),
 
                            ]
 
@@ -136,5 +162,15 @@ def create_moving_platforms(platforms):
 
     return platforms
 
+
+def create_npc():
+    npcs = pygame.sprite.Group()
+
+    npcs.add(
+        Blacksmith(screen_obj.width // 2 - 200 * screen_obj.width_scale, screen_obj.height - 95 * screen_obj.height_scale),
+
+    )
+
+    return npcs
 
 

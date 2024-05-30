@@ -285,30 +285,33 @@ class Player(pygame.sprite.Sprite):
         self.check_animation_count()
 
     @staticmethod
-    def move_environment(direction, main_location, partial_backgrounds, platforms, enemies):
+    def move_environment(direction, main_location, partial_backgrounds, platforms, enemies, npcs):
         main_location.move_background(direction)
         for platform in platforms:
-            platform.move_platforms(direction)
+            platform.move_platform(direction)
 
         for part_back in partial_backgrounds:
             part_back.move_background(direction)
 
+        for npc in npcs:
+            npc.move_npc(direction)
+
         Enemy.move_group(direction, enemies)
 
-    def move(self, keys, main_location, partial_backgrounds, platforms, enemies):
+    def move(self, keys, main_location, partial_backgrounds, platforms, enemies, npcs):
         self.correction()
         # self.sliding_window()
         if (keys[pygame.K_LEFT] or keys[pygame.K_a]) and self.can_left:
             self.can_right = True
             self.attack_direction = -constants.PLAYER_ATTACK_DIRECTION
 
-            Player.move_environment("left", main_location, partial_backgrounds, platforms, enemies)
+            Player.move_environment("left", main_location, partial_backgrounds, platforms, enemies, npcs)
 
         elif (keys[pygame.K_RIGHT] or keys[pygame.K_d]) and self.can_right:
             self.can_left = True
             self.attack_direction = constants.PLAYER_ATTACK_DIRECTION
 
-            Player.move_environment("right", main_location, partial_backgrounds, platforms, enemies)
+            Player.move_environment("right", main_location, partial_backgrounds, platforms, enemies, npcs)
 
         if (keys[pygame.K_SPACE] or keys[pygame.K_w] or keys[pygame.K_UP]) and not self.is_jump:
             self.is_jump = True
@@ -356,10 +359,10 @@ class Player(pygame.sprite.Sprite):
                         self.x = platform.rect.right
                         self.can_left = False
 
-    def update(self, screen, main_location, partial_backgrounds, platforms, enemies):
+    def update(self, screen, main_location, partial_backgrounds, platforms, enemies, npcs):
         keys = pygame.key.get_pressed()
 
-        self.move(keys, main_location, partial_backgrounds, platforms, enemies)
+        self.move(keys, main_location, partial_backgrounds, platforms, enemies, npcs)
         self.check_collisions(platforms)
         self.draw(screen, keys)
         self.check_damage(enemies)

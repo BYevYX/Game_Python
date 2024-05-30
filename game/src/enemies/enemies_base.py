@@ -4,8 +4,8 @@ from game.src.screen import screen_obj
 
 
 class Enemy(pygame.sprite.Sprite):
-    images = []
-    death_images = []
+    images = None
+    death_images = None
 
     def __init__(self, x, y, range_place=200 * screen_obj.width_scale, platform=None):
         super().__init__()
