@@ -244,7 +244,11 @@ class Player(pygame.sprite.Sprite):
     def attack(self, enemies):
         self.last_attack_time = pygame.time.get_ticks()
 
-        attack_rect = pygame.Rect(self.rect.x, self.rect.y, self.rect.width + self.attack_range, self.rect.height)
+        if self.attack_direction == 1:
+            attack_rect = pygame.Rect(self.rect.x, self.rect.y, self.rect.width + self.attack_range, self.rect.height)
+        else:
+            attack_rect = pygame.Rect(self.rect.x, self.rect.y, -self.attack_range, self.rect.height)
+
         for group in enemies:
             for enemy in group:
                 if attack_rect.colliderect(enemy.rect):
