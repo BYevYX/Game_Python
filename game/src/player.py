@@ -2,7 +2,7 @@ import pygame
 import time
 from game.src.screen import screen_obj
 import game.src.constants as constants
-from game.src.enemies.enemies_base import Enemy
+from game.src.enemies.enemies_base import CommonEnemy
 
 
 class Player(pygame.sprite.Sprite):
@@ -144,7 +144,6 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.run[0].get_rect(topleft=(self.x, self.y))
         self.image = self.run[self.run_animation_count]
 
-
     def animate_hp(self, screen):
         for i in range(self.hp):
             screen.blit(self.hp_image[0], (40 + i * 50, 30))
@@ -154,13 +153,13 @@ class Player(pygame.sprite.Sprite):
     def check_animation_count(self):
         self.delay_animation += 1
 
-        if self.run_animation_count == len(self.run) - 1:
-            self.run_animation_count = 0
-        else:
-            self.run_animation_count += 1
-
         if self.delay_animation == 2:
             self.delay_animation = 0
+
+            if self.run_animation_count == len(self.run) - 1:
+                self.run_animation_count = 0
+            else:
+                self.run_animation_count += 1
 
             if self.stay_animation_count == len(self.stay_images) - 1:
                 self.stay_animation_count = 0
@@ -177,8 +176,6 @@ class Player(pygame.sprite.Sprite):
                 self.is_attacking = False
             elif self.is_attacking:
                 self.attack_animation_count += 1
-
-
 
     # def sliding_window(self):
     #
@@ -207,16 +204,15 @@ class Player(pygame.sprite.Sprite):
             self.invincible = True
             self.last_hit_time = current_time
 
-
             knockback_distance = constants.PLAYER_MAIN_KNOCKBACK
-            if self.rect.centerx < enemy.rect.centerx:
+            if self.rect.left <= enemy.rect.left:
                 self.x -= knockback_distance
-            else:
+            elif self.rect.right >= enemy.rect.right:
                 self.x += knockback_distance
 
-            if self.rect.centery < enemy.rect.centery:
+            if self.rect.bottom <= enemy.rect.bottom:
                 self.y -= knockback_distance
-            else:
+            elif self.rect.top >= enemy.rect.top:
                 self.y += knockback_distance
 
     def check_invincibility(self):
@@ -239,7 +235,7 @@ class Player(pygame.sprite.Sprite):
         for group_enemies in enemies:
             collided_enemy = pygame.sprite.spritecollideany(self, group_enemies)
             if collided_enemy:
-                self.take_damage(1, collided_enemy)
+                self.take_damage(collided_enemy.damage, collided_enemy)
 
     def attack(self, enemies):
         self.last_attack_time = pygame.time.get_ticks()
@@ -303,7 +299,7 @@ class Player(pygame.sprite.Sprite):
         for npc in npcs:
             npc.move_npc(direction)
 
-        Enemy.move_group(direction, enemies)
+        CommonEnemy.move_group(direction, enemies)
 
     def move(self, keys, main_location, partial_backgrounds, platforms, enemies, npcs):
         self.correction()

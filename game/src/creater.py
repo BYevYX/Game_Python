@@ -47,47 +47,48 @@ def create_location():
                                "image/locations/backgrounds/05 background.png"],
                               'sound/bg-sound.mp3', (screen_obj.width, screen_obj.height))
 
-    partial_backgrounds = [PartialBackground(start + screen_obj.width, 0, 200 * screen_obj.width_scale,
-                                             600 * screen_obj.height_scale),
+    partial_backgrounds = [
 
-                           PartialBackground(start + screen_obj.width * 3 + 100 * screen_obj.width_scale, 0,
-                                             screen_obj.width - 100 * screen_obj.width_scale, screen_obj.height,
-                                             'brown_brick_wall'),
+        PartialBackground(screen_obj.width // 2 + 100 * screen_obj.width_scale,
+                          screen_obj.height - 330 * screen_obj.height_scale, 250 * screen_obj.width_scale,
+                          300 * screen_obj.height_scale, "big_tree"),
 
-                           # хата
+        PartialBackground(start + screen_obj.width, 0, 200 * screen_obj.width_scale, 600 * screen_obj.height_scale,
+                          "collumn_back"),
 
-                           PartialBackground(0, screen_obj.height - 130 * screen_obj.height_scale,
-                                             450 * screen_obj.width_scale, 110 * screen_obj.height_scale,
-                                             "house_enter"),
+        PartialBackground(start + screen_obj.width * 4, 0, 200 * screen_obj.width_scale, 300 * screen_obj.height_scale,
+                          "collumn_back"),
 
-                           PartialBackground(0, screen_obj.height - 280 * screen_obj.height_scale,
-                                             225 * screen_obj.width_scale, 150 * screen_obj.height_scale,
-                                             "house_wall"),
+        PartialBackground(start + screen_obj.width * 3 + 100 * screen_obj.width_scale, 0,
+                          screen_obj.width - 100 * screen_obj.width_scale, screen_obj.height, 'brown_brick_wall'),
 
-                           PartialBackground(225 * screen_obj.width_scale,
-                                             screen_obj.height - 280 * screen_obj.height_scale,
-                                             225 * screen_obj.width_scale, 150 * screen_obj.height_scale,
-                                             "house_wall"),
+        # хата
+        PartialBackground(0, screen_obj.height - 130 * screen_obj.height_scale, 450 * screen_obj.width_scale,
+                          110 * screen_obj.height_scale, "house_enter"),
 
-                           PartialBackground(0, screen_obj.height - 380 * screen_obj.height_scale,
-                                             225 * screen_obj.width_scale, 100 * screen_obj.height_scale,
-                                             "house_roof"),
+        PartialBackground(0, screen_obj.height - 280 * screen_obj.height_scale, 225 * screen_obj.width_scale,
+                          150 * screen_obj.height_scale, "house_wall"),
 
-                           PartialBackground(225 * screen_obj.width_scale,
-                                             screen_obj.height - 380 * screen_obj.height_scale,
-                                             225 * screen_obj.width_scale, 100 * screen_obj.height_scale,
-                                             "house_roof"),
+        PartialBackground(225 * screen_obj.width_scale, screen_obj.height - 280 * screen_obj.height_scale,
+                        225 * screen_obj.width_scale, 150 * screen_obj.height_scale, "house_wall"),
 
-                           PartialBackground((225 - 40) * screen_obj.width_scale, screen_obj.height - 408 * screen_obj.height_scale,
-                                             20 * screen_obj.width_scale, 30 * screen_obj.height_scale,
-                                             "house_tube"),
+        PartialBackground(0, screen_obj.height - 380 * screen_obj.height_scale, 225 * screen_obj.width_scale,
+                          100 * screen_obj.height_scale, "house_roof"),
 
-                           PartialBackground((225 + 40)* screen_obj.width_scale,
-                                             screen_obj.height - 408 * screen_obj.height_scale,
-                                             20 * screen_obj.width_scale, 30 * screen_obj.height_scale,
-                                             "house_tube"),
+        PartialBackground(225 * screen_obj.width_scale, screen_obj.height - 380 * screen_obj.height_scale,
+                          225 * screen_obj.width_scale, 100 * screen_obj.height_scale, "house_roof"),
 
-                           ]
+        PartialBackground((225 - 40) * screen_obj.width_scale, screen_obj.height - 408 * screen_obj.height_scale,
+                          20 * screen_obj.width_scale, 30 * screen_obj.height_scale, "house_tube"),
+
+        PartialBackground((225 + 40) * screen_obj.width_scale, screen_obj.height - 408 * screen_obj.height_scale,
+                          20 * screen_obj.width_scale, 30 * screen_obj.height_scale, "house_tube"),
+
+        # замок
+        PartialBackground(start + screen_obj.width * 5 + 220 * screen_obj.width_scale, 0, screen_obj.width,
+                          screen_obj.height)
+
+    ]
 
     return [main_location, partial_backgrounds]
 
@@ -95,11 +96,13 @@ def create_platforms():
     start = screen_obj.width
     platforms = pygame.sprite.Group()
 
-    for x in range(0, start + 4 * screen_obj.width, int(300 * screen_obj.width_scale)):
+    for x in range(0, start + 5 * screen_obj.width, int(300 * screen_obj.width_scale)):
         platforms.add(Platform(x, screen_obj.height - 40 * screen_obj.height_scale, int(300 * screen_obj.width_scale), 40 * screen_obj.height_scale))
 
         # левый столб
-    platforms.add(Platform(start + 0, screen_obj.height - 200 * screen_obj.height_scale, 200 * screen_obj.width_scale, 30 * screen_obj.height_scale),
+    platforms.add(Platform(-start // 1.23, 0, screen_obj.width // 1.2, screen_obj.height, "mountain"),
+
+                  Platform(start + 0, screen_obj.height - 200 * screen_obj.height_scale, 200 * screen_obj.width_scale, 30 * screen_obj.height_scale),
                   Platform(start + 0, screen_obj.height - 400 * screen_obj.height_scale, 200 * screen_obj.width_scale, 30 * screen_obj.height_scale),
 
                   # центр
@@ -132,7 +135,6 @@ def create_platforms():
                   Platform(start + screen_obj.width * 3 // 2 + 50 * screen_obj.width_scale, screen_obj.height // 2 + 150 * screen_obj.height_scale, 300 * screen_obj.width_scale, 30 * screen_obj.height_scale),
 
                   # мини здание паттерн
-
                   Platform(start + screen_obj.width * 3 + 100 * screen_obj.width_scale, screen_obj.height - 150 * screen_obj.height_scale, 30 * screen_obj.width_scale, 120 * screen_obj.height_scale, 'right_wall'),
                   Platform(start + screen_obj.width * 3 + 100 * screen_obj.width_scale, 0, 30 * screen_obj.width_scale, 250 * screen_obj.height_scale, 'right_wall'),
                   Platform(start + screen_obj.width * 4, 0, 30 * screen_obj.width_scale, 300 * screen_obj.height_scale, 'right_wall'),
@@ -141,7 +143,8 @@ def create_platforms():
                   Platform(start + screen_obj.width * 3 + 100 * screen_obj.width_scale, screen_obj.height - 350 * screen_obj.height_scale, 180 * screen_obj.width_scale, 30 * screen_obj.height_scale),
                   Platform(start + screen_obj.width * 4 - 180 * screen_obj.width_scale, screen_obj.height - 330 * screen_obj.height_scale, 180 * screen_obj.width_scale, 30 * screen_obj.height_scale),
 
-
+                  # босс арена
+                  Platform(start + screen_obj.width * 5 + 200 * screen_obj.width_scale, 0, 30 * screen_obj.width_scale, 400 * screen_obj.height_scale, 'right_wall'),
 
                   )
 

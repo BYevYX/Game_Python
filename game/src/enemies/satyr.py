@@ -1,10 +1,10 @@
-from game.src.enemies.enemies_base import Enemy
+from game.src.enemies.enemies_base import CommonEnemy
 import game.src.constants as constants
 from game.src.cache import ImageCache
 from game.src.screen import screen_obj
 
 
-class Satyr(Enemy):
+class Satyr(CommonEnemy):
 
     def __init__(self, x, y, range_place=100 * screen_obj.width_scale):
         image_paths = [

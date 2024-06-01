@@ -12,6 +12,7 @@ class Platform(pygame.sprite.Sprite):
         "left_wall": pygame.image.load("image/locations/platforms/left_wall.png").convert_alpha(),
         "right_wall": pygame.image.load("image/locations/platforms/right_wall.png").convert_alpha(),
         "moving_platform": pygame.image.load("image/locations/platforms/moving_platform.png").convert_alpha(),
+        "mountain": pygame.image.load("image/locations/obstacles/big_mountain.png").convert_alpha(),
     }
 
     def __init__(self, x, y, width, height, image_type="main_platform"):

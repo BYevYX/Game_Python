@@ -1,10 +1,10 @@
-from game.src.enemies.enemies_base import Enemy
+from game.src.enemies.enemies_base import CommonEnemy
 from game.src.cache import ImageCache
 import game.src.constants as constants
 from game.src.screen import screen_obj
 
 
-class Sculwolf(Enemy):
+class Sculwolf(CommonEnemy):
     def __init__(self, x, y, range_place=100 * screen_obj.width_scale):
         image_paths = [
             'image/enemys/sculwolf/move/Massacre Sprite Sheet_1.png',
@@ -32,7 +32,7 @@ class Sculwolf(Enemy):
         ]
 
         self.images = ImageCache.get_images(image_paths, (screen_obj.width_scale, screen_obj.height_scale))
-        super().__init__(x, y - 40 * screen_obj.height_scale, range_place)
+        super().__init__(x, y - 30 * screen_obj.height_scale, range_place)
 
         self.jump_height = constants.ENEMY_JUMP_HEIGHT * screen_obj.height_scale
         self.death_images = ImageCache.get_images(death_paths, (screen_obj.width_scale, screen_obj.height_scale))

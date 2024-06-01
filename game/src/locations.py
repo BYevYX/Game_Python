@@ -50,6 +50,8 @@ class PartialBackground:
             "house_tube": "image/locations/house/house_tube.png",
             "house_wall": "image/locations/house/house_wall.png",
             "house_enter": "image/locations/house/house_wood_entrance.png",
+            "big_tree": "image/locations/decorations/big_tree.png",
+            "collumn_back": "image/locations/backgrounds/collumn_background.png",
         }
 
         image = ImageCache.get_images([bases_image_paths[image_name]])
