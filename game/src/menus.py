@@ -13,6 +13,7 @@ class Menu:
         self.MAX_FPS = constants.MAX_FPS
         self.clock = pygame.time.Clock()
         self.cursor = pygame.image.load("image/UI/cursor/cursor.png").convert_alpha()
+        self.is_restart = False
 
     WIDTH = screen_obj.width
     HEIGHT = screen_obj.height
@@ -26,6 +27,12 @@ class Menu:
         running = [True]
         while running[0]:
             screen.fill((0, 0, 0))
+
+            if menu_obj.is_restart:
+                menu_obj.is_restart = False
+                menu_obj.fade(screen)
+                menu_obj.is_restart = GameOn().start(screen)
+
             screen.blit(menu_obj.main_background, (0, 0))
 
             font = pygame.font.Font(None, 72)
@@ -117,9 +124,8 @@ class MainMenu(Menu):
 
             if event.button == self.start_button:
                 self.fade(screen)
+                self.is_restart = GameOn().start(screen)
 
-                game = GameOn()
-                game.start(screen)
 
 
 

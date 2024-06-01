@@ -47,4 +47,5 @@ class Satyr(Enemy):
 
         self.death_images = ImageCache.get_images(death_paths, (2 * screen_obj.width_scale, 2 * screen_obj.height_scale))
         self.current_hp = 100
+        self.const_delay_death_animation = 2
 

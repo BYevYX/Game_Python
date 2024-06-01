@@ -21,6 +21,10 @@ class Enemy(pygame.sprite.Sprite):
         self.direction = "right"
         self.velocity = constants.VELOCITY * screen_obj.width_scale
         self.current_hp = constants.ENEMY_HP
+        self.const_delay_death_animation = 0
+        self.delay_death_animation = 0
+        self.is_blink = False
+        self.blink_time = 4
 
     def change_direction(self, direction):
         if direction != self.direction:
@@ -48,13 +52,21 @@ class Enemy(pygame.sprite.Sprite):
 
         self.update_animation()
 
+    def take_damage(self, damage):
+        self.current_hp -= damage
+
+
     def death(self, group, screen):
         if self.current_hp <= 0:
             self.is_dead = True
 
             if len(self.death_images):
                 screen.blit(self.death_images[self.death_animation_count], (self.rect.x, self.rect.y))
-                self.death_animation_count += 1
+                if self.delay_death_animation == self.const_delay_death_animation:
+                    self.delay_death_animation = 0
+                    self.death_animation_count += 1
+                else:
+                    self.delay_death_animation += 1
 
             if self.death_animation_count == len(self.death_images):
                 self.death_animation_count = 0

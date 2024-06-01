@@ -248,7 +248,7 @@ class Player(pygame.sprite.Sprite):
         for group in enemies:
             for enemy in group:
                 if attack_rect.colliderect(enemy.rect):
-                    enemy.current_hp -= self.attack_damage
+                    enemy.take_damage(self.attack_damage)
 
     def draw(self, screen, keys):
         self.animate_hp(screen)

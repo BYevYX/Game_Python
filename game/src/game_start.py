@@ -25,6 +25,8 @@ class GameOn:
         self.pause = False
         self.running = True
 
+        self.is_restart = False
+
         self.lose_label = Label(screen_obj.width, screen_obj.height, None, 72, 'You Lose!',
                                 (193, 196, 199), "image/UI/Panel/Window/Medium.png")
         self.pause_label = Label(screen_obj.width, screen_obj.height, None, 72, 'Pause',
@@ -68,6 +70,9 @@ class GameOn:
 
                 if event.button == self.menu_defeat_button:
                     self.running = False
+
+                if event.button == self.restart_button:
+                    self.is_restart = True
 
                 if event.button == self.continue_button:
                     self.main_location.sound.play()
@@ -132,6 +137,9 @@ class GameOn:
             pygame.display.update()
 
             self.handle_events(screen, pygame.event.get())
+
+            if self.is_restart:
+                return self.is_restart
 
             pygame.time.delay(constants.DELAY)
             self.clock.tick(constants.MAX_FPS)
