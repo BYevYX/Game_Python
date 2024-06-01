@@ -32,13 +32,15 @@ class Sculwolf(Enemy):
         ]
 
         self.images = ImageCache.get_images(image_paths, (screen_obj.width_scale, screen_obj.height_scale))
-        super().__init__(x, y - 20 * screen_obj.height_scale, range_place)
+        super().__init__(x, y - 40 * screen_obj.height_scale, range_place)
 
         self.jump_height = constants.ENEMY_JUMP_HEIGHT * screen_obj.height_scale
         self.death_images = ImageCache.get_images(death_paths, (screen_obj.width_scale, screen_obj.height_scale))
 
         self.current_hp = 80
         self.const_delay_death_animation = 1
+        self.const_delay_animation = 1
+
 
     def jump(self):
         if 7 <= self.animation_count <= 9:

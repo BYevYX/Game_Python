@@ -1,4 +1,5 @@
 from game.src.enemies.enemies_base import Enemy
+import game.src.constants as constants
 from game.src.cache import ImageCache
 from game.src.screen import screen_obj
 
@@ -48,4 +49,6 @@ class Satyr(Enemy):
         self.death_images = ImageCache.get_images(death_paths, (2 * screen_obj.width_scale, 2 * screen_obj.height_scale))
         self.current_hp = 100
         self.const_delay_death_animation = 2
+        self.const_delay_animation = 2
+        self.speed = (constants.ENEMY_NORMAL_SPEED - 1) * screen_obj.width_scale
 

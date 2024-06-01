@@ -13,8 +13,8 @@ def create_enemies():
     start = screen_obj.width
     sculwolfs_group = pygame.sprite.Group()
     sculwolfs_group.add(Sculwolf(start + screen_obj.width // 2 - 150 * screen_obj.width_scale, screen_obj.height // 2 - 55 * screen_obj.height_scale, 200 * screen_obj.width_scale),
-                        Sculwolf(start + 0, screen_obj.height - 225 * screen_obj.height_scale, 80 * screen_obj.width_scale),
-                        Sculwolf(start + screen_obj.width - 200 * screen_obj.width_scale, screen_obj.height - 425  * screen_obj.height_scale, 90 * screen_obj.width_scale),
+                        Sculwolf(start + 0, screen_obj.height - 225 * screen_obj.height_scale, 120 * screen_obj.width_scale),
+                        Sculwolf(start + screen_obj.width - 200 * screen_obj.width_scale, screen_obj.height - 425  * screen_obj.height_scale, 120 * screen_obj.width_scale),
                         Sculwolf(start + screen_obj.width * 3 // 2 + 50 * screen_obj.width_scale, screen_obj.height // 2 + 125  * screen_obj.height_scale, 260 * screen_obj.width_scale),
 
                         )

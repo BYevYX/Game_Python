@@ -34,6 +34,8 @@ class Snail(Enemy):
         self.sniff_animation_count = 0
         self.walk_count = 0
 
+        self.const_delay_animation = 2
+
     def move(self):
         if self.is_walk:
             super().move()

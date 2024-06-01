@@ -23,7 +23,8 @@ class Enemy(pygame.sprite.Sprite):
         self.current_hp = constants.ENEMY_HP
         self.const_delay_death_animation = 0
         self.delay_death_animation = 0
-        self.is_blink = False
+        self.const_delay_animation = 0
+        self.delay_animation = 0
         self.blink_time = 4
 
     def change_direction(self, direction):
@@ -40,7 +41,12 @@ class Enemy(pygame.sprite.Sprite):
         self.rect.x += self.speed
 
     def update_animation(self):
-        self.animation_count += 1
+        if self.delay_animation == self.const_delay_animation:
+            self.delay_animation = 0
+            self.animation_count += 1
+        else:
+            self.delay_animation += 1
+
         if self.animation_count >= len(self.images):
             self.animation_count = 0
 
