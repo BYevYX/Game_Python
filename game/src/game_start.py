@@ -15,6 +15,7 @@ class GameOn:
         self.main_location, self.partial_backgrounds = creater.create_location()
         self.platforms = creater.create_platforms()
         self.enemies = creater.create_enemies()
+        self.waves = pygame.sprite.Group()
 
         creater.add_moving_platforms(self.platforms)
 
@@ -109,13 +110,18 @@ class GameOn:
                 for enemy_group in self.enemies:
                     enemy_group.update(screen, enemy_group)
 
+                for wave in self.waves:
+                    wave.deal_damage(self.enemies)
+
                 self.npcs.update(screen)
 
                 if self.player.current_hp <= 0:
                     self.gameplay = False
 
-                self.player.update(screen, self.main_location, self.partial_backgrounds, self.platforms, self.enemies, self.npcs)
+                self.player.update(screen, self.main_location, self.partial_backgrounds, self.platforms, self.enemies, self.npcs, self.waves)
 
+                # self.waves.update()
+                # self.waves.draw(screen)
 
             else:
                 self.main_location.sound.stop()
@@ -133,6 +139,7 @@ class GameOn:
                     btn.check_hover(pygame.mouse.get_pos())
 
                 self.lose_label.draw_cursor(screen)
+
 
             pygame.display.update()
 

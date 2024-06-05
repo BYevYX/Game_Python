@@ -21,3 +21,10 @@ class StalkingEnemy(Enemy):
         self.rect.x += dx * self.speed
         self.rect.y += dy * self.speed
 
+
+class Boss(StalkingEnemy):
+
+    def __init__(self, x, y):
+        super().__init__(x, y)
+
+        self.current_hp = constants.BOSS_HP

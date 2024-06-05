@@ -158,8 +158,17 @@ def add_moving_platforms(platforms):
     start = screen_obj.width
 
     # движущиеся платформы в мини здании
-    platforms.add(MovingPlatform(start + screen_obj.width * 3 + 300 * screen_obj.width_scale, screen_obj.height - 400 * screen_obj.height_scale, 200 * screen_obj.width_scale, 30 * screen_obj.height_scale, start + screen_obj.width * 3 + 300 * screen_obj.width_scale, start + screen_obj.width * 4 - 200 * screen_obj.width_scale),
-                  MovingPlatform(start + screen_obj.width * 3.5, screen_obj.height - 550 * screen_obj.height_scale, 200 * screen_obj.width_scale, 30 * screen_obj.height_scale, start + screen_obj.width * 4, start + screen_obj.width * 3 + 140 * screen_obj.width_scale),
+    platforms.add(MovingPlatform(start + screen_obj.width * 3 + 300 * screen_obj.width_scale,
+                                 screen_obj.height - 400 * screen_obj.height_scale, 200 * screen_obj.width_scale,
+                                 30 * screen_obj.height_scale,
+                                 start + screen_obj.width * 3 + 300 * screen_obj.width_scale,
+                                 start + screen_obj.width * 4 - 200 * screen_obj.width_scale),
+
+                  MovingPlatform(start + screen_obj.width * 3.5, screen_obj.height - 550 * screen_obj.height_scale,
+                                 200 * screen_obj.width_scale, 30 * screen_obj.height_scale,
+                                 start + screen_obj.width * 4,
+                                 start + screen_obj.width * 3 + 140 * screen_obj.width_scale),
+
                   # MovingPlatform(start + screen_obj.width * 3.5, screen_obj.height - 200,200, 30, screen_obj.height * 0.8, screen_obj.height * 0.3, 'y'),
                  )
 

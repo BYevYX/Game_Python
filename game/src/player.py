@@ -3,6 +3,9 @@ import time
 from game.src.screen import screen_obj
 import game.src.constants as constants
 from game.src.enemies.enemies_base import CommonEnemy
+from game.src.cache import ImageCache
+# from game.src.shokwave import Shockwave
+
 
 
 class Player(pygame.sprite.Sprite):
@@ -21,6 +24,7 @@ class Player(pygame.sprite.Sprite):
         self.jump_animation_count = 0
         self.attack_animation_count = 0
         self.delay_animation = 0
+        self.delay_jump_animation = 0
 
         self.is_attacking = False
         self.attack_cooldown = constants.PLAYER_ATTACK_COOLDOWN
@@ -45,101 +49,39 @@ class Player(pygame.sprite.Sprite):
         self.inventory = []
 
         self.hp_image = (
-            pygame.transform.scale(pygame.image.load('image/Hero/heart/Empty_heart.png').convert_alpha(),
+            pygame.transform.scale(pygame.image.load('image/Heros/heart/Empty_heart.png').convert_alpha(),
                                    (16 * self.heart_scale, 15 * self.heart_scale)),
-            pygame.transform.scale(pygame.image.load('image/Hero/heart/Heart.png').convert_alpha(),
+            pygame.transform.scale(pygame.image.load('image/Heros/heart/Heart.png').convert_alpha(),
                                    (12 * self.heart_scale, 11 * self.heart_scale)),
-            pygame.transform.scale(pygame.image.load('image/Hero/heart/Metal_heart.png').convert_alpha(),
+            pygame.transform.scale(pygame.image.load('image/Heros/heart/Metal_heart.png').convert_alpha(),
                                    (12 * self.heart_scale, 11 * self.heart_scale))
         )
 
-        self.run = (
-            pygame.transform.scale(pygame.image.load('image/Hero/Run/run-1.png').convert_alpha(),
-                                                    (38 * 1.2 * screen_obj.width_scale, 60 * 1.2 * screen_obj.height_scale)),
-            pygame.transform.scale(pygame.image.load('image/Hero/Run/run-2.png').convert_alpha(),
-                                                    (38 * 1.2 * screen_obj.width_scale, 60 * 1.2 * screen_obj.height_scale)),
-            pygame.transform.scale(pygame.image.load('image/Hero/Run/run-3.png').convert_alpha(),
-                                                    (38 * 1.2 * screen_obj.width_scale, 60 * 1.2 * screen_obj.height_scale)),
-            pygame.transform.scale(pygame.image.load('image/Hero/Run/run-4.png').convert_alpha(),
-                                                    (38 * 1.2 * screen_obj.width_scale, 60 * 1.2 * screen_obj.height_scale)),
-            pygame.transform.scale(pygame.image.load('image/Hero/Run/run-5.png').convert_alpha(),
-                                                    (38 * 1.2 * screen_obj.width_scale, 60 * 1.2 * screen_obj.height_scale)),
-            pygame.transform.scale(pygame.image.load('image/Hero/Run/run-6.png').convert_alpha(),
-                                                    (38 * 1.2 * screen_obj.width_scale, 60 * 1.2 * screen_obj.height_scale)),
-            pygame.transform.scale(pygame.image.load('image/Hero/Run/run-7.png').convert_alpha(),
-                                                    (38 * 1.2 * screen_obj.width_scale, 60 * 1.2 * screen_obj.height_scale)),
-            pygame.transform.scale(pygame.image.load('image/Hero/Run/run-8.png').convert_alpha(),
-                                                    (38 * 1.2 * screen_obj.width_scale, 60 * 1.2 * screen_obj.height_scale)),
-            pygame.transform.scale(pygame.image.load('image/Hero/Run/run-9.png').convert_alpha(),
-                                                    (38 * 1.2 * screen_obj.width_scale, 60 * 1.2 * screen_obj.height_scale)),
-            pygame.transform.scale(pygame.image.load('image/Hero/Run/run-10.png').convert_alpha(),
-                                                    (38 * 1.2 * screen_obj.width_scale, 60 * 1.2 * screen_obj.height_scale)),
-            pygame.transform.scale(pygame.image.load('image/Hero/Run/run-11.png').convert_alpha(),
-                                                    (38 * 1.2 * screen_obj.width_scale, 60 * 1.2 * screen_obj.height_scale)),
-            pygame.transform.scale(pygame.image.load('image/Hero/Run/run-12.png').convert_alpha(),
-                                                    (38 * 1.2 * screen_obj.width_scale, 60 * 1.2 * screen_obj.height_scale)),
-        )
+        run = []
+        for i in range(1, 9):
+            run.append(f"image/Heros/Fire-knight/02_run/run_{i}.png")
 
-        self.stay_images = (
-            pygame.transform.scale(pygame.image.load('image/Hero/stay/idle-1.png').convert_alpha(),
-                                                    (23 * 1.2 * screen_obj.width_scale, 60 * 1.2 * screen_obj.height_scale)),
-            pygame.transform.scale(pygame.image.load('image/Hero/stay/idle-2.png').convert_alpha(),
-                                                    (23 * 1.2 * screen_obj.width_scale, 60 * 1.2 * screen_obj.height_scale)),
-            pygame.transform.scale(pygame.image.load('image/Hero/stay/idle-3.png').convert_alpha(),
-                                                    (23 * 1.2 * screen_obj.width_scale, 60 * 1.2 * screen_obj.height_scale)),
-            pygame.transform.scale(pygame.image.load('image/Hero/stay/idle-4.png').convert_alpha(),
-                                                    (23 * 1.2 * screen_obj.width_scale, 60 * 1.2 * screen_obj.height_scale)),
-            pygame.transform.scale(pygame.image.load('image/Hero/stay/idle-5.png').convert_alpha(),
-                                                    (23 * 1.2 * screen_obj.width_scale, 60 * 1.2 * screen_obj.height_scale)),
-            pygame.transform.scale(pygame.image.load('image/Hero/stay/idle-6.png').convert_alpha(),
-                                                    (23 * 1.2 * screen_obj.width_scale, 60 * 1.2 * screen_obj.height_scale)),
-        )
+        self.run = ImageCache.get_images(run, (1.5, 1.5))
 
-        self.jump = (
-            pygame.transform.scale(pygame.image.load('image/Hero/Jump/jump-1.png').convert_alpha(),
-                                                    (31 * 1.2 * screen_obj.width_scale, 60 * 1.2 * screen_obj.height_scale)),
-            pygame.transform.scale(pygame.image.load('image/Hero/Jump/jump-2.png').convert_alpha(),
-                                                    (31 * 1.2 * screen_obj.width_scale, 60 * 1.2 * screen_obj.height_scale)),
-            pygame.transform.scale(pygame.image.load('image/Hero/Jump/jump-3.png').convert_alpha(),
-                                                    (31 * 1.2 * screen_obj.width_scale, 60 * 1.2 * screen_obj.height_scale)),
-            pygame.transform.scale(pygame.image.load('image/Hero/Jump/jump-4.png').convert_alpha(),
-                                                    (31 * 1.2 * screen_obj.width_scale, 60 * 1.2 * screen_obj.height_scale)),
-            pygame.transform.scale(pygame.image.load('image/Hero/Jump/jump-5.png').convert_alpha(),
-                                                    (31 * 1.2 * screen_obj.width_scale, 60 * 1.2 * screen_obj.height_scale)),
-            pygame.transform.scale(pygame.image.load('image/Hero/Jump/jump-6.png').convert_alpha(),
-                                                    (31 * 1.2 * screen_obj.width_scale, 60 * 1.2 * screen_obj.height_scale)),
-            pygame.transform.scale(pygame.image.load('image/Hero/Jump/jump-7.png').convert_alpha(),
-                                                    (31 * 1.2 * screen_obj.width_scale, 60 * 1.2 * screen_obj.height_scale)),
-            pygame.transform.scale(pygame.image.load('image/Hero/Jump/jump-8.png').convert_alpha(),
-                                                    (31 * 1.2 * screen_obj.width_scale, 60 * 1.2 * screen_obj.height_scale)),
-            pygame.transform.scale(pygame.image.load('image/Hero/Jump/jump-9.png').convert_alpha(),
-                                                    (31 * 1.2 * screen_obj.width_scale, 60 * 1.2 * screen_obj.height_scale)),
-            pygame.transform.scale(pygame.image.load('image/Hero/Jump/jump-10.png').convert_alpha(),
-                                                    (31 * 1.2 * screen_obj.width_scale, 60 * 1.2 * screen_obj.height_scale)),
-            pygame.transform.scale(pygame.image.load('image/Hero/Jump/jump-11.png').convert_alpha(),
-                                                    (31 * 1.2 * screen_obj.width_scale, 60 * 1.2 * screen_obj.height_scale)),
-            pygame.transform.scale(pygame.image.load('image/Hero/Jump/jump-12.png').convert_alpha(),
-                                                    (31 * 1.2 * screen_obj.width_scale, 60 * 1.2 * screen_obj.height_scale)),
-            pygame.transform.scale(pygame.image.load('image/Hero/Jump/jump-13.png').convert_alpha(),
-                                                    (31 * 1.2 * screen_obj.width_scale, 60 * 1.2 * screen_obj.height_scale)),
-            pygame.transform.scale(pygame.image.load('image/Hero/Jump/jump-14.png').convert_alpha(),
-                                                    (31 * 1.2 * screen_obj.width_scale, 60 * 1.2 * screen_obj.height_scale)),
-        )
+        stay = []
+        for i in range(1, 9):
+            stay.append(f"image/Heros/Fire-knight/01_idle/idle_{i}.png")
 
-        self.attack_images = (
-            pygame.transform.scale(pygame.image.load('image/Hero/Attack/attack-A1.png').convert_alpha(),
-                                                    (38 * 1.2 * screen_obj.width_scale, 60 * 1.2 * screen_obj.height_scale)),
-            pygame.transform.scale(pygame.image.load('image/Hero/Attack/attack-A2.png').convert_alpha(),
-                                                    (38 * 1.2 * screen_obj.width_scale, 60 * 1.2 * screen_obj.height_scale)),
-            pygame.transform.scale(pygame.image.load('image/Hero/Attack/attack-A3.png').convert_alpha(),
-                                                    (38 * 1.2 * screen_obj.width_scale, 60 * 1.2 * screen_obj.height_scale)),
-            pygame.transform.scale(pygame.image.load('image/Hero/Attack/attack-A4.png').convert_alpha(),
-                                                    (38 * 1.2 * screen_obj.width_scale, 60 * 1.2 * screen_obj.height_scale)),
-            pygame.transform.scale(pygame.image.load('image/Hero/Attack/attack-A5.png').convert_alpha(),
-                                                    (38 * 1.2 * screen_obj.width_scale, 60 * 1.2 * screen_obj.height_scale)),
-            pygame.transform.scale(pygame.image.load('image/Hero/Attack/attack-A6.png').convert_alpha(),
-                                                    (38 * 1.2 * screen_obj.width_scale, 60 * 1.2 * screen_obj.height_scale)),
-        )
+        self.stay_images = ImageCache.get_images(stay, (1.5, 1.5))
+
+        jump = []
+        for i in range(1, 21):
+            jump.append(f"image/Heros/Fire-knight/03_jump/jump_{i}.png")
+
+        self.jump = ImageCache.get_images(jump, (1.5, 1.5))
+
+        attack_1 = []
+        for i in range(1, 12):
+            attack_1.append(f"image/Heros/Fire-knight/05_1_atk/1_atk_{i}.png")
+
+        self.attack_1 = ImageCache.get_images(attack_1, (1.5, 1.5))
+
+
 
         self.rect = self.run[0].get_rect(topleft=(self.x, self.y))
         self.image = self.run[self.run_animation_count]
@@ -152,8 +94,9 @@ class Player(pygame.sprite.Sprite):
 
     def check_animation_count(self):
         self.delay_animation += 1
+        self.delay_jump_animation += 1
 
-        if self.delay_animation == 2:
+        if self.delay_animation == 3:
             self.delay_animation = 0
 
             if self.run_animation_count == len(self.run) - 1:
@@ -166,16 +109,25 @@ class Player(pygame.sprite.Sprite):
             else:
                 self.stay_animation_count += 1
 
-            if self.jump_animation_count == len(self.jump) - 1:
-                self.jump_animation_count = 0
-            elif self.is_jump:
-                self.jump_animation_count += 1
-
-            if self.attack_animation_count == len(self.attack_images) - 1:
+            if self.attack_animation_count == len(self.attack_1) - 1:
                 self.attack_animation_count = 0
                 self.is_attacking = False
             elif self.is_attacking:
                 self.attack_animation_count += 1
+                if self.attack_animation_count == 3:
+                    self.y -= 60
+                elif self.attack_animation_count == 7:
+                    self.y += 60
+
+        if self.delay_jump_animation == 4:
+            self.delay_jump_animation = 0
+
+            if self.jump_animation_count == len(self.jump) - 1:
+                self.jump_animation_count = 0
+            elif self.is_jump:
+                self.jump_animation_count += 1
+            else:
+                self.jump_animation_count = 0
 
     # def sliding_window(self):
     #
@@ -237,14 +189,17 @@ class Player(pygame.sprite.Sprite):
             if collided_enemy:
                 self.take_damage(collided_enemy.damage, collided_enemy)
 
-    def attack(self, enemies):
+    def attack(self, enemies, waves):
         self.last_attack_time = pygame.time.get_ticks()
 
         if self.attack_direction == 1:
+            # wave = Shockwave(self.rect.centerx, self.rect.centery, 5, 0)
             attack_rect = pygame.Rect(self.rect.x, self.rect.y, self.rect.width + self.attack_range, self.rect.height)
         else:
+            # wave = Shockwave(self.rect.centerx, self.rect.centery, -5, 0, -1)
             attack_rect = pygame.Rect(self.rect.x, self.rect.y, -self.attack_range, self.rect.height)
 
+        # waves.add(wave)
         for group in enemies:
             for enemy in group:
                 if attack_rect.colliderect(enemy.rect):
@@ -255,11 +210,11 @@ class Player(pygame.sprite.Sprite):
 
         if self.is_attacking:
             if self.attack_direction == 1:
-                image = self.attack_images[self.attack_animation_count]
+                image = self.attack_1[self.attack_animation_count]
                 self.blink(image)
                 screen.blit(image, (self.x, self.y))
             else:
-                image = pygame.transform.flip(self.attack_images[self.attack_animation_count], True, False)
+                image = pygame.transform.flip(self.attack_1[self.attack_animation_count], True, False)
                 self.blink(image)
                 screen.blit(image, (self.x, self.y))
         elif not self.is_jump:
@@ -272,11 +227,15 @@ class Player(pygame.sprite.Sprite):
                 self.blink(image)
                 screen.blit(image, (self.x, self.y))
             else:
-                image = self.stay_images[self.stay_animation_count]
+                if self.attack_direction == 1:
+                    image = self.stay_images[self.stay_animation_count]
+                else:
+                    image = pygame.transform.flip(self.stay_images[self.stay_animation_count], True, False)
+
                 self.blink(image)
                 screen.blit(image, (self.x, self.y))
         else:
-            if (keys[pygame.K_LEFT] or keys[pygame.K_a]) and self.x > screen_obj.width * 0.03:
+            if self.attack_direction == -1:
                 image = pygame.transform.flip(self.jump[self.jump_animation_count], True, False)
                 self.blink(image)
                 screen.blit(image, (self.x, self.y))
@@ -301,7 +260,7 @@ class Player(pygame.sprite.Sprite):
 
         CommonEnemy.move_group(direction, enemies)
 
-    def move(self, keys, main_location, partial_backgrounds, platforms, enemies, npcs):
+    def move(self, keys, main_location, partial_backgrounds, platforms, enemies, npcs, waves):
         self.correction()
         # self.sliding_window()
         if (keys[pygame.K_LEFT] or keys[pygame.K_a]) and self.can_left:
@@ -323,7 +282,7 @@ class Player(pygame.sprite.Sprite):
 
         if keys[pygame.K_f] and not self.is_attacking and pygame.time.get_ticks() - self.last_attack_time > self.attack_cooldown:
             self.is_attacking = True
-            self.attack(enemies)
+            self.attack(enemies, waves)
 
         self.rect = pygame.Rect(self.x, self.y, self.rect.width, self.rect.height)
 
@@ -362,10 +321,10 @@ class Player(pygame.sprite.Sprite):
                         self.x = platform.rect.right
                         self.can_left = False
 
-    def update(self, screen, main_location, partial_backgrounds, platforms, enemies, npcs):
+    def update(self, screen, main_location, partial_backgrounds, platforms, enemies, npcs, waves):
         keys = pygame.key.get_pressed()
 
-        self.move(keys, main_location, partial_backgrounds, platforms, enemies, npcs)
+        self.move(keys, main_location, partial_backgrounds, platforms, enemies, npcs, waves)
         self.check_collisions(platforms)
         self.draw(screen, keys)
         self.check_damage(enemies)

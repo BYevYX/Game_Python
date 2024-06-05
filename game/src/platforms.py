@@ -57,7 +57,7 @@ class MovingPlatform(Platform):
             if self.rect.top > max(self.to, self.up) or self.rect.bottom < min(self.up, self.to):
                 self.slide_velocity *= -1
 
-    def move_platforms(self, direction):
+    def move_platform(self, direction):
         super().move_platform(direction)
 
         if self.slide_direction == 'x':

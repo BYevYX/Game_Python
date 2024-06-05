@@ -43,7 +43,7 @@ class Enemy(pygame.sprite.Sprite):
 
         self.update_animation()
 
-    def take_damage(self, damage):
+    def take_damage(self, damage=constants.PLAYER_ATTACK_DAMAGE):
         self.current_hp -= damage
 
     def death(self, group, screen):
