@@ -34,3 +34,6 @@ class Shockwave(pygame.sprite.Sprite):
                         enemy.take_damage()
                         self.damage_dealt = True  # Устанавливаем флаг, что урон нанесен
                         break
+
+
+# wave = Shockwave(self.rect.centerx, self.rect.centery, 5, 0)

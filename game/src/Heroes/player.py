@@ -3,9 +3,6 @@ import time
 from game.src.screen import screen_obj
 import game.src.constants as constants
 from game.src.enemies.enemies_base import CommonEnemy
-from game.src.cache import ImageCache
-# from game.src.shokwave import Shockwave
-
 
 
 class Player(pygame.sprite.Sprite):
@@ -23,17 +20,22 @@ class Player(pygame.sprite.Sprite):
         self.stay_animation_count = 0
         self.jump_animation_count = 0
         self.attack_animation_count = 0
-        self.delay_animation = 0
-        self.delay_jump_animation = 0
+
+        self.const_delay_animation = 0
+        self.const_delay_jump_animation = 0
+        self.delay_animation = self.const_delay_animation
+        self.delay_jump_animation = self.const_delay_jump_animation
+
 
         self.is_attacking = False
         self.attack_cooldown = constants.PLAYER_ATTACK_COOLDOWN
         self.last_attack_time = 0
         self.attack_range = constants.PLAYER_ATTACK_RANGE * screen_obj.width_scale
         self.attack_damage = constants.PLAYER_ATTACK_DAMAGE
+        self.knockback = constants.PLAYER_MAIN_KNOCKBACK
 
         self.invincible = False
-        self.invincibility_duration = 2  # В секундах
+        self.invincibility_duration = constants.PLAYER_INVISIBILITY_DURATION  # В секундах
         self.last_hit_time = 0
 
         self.is_jump = False
@@ -57,34 +59,13 @@ class Player(pygame.sprite.Sprite):
                                    (12 * self.heart_scale, 11 * self.heart_scale))
         )
 
-        run = []
-        for i in range(1, 9):
-            run.append(f"image/Heros/Fire-knight/02_run/run_{i}.png")
+        self.run = []
+        self.stay_images = []
+        self.jump = []
+        self.attack_1 = []
 
-        self.run = ImageCache.get_images(run, (1.5, 1.5))
+        self.rect = pygame.Rect(self.x, self.y, 10, 10)
 
-        stay = []
-        for i in range(1, 9):
-            stay.append(f"image/Heros/Fire-knight/01_idle/idle_{i}.png")
-
-        self.stay_images = ImageCache.get_images(stay, (1.5, 1.5))
-
-        jump = []
-        for i in range(1, 21):
-            jump.append(f"image/Heros/Fire-knight/03_jump/jump_{i}.png")
-
-        self.jump = ImageCache.get_images(jump, (1.5, 1.5))
-
-        attack_1 = []
-        for i in range(1, 12):
-            attack_1.append(f"image/Heros/Fire-knight/05_1_atk/1_atk_{i}.png")
-
-        self.attack_1 = ImageCache.get_images(attack_1, (1.5, 1.5))
-
-
-
-        self.rect = self.run[0].get_rect(topleft=(self.x, self.y))
-        self.image = self.run[self.run_animation_count]
 
     def animate_hp(self, screen):
         for i in range(self.hp):
@@ -93,11 +74,11 @@ class Player(pygame.sprite.Sprite):
                 screen.blit(self.hp_image[1], (2 * self.heart_scale + 40 + i * 50, 30 + 2 * self.heart_scale))
 
     def check_animation_count(self):
-        self.delay_animation += 1
-        self.delay_jump_animation += 1
+        self.delay_animation -= 1
+        self.delay_jump_animation -= 1
 
-        if self.delay_animation == 3:
-            self.delay_animation = 0
+        if self.delay_animation == 0:
+            self.delay_animation = self.const_delay_animation
 
             if self.run_animation_count == len(self.run) - 1:
                 self.run_animation_count = 0
@@ -114,13 +95,9 @@ class Player(pygame.sprite.Sprite):
                 self.is_attacking = False
             elif self.is_attacking:
                 self.attack_animation_count += 1
-                if self.attack_animation_count == 3:
-                    self.y -= 60
-                elif self.attack_animation_count == 7:
-                    self.y += 60
 
-        if self.delay_jump_animation == 4:
-            self.delay_jump_animation = 0
+        if self.delay_jump_animation == 0:
+            self.delay_jump_animation = self.const_delay_jump_animation
 
             if self.jump_animation_count == len(self.jump) - 1:
                 self.jump_animation_count = 0
@@ -128,13 +105,6 @@ class Player(pygame.sprite.Sprite):
                 self.jump_animation_count += 1
             else:
                 self.jump_animation_count = 0
-
-    # def sliding_window(self):
-    #
-    #     if self.speed < 5 and screen_obj.width // 2 - 115 <= self.x <= screen_obj.width // 2 + 120:
-    #         self.speed += 1
-    #     elif self.speed > 0 and (self.x <= screen_obj.width // 2 - 100 or self.x >= screen_obj.width // 2 + 100):
-    #         self.speed -= 1
 
     def correction(self):
         if not self.can_right and not self.can_left:
@@ -156,16 +126,15 @@ class Player(pygame.sprite.Sprite):
             self.invincible = True
             self.last_hit_time = current_time
 
-            knockback_distance = constants.PLAYER_MAIN_KNOCKBACK
             if self.rect.left <= enemy.rect.left:
-                self.x -= knockback_distance
+                self.x -= self.knockback
             elif self.rect.right >= enemy.rect.right:
-                self.x += knockback_distance
+                self.x += self.knockback
 
             if self.rect.bottom <= enemy.rect.bottom:
-                self.y -= knockback_distance
+                self.y -= self.knockback
             elif self.rect.top >= enemy.rect.top:
-                self.y += knockback_distance
+                self.y += self.knockback
 
     def check_invincibility(self):
         current_time = time.time()
@@ -189,17 +158,15 @@ class Player(pygame.sprite.Sprite):
             if collided_enemy:
                 self.take_damage(collided_enemy.damage, collided_enemy)
 
-    def attack(self, enemies, waves):
+    def attack(self, enemies):
         self.last_attack_time = pygame.time.get_ticks()
 
         if self.attack_direction == 1:
-            # wave = Shockwave(self.rect.centerx, self.rect.centery, 5, 0)
+
             attack_rect = pygame.Rect(self.rect.x, self.rect.y, self.rect.width + self.attack_range, self.rect.height)
         else:
-            # wave = Shockwave(self.rect.centerx, self.rect.centery, -5, 0, -1)
             attack_rect = pygame.Rect(self.rect.x, self.rect.y, -self.attack_range, self.rect.height)
 
-        # waves.add(wave)
         for group in enemies:
             for enemy in group:
                 if attack_rect.colliderect(enemy.rect):
@@ -260,9 +227,8 @@ class Player(pygame.sprite.Sprite):
 
         CommonEnemy.move_group(direction, enemies)
 
-    def move(self, keys, main_location, partial_backgrounds, platforms, enemies, npcs, waves):
+    def move(self, keys, main_location, partial_backgrounds, platforms, enemies, npcs):
         self.correction()
-        # self.sliding_window()
         if (keys[pygame.K_LEFT] or keys[pygame.K_a]) and self.can_left:
             self.can_right = True
             self.attack_direction = -constants.PLAYER_ATTACK_DIRECTION
@@ -282,7 +248,7 @@ class Player(pygame.sprite.Sprite):
 
         if keys[pygame.K_f] and not self.is_attacking and pygame.time.get_ticks() - self.last_attack_time > self.attack_cooldown:
             self.is_attacking = True
-            self.attack(enemies, waves)
+            self.attack(enemies)
 
         self.rect = pygame.Rect(self.x, self.y, self.rect.width, self.rect.height)
 
@@ -321,10 +287,10 @@ class Player(pygame.sprite.Sprite):
                         self.x = platform.rect.right
                         self.can_left = False
 
-    def update(self, screen, main_location, partial_backgrounds, platforms, enemies, npcs, waves):
+    def update(self, screen, main_location, partial_backgrounds, platforms, enemies, npcs):
         keys = pygame.key.get_pressed()
 
-        self.move(keys, main_location, partial_backgrounds, platforms, enemies, npcs, waves)
+        self.move(keys, main_location, partial_backgrounds, platforms, enemies, npcs)
         self.check_collisions(platforms)
         self.draw(screen, keys)
         self.check_damage(enemies)
