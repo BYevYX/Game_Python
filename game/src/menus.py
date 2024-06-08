@@ -4,6 +4,8 @@ from game.src.button import Button
 from game.src.screen import screen_obj
 import game.src.constants as constants
 from game.src.game_start import GameOn
+from game.src.Heroes.standard_hero import StandardHero
+from game.src.Heroes.fire_knight import FireKnight
 
 
 class Menu:
@@ -14,6 +16,9 @@ class Menu:
         self.clock = pygame.time.Clock()
         self.cursor = pygame.image.load("image/UI/cursor/cursor.png").convert_alpha()
         self.is_restart = False
+
+        self.can_move_buttons = True
+        self.title = ""
 
     WIDTH = screen_obj.width
     HEIGHT = screen_obj.height
@@ -31,7 +36,9 @@ class Menu:
             if menu_obj.is_restart:
                 menu_obj.is_restart = False
                 menu_obj.fade(screen)
-                menu_obj.is_restart = GameOn().start(screen)
+                player = SelectorCharacter().choice(screen_obj.screen)
+                menu_obj.fade(screen)
+                menu_obj.is_restart = GameOn(player).start(screen)
 
             screen.blit(menu_obj.main_background, (0, 0))
 
@@ -46,13 +53,17 @@ class Menu:
                     pygame.quit()
                     sys.exit()
 
-                menu_obj.handle_events(event, screen, running)
+                result = menu_obj.handle_events(event, screen, running)
+
+                if result:
+                    return result
 
                 for btn in menu_obj.buttons:
                     btn.handle_event(event)
 
             for btn in menu_obj.buttons:
-                btn.set_pos((Menu.WIDTH - 252) / 2)
+                if menu_obj.can_move_buttons:
+                    btn.set_pos((Menu.WIDTH - 252) / 2)
                 btn.check_hover(pygame.mouse.get_pos())
                 btn.draw(screen)
 
@@ -124,7 +135,8 @@ class MainMenu(Menu):
 
             if event.button == self.start_button:
                 self.fade(screen)
-                self.is_restart = GameOn().start(screen)
+                player = SelectorCharacter().choice(screen_obj.screen)
+                self.is_restart = GameOn(player).start(screen)
 
 
 
@@ -195,3 +207,54 @@ class VideoMenu(Menu):
 
             self.fade(screen)
             Menu.check_size()
+
+
+# {
+#     name: str
+#     returned: any
+# }
+
+class SelectorMenu(Menu):
+    def __init__(self, *args):
+        super().__init__()
+
+        self.can_move_buttons = False
+
+        self.title = "Chose character"
+
+        self.buttons = [Button(Menu.WIDTH / len(args) * i + 10 * screen_obj.width_scale, 200,
+                               Menu.WIDTH / len(args) - 20, 200,
+                               "image/UI/Buttons/PlayText/Default@3x.png", obj["name"],
+                               "image/UI/Buttons/PlayText/Hover@3x.png", "sound/knopka-schelchok.mp3")
+                        for (i, obj) in enumerate(args)]
+
+        self.returned = [obj["returned"] for obj in args]
+
+    def handle_events(self, event, screen, running):
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+            self.fade(screen)
+            running[0] = False
+
+        if event.type == pygame.USEREVENT:
+
+            for (i, btn) in enumerate(self.buttons):
+                if event.button == btn:
+                    self.fade(screen)
+                    return self.returned[i]
+
+    def choice(self, screen):
+        return self.draw_menu(self, screen)
+
+
+class SelectorCharacter(SelectorMenu):
+    def __init__(self):
+
+        x = screen_obj.width // 2
+        y = screen_obj.height - 120 * screen_obj.height_scale
+
+        super().__init__(
+            {"name": "Standard hero", "returned": StandardHero(x, y)},
+            {"name": "Fire Knight", "returned": FireKnight(x, y)},
+        )
+
+# можно переписать в клас не наследующий от меню но копирующий его и исполбзующий его статический метод

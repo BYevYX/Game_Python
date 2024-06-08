@@ -2,8 +2,6 @@ import pygame
 import sys
 from game.src.screen import screen_obj
 from game.src.button import Button
-from game.src.Heroes.standard_hero import StandardHero
-from game.src.Heroes.fire_knight import FireKnight
 from game.src.labels import Label
 from game.src.platforms import MovingPlatform
 import game.src.constants as constants
@@ -11,7 +9,7 @@ import game.src.creater as creater
 
 
 class GameOn:
-    def __init__(self):
+    def __init__(self, player):
         self.clock = pygame.time.Clock()
         self.main_location, self.partial_backgrounds = creater.create_location()
         self.platforms = creater.create_platforms()
@@ -20,7 +18,8 @@ class GameOn:
 
         creater.add_moving_platforms(self.platforms)
 
-        self.player = FireKnight(screen_obj.width // 2, screen_obj.height - 120 * screen_obj.height_scale)
+        # self.player = FireKnight(screen_obj.width // 2, screen_obj.height - 120 * screen_obj.height_scale)
+        self.player = player
         self.npcs = creater.create_npc()
 
         self.gameplay = True

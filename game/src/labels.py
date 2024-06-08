@@ -1,7 +1,7 @@
 import pygame
 
 
-class Label():
+class Label:
     def __init__(self, width, height, font_path, size, text, color=(0, 0, 0), background_path=None):
 
         self.font = pygame.font.Font(font_path, size)
