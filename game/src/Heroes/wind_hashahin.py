@@ -5,15 +5,14 @@ import game.src.constants as constants
 from game.src.screen import screen_obj
 
 
-
-class FireKnight(Player):
+class WindHashahin(Player):
     def __init__(self, x, y):
         super().__init__(x, y)
 
-        self.hp = constants.PLAYER_HP_COUNT
+        self.hp = constants.PLAYER_HP_COUNT - 1
 
         self.const_delay_animation = 3
-        self.const_delay_jump_animation = 4
+        self.const_delay_jump_animation = 10
         self.delay_animation = self.const_delay_animation
         self.delay_jump_animation = self.const_delay_jump_animation
 
@@ -25,29 +24,22 @@ class FireKnight(Player):
 
 
 
-        run = [f"image/Heros/Fire-knight/02_run/run_{i}.png" for i in range(1, 9)]
+        run = [f"image/Heros/Wind_hashahin/run/run_{i}.png" for i in range(1, 9)]
         self.run = ImageCache.get_images(run, (1.5, 1.5))
 
-        stay = [f"image/Heros/Fire-knight/01_idle/idle_{i}.png" for i in range(1, 9)]
+        stay = [f"image/Heros/Wind_hashahin/idle/idle_{i}.png" for i in range(1, 9)]
         self.stay_images = ImageCache.get_images(stay, (1.5, 1.5))
 
-        jump = [f"image/Heros/Fire-knight/03_jump/jump_{i}.png" for i in range(1, 21)]
+        jump = ([f"image/Heros/Wind_hashahin/jump/j_up_{i}.png" for i in range(1, 4)] +
+                [f"image/Heros/Wind_hashahin/jump/j_down_{i}.png" for i in range(1, 4)])
         self.jump = ImageCache.get_images(jump, (1.5, 1.5))
 
-        attack_1 = [f"image/Heros/Fire-knight/05_1_atk/1_atk_{i}.png" for i in range(1, 12)]
+        attack_1 = [f"image/Heros/Wind_hashahin/1_atk/1_atk_{i}.png" for i in range(1, 9)]
         self.attack_1 = ImageCache.get_images(attack_1, (1.5, 1.5))
 
         self.rect = self.run[0].get_rect(topleft=(self.x, self.y))
-        self.rect = pygame.Rect(self.x, self.y, self.rect.width - 5 * screen_obj.width_scale, self.rect.height)
+        self.rect = pygame.Rect(self.x, self.y, self.rect.width - 30 * screen_obj.width_scale, self.rect.height)
 
-    def check_animation_count(self):
-        super().check_animation_count()
-
-        if self.delay_animation == self.const_delay_animation:
-            if self.attack_animation_count == 3:
-                self.y -= 60
-            elif self.attack_animation_count == 7:
-                self.y += 60
 
 
 

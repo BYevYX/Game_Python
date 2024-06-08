@@ -296,3 +296,4 @@ class Player(pygame.sprite.Sprite):
         self.check_damage(enemies)
         self.check_invincibility()
 
+        # pygame.draw.rect(screen, (255, 255, 255), (self.rect.x, self.rect.y, self.rect.width, self.rect.height))

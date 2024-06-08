@@ -6,6 +6,7 @@ import game.src.constants as constants
 from game.src.game_start import GameOn
 from game.src.Heroes.standard_hero import StandardHero
 from game.src.Heroes.fire_knight import FireKnight
+from game.src.Heroes.wind_hashahin import WindHashahin
 
 
 class Menu:
@@ -255,6 +256,7 @@ class SelectorCharacter(SelectorMenu):
         super().__init__(
             {"name": "Standard hero", "returned": StandardHero(x, y)},
             {"name": "Fire Knight", "returned": FireKnight(x, y)},
+            {"name": "Wind Hashshin", "returned": WindHashahin(x, y)},
         )
 
 # можно переписать в клас не наследующий от меню но копирующий его и исполбзующий его статический метод
