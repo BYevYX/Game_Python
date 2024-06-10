@@ -9,6 +9,7 @@ class StandardHero(Player):
         super().__init__(x, y)
 
         self.hp = constants.PLAYER_HP_COUNT - 1
+        self.current_hp = self.hp
 
         self.const_delay_animation = 2
         self.const_delay_jump_animation = 5

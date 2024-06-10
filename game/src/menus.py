@@ -240,8 +240,11 @@ class SelectorMenu(Menu):
 
             for (i, btn) in enumerate(self.buttons):
                 if event.button == btn:
+                    x = screen_obj.width // 2
+                    y = screen_obj.height - 120 * screen_obj.height_scale
+
                     self.fade(screen)
-                    return self.returned[i]
+                    return self.returned[i](x, y)
 
     def choice(self, screen):
         return self.draw_menu(self, screen)
@@ -250,13 +253,10 @@ class SelectorMenu(Menu):
 class SelectorCharacter(SelectorMenu):
     def __init__(self):
 
-        x = screen_obj.width // 2
-        y = screen_obj.height - 120 * screen_obj.height_scale
-
         super().__init__(
-            {"name": "Standard hero", "returned": StandardHero(x, y)},
-            {"name": "Fire Knight", "returned": FireKnight(x, y)},
-            {"name": "Wind Hashshin", "returned": WindHashahin(x, y)},
+            {"name": "Standard hero", "returned": StandardHero},
+            {"name": "Fire Knight", "returned": FireKnight},
+            {"name": "Wind Hashshin", "returned": WindHashahin},
         )
 
 # можно переписать в клас не наследующий от меню но копирующий его и исполбзующий его статический метод

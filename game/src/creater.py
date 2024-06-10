@@ -3,6 +3,7 @@ from game.src.screen import screen_obj
 from game.src.enemies.sculwolf import Sculwolf
 from game.src.enemies.satyr import Satyr
 from game.src.enemies.snail import Snail
+from game.src.enemies.boss import Boss
 from game.src.locations import Locations, PartialBackground
 from game.src.platforms import Platform, MovingPlatform
 from game.src.npc import Blacksmith
@@ -33,8 +34,16 @@ def create_enemies():
                     #Snail(start + 200 * screen_obj.width_scale, screen_obj.height - 40,  * screen_obj.width_scale),
                     )
 
+
     return [sculwolfs_group, satyr_group, snail_group]
 
+
+def add_boss(enemies):
+    bosses = pygame.sprite.Group()
+    bosses.add(Boss(screen_obj.width + 400 * screen_obj.width_scale, screen_obj.height - 130 * screen_obj.height_scale)
+               )
+
+    enemies.append(bosses)
 
 
 def create_location():
@@ -174,6 +183,16 @@ def add_moving_platforms(platforms):
 
     return platforms
 
+
+def create_and_add_gates(platforms):
+    gates = pygame.sprite.Group()
+    gates.add(Platform(screen_obj.width // 2 - 100 * screen_obj.width_scale, 300, 40, 120, "gate"),
+              Platform(screen_obj.width // 2 - 100 * screen_obj.width_scale, 400, 40, 160, "gate"),
+              Platform(screen_obj.width * 1.6, 400, 30, 160, "gate"),
+              )
+
+    platforms.add(gates)
+    return gates
 
 def create_npc():
     npcs = pygame.sprite.Group()

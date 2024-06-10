@@ -65,6 +65,7 @@ class Player(pygame.sprite.Sprite):
         self.attack_1 = []
 
         self.rect = pygame.Rect(self.x, self.y, 10, 10)
+        self.rect_dx = 0
 
 
     def animate_hp(self, screen):
@@ -116,8 +117,10 @@ class Player(pygame.sprite.Sprite):
 
         if self.x > screen_obj.width // 2:
             self.x -= 1
+
         else:
             self.x += 1
+
 
     def take_damage(self, damage, enemy):
         current_time = time.time()
@@ -214,32 +217,34 @@ class Player(pygame.sprite.Sprite):
         self.check_animation_count()
 
     @staticmethod
-    def move_environment(direction, main_location, partial_backgrounds, platforms, enemies, npcs):
-        main_location.move_background(direction)
-        for platform in platforms:
+    def move_environment(direction, game):
+        game.main_location.move_background(direction)
+        for platform in game.platforms:
             platform.move_platform(direction)
 
-        for part_back in partial_backgrounds:
+        for part_back in game.partial_backgrounds:
             part_back.move_background(direction)
 
-        for npc in npcs:
+        for npc in game.npcs:
             npc.move_npc(direction)
 
-        CommonEnemy.move_group(direction, enemies)
+        CommonEnemy.move_group(direction, game.enemies)
 
-    def move(self, keys, main_location, partial_backgrounds, platforms, enemies, npcs):
+    def move(self, keys, game):
         self.correction()
         if (keys[pygame.K_LEFT] or keys[pygame.K_a]) and self.can_left:
             self.can_right = True
             self.attack_direction = -constants.PLAYER_ATTACK_DIRECTION
+            game.change_absolute_x(constants.VELOCITY)
 
-            Player.move_environment("left", main_location, partial_backgrounds, platforms, enemies, npcs)
+            Player.move_environment("left", game)
 
         elif (keys[pygame.K_RIGHT] or keys[pygame.K_d]) and self.can_right:
             self.can_left = True
             self.attack_direction = constants.PLAYER_ATTACK_DIRECTION
+            game.change_absolute_x(-constants.VELOCITY)
 
-            Player.move_environment("right", main_location, partial_backgrounds, platforms, enemies, npcs)
+            Player.move_environment("right", game)
 
         if (keys[pygame.K_SPACE] or keys[pygame.K_w] or keys[pygame.K_UP]) and not self.is_jump:
             self.is_jump = True
@@ -248,9 +253,9 @@ class Player(pygame.sprite.Sprite):
 
         if keys[pygame.K_f] and not self.is_attacking and pygame.time.get_ticks() - self.last_attack_time > self.attack_cooldown:
             self.is_attacking = True
-            self.attack(enemies)
+            self.attack(game.enemies)
 
-        self.rect = pygame.Rect(self.x, self.y, self.rect.width, self.rect.height)
+        self.rect = pygame.Rect(self.x + self.rect_dx, self.y, self.rect.width, self.rect.height)
 
         if not self.on_ground:
             if self.y_velocity < self.max_fall_speed:
@@ -287,13 +292,13 @@ class Player(pygame.sprite.Sprite):
                         self.x = platform.rect.right
                         self.can_left = False
 
-    def update(self, screen, main_location, partial_backgrounds, platforms, enemies, npcs):
+    def update(self, screen, game):
         keys = pygame.key.get_pressed()
 
-        self.move(keys, main_location, partial_backgrounds, platforms, enemies, npcs)
-        self.check_collisions(platforms)
+        self.move(keys, game)
+        self.check_collisions(game.platforms)
         self.draw(screen, keys)
-        self.check_damage(enemies)
+        self.check_damage(game.enemies)
         self.check_invincibility()
 
-        # pygame.draw.rect(screen, (255, 255, 255), (self.rect.x, self.rect.y, self.rect.width, self.rect.height))
+        #pygame.draw.rect(screen, (255, 255, 255), (self.rect.x, self.rect.y, self.rect.width, self.rect.height))

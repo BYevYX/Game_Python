@@ -25,6 +25,9 @@ class Enemy(pygame.sprite.Sprite):
         self.delay_animation = 0
         self.damage = 1
 
+        self.damage_texts = []
+        self.font = pygame.font.Font(None, 30)
+
     def update_animation(self):
         if self.delay_animation == self.const_delay_animation:
             self.delay_animation = 0
@@ -41,10 +44,15 @@ class Enemy(pygame.sprite.Sprite):
         else:
             screen.blit(self.images[self.animation_count], (self.rect.x, self.rect.y))
 
+        for dmg, time in self.damage_texts:
+            damage_surface = self.font.render(str(dmg), True, (139, 0, 0))
+            screen.blit(damage_surface, (self.rect.x, self.rect.y - 30 - 10))
+
         self.update_animation()
 
     def take_damage(self, damage=constants.PLAYER_ATTACK_DAMAGE):
         self.current_hp -= damage
+        self.damage_texts.append((damage, 30))
 
     def death(self, group, screen):
         if self.current_hp > 0:
@@ -63,7 +71,14 @@ class Enemy(pygame.sprite.Sprite):
             self.death_animation_count = 0
             group.remove(self)
 
-    def update(self, screen, group):
+    def change_direction(self, direction):
+        if direction != self.velocity_direction:
+            self.velocity *= -1
+            self.velocity_direction = direction
+
+    def update(self, screen, group, game=None):
+        self.damage_texts = [(dmg, time - 1) for dmg, time in self.damage_texts if time > 0]
+
         if not self.is_dead:
             self.draw(screen)
 
@@ -89,11 +104,6 @@ class CommonEnemy(Enemy):
         self.left = x
         self.right = x + range_place
 
-    def change_direction(self, direction):
-        if direction != self.velocity_direction:
-            self.velocity *= -1
-            self.velocity_direction = direction
-
     def move(self):
         if self.rect.x >= self.right:
             self.speed = -self.speed
@@ -102,6 +112,6 @@ class CommonEnemy(Enemy):
 
         self.rect.x += self.speed
 
-    def update(self, screen, group):
+    def update(self, screen, group, game=None):
         super().update(screen, group)
         self.move()

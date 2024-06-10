@@ -1,24 +1,26 @@
 import pygame
 import game.src.constants as constants
 from game.src.screen import screen_obj
+from game.src.cache import ImageCache
 # from random import randint
 
 
-
-
 class Platform(pygame.sprite.Sprite):
-    platform_images = {
-        "main_platform": pygame.image.load("image/locations/platforms/big platform.png").convert_alpha(),
-        "left_wall": pygame.image.load("image/locations/platforms/left_wall.png").convert_alpha(),
-        "right_wall": pygame.image.load("image/locations/platforms/right_wall.png").convert_alpha(),
-        "moving_platform": pygame.image.load("image/locations/platforms/moving_platform.png").convert_alpha(),
-        "mountain": pygame.image.load("image/locations/obstacles/big_mountain.png").convert_alpha(),
-    }
 
     def __init__(self, x, y, width, height, image_type="main_platform"):
         super().__init__()
 
-        self.image = pygame.transform.scale(Platform.platform_images[image_type], (width, height))
+        platform_images = {
+            "main_platform": "image/locations/platforms/big platform.png",
+            "left_wall": "image/locations/platforms/left_wall.png",
+            "right_wall": "image/locations/platforms/right_wall.png",
+            "moving_platform": "image/locations/platforms/moving_platform.png",
+            "mountain": "image/locations/obstacles/big_mountain.png",
+            "gate": "image/locations/obstacles/gate.png",
+        }
+
+        image = ImageCache.get_images([platform_images[image_type]])
+        self.image = pygame.transform.scale(image[0], (width, height))
 
         self.rect = self.image.get_rect()
         self.rect.x = x
@@ -26,7 +28,6 @@ class Platform(pygame.sprite.Sprite):
 
         self.velocity = constants.VELOCITY * screen_obj.width_scale
         self.direction = "right"
-
 
     def move_platform(self, direction):
         if direction != self.direction:

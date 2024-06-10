@@ -15,10 +15,10 @@ class GameOn:
         self.platforms = creater.create_platforms()
         self.enemies = creater.create_enemies()
         self.waves = pygame.sprite.Group()
+        self.gates = None
 
         creater.add_moving_platforms(self.platforms)
 
-        # self.player = FireKnight(screen_obj.width // 2, screen_obj.height - 120 * screen_obj.height_scale)
         self.player = player
         self.npcs = creater.create_npc()
 
@@ -27,6 +27,10 @@ class GameOn:
         self.running = True
 
         self.is_restart = False
+
+        self.absolute_x = 0
+        self.is_boss_defeated = False
+        self.is_boss_created = False
 
         self.lose_label = Label(screen_obj.width, screen_obj.height, None, 72, 'You Lose!',
                                 (193, 196, 199), "image/UI/Panel/Window/Medium.png")
@@ -86,7 +90,7 @@ class GameOn:
                 for btn in [self.menu_defeat_button, self.restart_button]:
                     btn.handle_event(event)
 
-    def draw_back_platforms(self, screen):
+    def draw_back_and_platforms(self, screen):
         self.main_location.draw_background(screen)
 
         for part_back in self.partial_backgrounds:
@@ -94,12 +98,15 @@ class GameOn:
 
         self.platforms.draw(screen)
 
+    def change_absolute_x(self, dx):
+        self.absolute_x += dx
+
     def start(self, screen):
         self.main_location.sound.play(-1)
 
         while self.running:
 
-            self.draw_back_platforms(screen)
+            self.draw_back_and_platforms(screen)
 
             for platform in self.platforms:
                 if isinstance(platform, MovingPlatform):
@@ -108,20 +115,19 @@ class GameOn:
             if self.gameplay and not self.pause:
 
                 for enemy_group in self.enemies:
-                    enemy_group.update(screen, enemy_group)
-
-                for wave in self.waves:
-                    wave.deal_damage(self.enemies)
+                    enemy_group.update(screen, enemy_group, self)
 
                 self.npcs.update(screen)
 
                 if self.player.current_hp <= 0:
                     self.gameplay = False
 
-                self.player.update(screen, self.main_location, self.partial_backgrounds, self.platforms, self.enemies, self.npcs)
+                self.player.update(screen, self)
 
-                # self.waves.update()
-                # self.waves.draw(screen)
+                if self.absolute_x >= screen_obj.width * 4.6 and not self.is_boss_created:
+                    creater.add_boss(self.enemies)
+                    self.is_boss_created = True
+                    self.gates = creater.create_and_add_gates(self.platforms)
 
             else:
                 self.main_location.sound.stop()
@@ -139,7 +145,6 @@ class GameOn:
                     btn.check_hover(pygame.mouse.get_pos())
 
                 self.lose_label.draw_cursor(screen)
-
 
             pygame.display.update()
 

@@ -10,6 +10,7 @@ class WindHashahin(Player):
         super().__init__(x, y)
 
         self.hp = constants.PLAYER_HP_COUNT - 1
+        self.current_hp = self.hp
 
         self.const_delay_animation = 3
         self.const_delay_jump_animation = 10
@@ -18,10 +19,7 @@ class WindHashahin(Player):
 
         self.attack_range = constants.PLAYER_ATTACK_RANGE * screen_obj.width_scale
         self.attack_damage = constants.PLAYER_ATTACK_DAMAGE
-        self.knockback = constants.PLAYER_MAIN_KNOCKBACK - 10
-
-
-
+        self.knockback = constants.PLAYER_MAIN_KNOCKBACK + 10
 
 
         run = [f"image/Heros/Wind_hashahin/run/run_{i}.png" for i in range(1, 9)]
