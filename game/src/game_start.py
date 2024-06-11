@@ -14,13 +14,13 @@ class GameOn:
         self.main_location, self.partial_backgrounds = creater.create_location()
         self.platforms = creater.create_platforms()
         self.enemies = creater.create_enemies()
-        self.waves = pygame.sprite.Group()
         self.gates = None
 
         creater.add_moving_platforms(self.platforms)
 
         self.player = player
         self.npcs = creater.create_npc()
+        self.bosses = None
 
         self.gameplay = True
         self.pause = False
@@ -125,7 +125,7 @@ class GameOn:
                 self.player.update(screen, self)
 
                 if self.absolute_x >= screen_obj.width * 4.6 and not self.is_boss_created:
-                    creater.add_boss(self.enemies)
+                    self.bosses = creater.add_boss(self.enemies)
                     self.is_boss_created = True
                     self.gates = creater.create_and_add_gates(self.platforms)
 

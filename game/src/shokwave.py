@@ -1,39 +1,60 @@
 import pygame
+from game.src.cache import ImageCache
+from game.src.screen import screen_obj
+import game.src.constants as constants
+
 
 
 class Shockwave(pygame.sprite.Sprite):
     def __init__(self, x, y, dx, dy, direction=1):
         super().__init__()
-        self.x = x
         self.image = pygame.Surface((40, 70), pygame.SRCALPHA)
         self.rect = self.image.get_rect(center=(x, y))
-        self.velocity = pygame.Vector2(dx, dy)
-        self.damage_dealt = False  # Флаг для проверки, нанесен ли урон
+        self.velocity = pygame.Vector2(direction * dx, dy)
+        self.damage_dealt = False
+        self.direction = direction
+        self.animation_count = 0
 
-        # Рисуем полумесяц желтого цвета
-        self.image.fill((0, 0, 0, 0))  # Очистка поверхности
+        image_paths = [f"image/enemys/fireball/1_{i}.png" for i in range(61)]
+        self.images = ImageCache.get_images(image_paths)
 
-        if direction == 1:
-            pygame.draw.arc(self.image, (255, 255, 0), self.image.get_rect(), -3.14/2, 3.14/2, 5)  # Полумесяц
-        elif direction == -1:
-            pygame.draw.arc(self.image, (255, 255, 0), self.image.get_rect(), 3.14/2, -3.14/2, 5)  # Полумесяц
+        self.main_velocity = constants.VELOCITY
+        self.main_direction = 'right'
 
-    def update(self):
+    def draw(self, screen):
+        if self.direction == -1:
+            screen.blit(pygame.transform.flip(self.images[self.animation_count], True, False),
+                        (self.rect.x, self.rect.y))
+        elif self.direction == 1:
+            screen.blit(self.images[self.animation_count], (self.rect.x, self.rect.y))
+
+
+        self.animation_count += 1
+        if self.animation_count == len(self.images):
+            self.animation_count = 0
+
+    def update(self, screen, sprites, player):
         self.rect.x += self.velocity.x
         self.rect.y += self.velocity.y
 
-        # Удаляем волну, если она выходит за пределы экрана
-        if self.rect.x > self.x + 50 or self.rect.x < self.x - 100:
+        self.draw(screen)
+
+        self.deal_damage_player(player)
+
+        if self.rect.x > screen_obj.width or self.rect.x < 0:
             self.kill()
+            sprites.remove(self)
 
-    def deal_damage(self, enemies):
+
+    def move_sprite(self, direction):
+        if direction != self.main_direction:
+            self.main_velocity *= -1
+            self.main_direction = direction
+
+        self.rect.x += self.main_velocity
+
+    def deal_damage_player(self, player):
         if not self.damage_dealt:
-            for enemy_group in enemies:
-                for enemy in enemy_group:
-                    if pygame.sprite.collide_rect(self, enemy):
-                        enemy.take_damage()
-                        self.damage_dealt = True  # Устанавливаем флаг, что урон нанесен
-                        break
-
-
-# wave = Shockwave(self.rect.centerx, self.rect.centery, 5, 0)
+            if pygame.sprite.collide_rect(self, player):
+                player.take_damage()
+                self.damage_dealt = True

@@ -7,6 +7,8 @@ from game.src.game_start import GameOn
 from game.src.Heroes.standard_hero import StandardHero
 from game.src.Heroes.fire_knight import FireKnight
 from game.src.Heroes.wind_hashahin import WindHashahin
+from game.src.Heroes.water_princess import WaterPrincess
+from game.src.Heroes.leaf_ranger import LeafRanger
 
 
 class Menu:
@@ -257,6 +259,9 @@ class SelectorCharacter(SelectorMenu):
             {"name": "Standard hero", "returned": StandardHero},
             {"name": "Fire Knight", "returned": FireKnight},
             {"name": "Wind Hashshin", "returned": WindHashahin},
+            {"name": "Water Princess", "returned": WaterPrincess},
+            {"name": "Leaf Ranger", "returned": LeafRanger},
+
         )
 
 # можно переписать в клас не наследующий от меню но копирующий его и исполбзующий его статический метод

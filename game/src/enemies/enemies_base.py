@@ -24,6 +24,7 @@ class Enemy(pygame.sprite.Sprite):
         self.const_delay_animation = 0
         self.delay_animation = 0
         self.damage = 1
+        self.attack_direction = 1
 
         self.damage_texts = []
         self.font = pygame.font.Font(None, 30)
@@ -39,9 +40,10 @@ class Enemy(pygame.sprite.Sprite):
             self.animation_count = 0
 
     def draw(self, screen):
-        if self.speed < 0:
+
+        if self.attack_direction == -1:
             screen.blit(pygame.transform.flip(self.images[self.animation_count], True, False), (self.rect.x, self.rect.y))
-        else:
+        elif self.attack_direction == 1:
             screen.blit(self.images[self.animation_count], (self.rect.x, self.rect.y))
 
         for dmg, time in self.damage_texts:
@@ -107,11 +109,14 @@ class CommonEnemy(Enemy):
     def move(self):
         if self.rect.x >= self.right:
             self.speed = -self.speed
+            self.attack_direction = -1
         elif self.rect.x <= self.left:
             self.speed = abs(self.speed)
+            self.attack_direction = 1
 
         self.rect.x += self.speed
 
     def update(self, screen, group, game=None):
         super().update(screen, group)
+
         self.move()

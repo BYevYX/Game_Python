@@ -40,10 +40,12 @@ def create_enemies():
 
 def add_boss(enemies):
     bosses = pygame.sprite.Group()
-    bosses.add(Boss(screen_obj.width + 400 * screen_obj.width_scale, screen_obj.height - 130 * screen_obj.height_scale)
+    bosses.add(Boss(screen_obj.width + 400 * screen_obj.width_scale, screen_obj.height - 150 * screen_obj.height_scale)
                )
 
     enemies.append(bosses)
+
+    return bosses
 
 
 def create_location():

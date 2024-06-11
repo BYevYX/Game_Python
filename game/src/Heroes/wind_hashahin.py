@@ -14,8 +14,6 @@ class WindHashahin(Player):
 
         self.const_delay_animation = 3
         self.const_delay_jump_animation = 10
-        self.delay_animation = self.const_delay_animation
-        self.delay_jump_animation = self.const_delay_jump_animation
 
         self.attack_range = constants.PLAYER_ATTACK_RANGE * screen_obj.width_scale
         self.attack_damage = constants.PLAYER_ATTACK_DAMAGE
