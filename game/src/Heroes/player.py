@@ -64,7 +64,6 @@ class Player(pygame.sprite.Sprite):
         )
 
         self.rect = pygame.Rect(self.x, self.y, 10, 10)
-        self.rect_dx = 0
 
 
     def animate_hp(self, screen):
@@ -175,6 +174,7 @@ class Player(pygame.sprite.Sprite):
                 if attack_rect.colliderect(enemy.rect):
                     enemy.take_damage(self.attack_damage)
 
+
     def draw(self, screen, keys, position=None):
         self.animate_hp(screen)
 
@@ -262,7 +262,7 @@ class Player(pygame.sprite.Sprite):
             self.is_attacking = True
             self.attack(game.enemies)
 
-        self.rect = pygame.Rect(self.x + self.rect_dx, self.y, self.rect.width, self.rect.height)
+        self.rect = pygame.Rect(self.x, self.y, self.rect.width, self.rect.height)
 
         if not self.on_ground:
             if self.y_velocity < self.max_fall_speed:
@@ -308,4 +308,4 @@ class Player(pygame.sprite.Sprite):
         self.check_damage(game.enemies)
         self.check_invincibility()
 
-        pygame.draw.rect(screen, (255, 255, 255), (self.rect.x, self.rect.y, self.rect.width, self.rect.height))
+        #pygame.draw.rect(screen, (255, 255, 255), (self.rect.x, self.rect.y, self.rect.width, self.rect.height))

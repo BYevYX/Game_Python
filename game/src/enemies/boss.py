@@ -91,7 +91,7 @@ class Boss(StalkingEnemy):
             return
 
         if self.current_stop_timer % (self.stop_timer - 10) == 0:
-            fireball = Shockwave(self.rect.centerx, self.rect.centery, 5, 0, self.attack_direction)
+            fireball = Shockwave(self.rect.centerx, self.rect.centery, 5, 0, self.attack_direction, 'fireball')
             self.fireballs.add(fireball)
 
     def move_sprites(self, direction):
@@ -136,7 +136,6 @@ class Boss(StalkingEnemy):
             super().draw(screen)
             return
 
-        print(self.distance)
         if self.distance > 250:
             self.idle(screen)
         else:
@@ -178,7 +177,7 @@ class Boss(StalkingEnemy):
             self.stalk_update(game.player)
 
         self.fireball_attack()
-        self.fireballs.update(screen, self.fireballs, game.player)
+        self.fireballs.update(screen, self.fireballs, game)
 
         self.current_stop_timer += 1
         if self.current_stop_timer == self.stop_timer:
@@ -193,6 +192,5 @@ class Boss(StalkingEnemy):
                     game.platforms.remove(gate)
 
                 game.gates.empty()
-
 
 

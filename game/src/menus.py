@@ -225,13 +225,23 @@ class SelectorMenu(Menu):
 
         self.title = "Chose character"
 
-        self.buttons = [Button(Menu.WIDTH / len(args) * i + 10 * screen_obj.width_scale, 200,
-                               Menu.WIDTH / len(args) - 20, 200,
-                               "image/UI/Buttons/PlayText/Default@3x.png", obj["name"],
-                               "image/UI/Buttons/PlayText/Hover@3x.png", "sound/knopka-schelchok.mp3")
-                        for (i, obj) in enumerate(args)]
+        self.buttons = []
+        self.returned = []
 
-        self.returned = [obj["returned"] for obj in args]
+        y = 150
+        for (i, obj) in enumerate(args):
+            if i != 0 and i % 3 == 0:
+                y += 230 * screen_obj.height_scale
+
+            x = Menu.WIDTH / 3 * (i % 3) + 10 * screen_obj.width_scale
+
+            width = Menu.WIDTH / 3 - 20 * screen_obj.width_scale
+            height = 200 * screen_obj.height_scale
+
+            self.buttons.append(Button(x, y, width, height, "image/UI/Buttons/PlayText/Default@3x.png", obj["name"],
+                                "image/UI/Buttons/PlayText/Hover@3x.png", "sound/knopka-schelchok.mp3"))
+
+            self.returned.append(obj["returned"])
 
     def handle_events(self, event, screen, running):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:

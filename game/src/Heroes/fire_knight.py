@@ -5,7 +5,6 @@ import game.src.constants as constants
 from game.src.screen import screen_obj
 
 
-
 class FireKnight(Player):
     def __init__(self, x, y):
         super().__init__(x, y)
@@ -20,8 +19,6 @@ class FireKnight(Player):
         self.attack_damage = constants.PLAYER_ATTACK_DAMAGE
         self.knockback = constants.PLAYER_MAIN_KNOCKBACK - 10
 
-        self.rect_dx = 50
-
         run = [f"image/Heros/Fire-knight/02_run/run_{i}.png" for i in range(1, 9)]
         self.run = ImageCache.get_images(run, (1.5, 1.5))
 
@@ -35,7 +32,7 @@ class FireKnight(Player):
         self.attack_1 = ImageCache.get_images(attack_1, (1.5, 1.5))
 
         self.rect = self.run[0].get_rect(topleft=(self.x, self.y))
-        self.rect = pygame.Rect(self.x + self.rect_dx, self.y, self.rect.width - 30 * screen_obj.width_scale, self.rect.height)
+        self.rect = pygame.Rect(self.x, self.y, self.rect.width, self.rect.height)
 
     def check_animation_count(self):
         super().check_animation_count()
@@ -45,7 +42,4 @@ class FireKnight(Player):
                 self.y -= 60
             elif self.attack_animation_count == 7:
                 self.y += 60
-
-        if self.attack_direction == -1 and self.rect_dx > 0 or self.attack_direction == 1 and self.rect_dx < 0:
-            self.rect_dx = -self.rect_dx + 30
 
