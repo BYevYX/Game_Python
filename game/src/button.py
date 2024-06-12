@@ -30,7 +30,7 @@ class Button:
         screen.blit(current_image, self.rect.topleft)
 
         if self.text:
-            font = pygame.font.Font(None, 36) # добавить шрифт
+            font = pygame.font.Font(None, 36)  # добавить шрифт
             text_surface = font.render(self.text, True, (255, 255, 255))
             text_rect = text_surface.get_rect(center=self.rect.center)
             screen.blit(text_surface, text_rect)

@@ -1,5 +1,7 @@
-import pygame
 import sys
+
+import pygame
+
 import game.src.constants as constants
 from game.src.screen import screen_obj
 
@@ -105,4 +107,3 @@ class Blacksmith(Npc):
                 print(f"Bought {item} for {price} coins")
             else:
                 print("Not enough coins")
-

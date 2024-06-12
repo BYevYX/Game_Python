@@ -1,7 +1,8 @@
 import pygame
+
+import game.src.constants as constants
 from game.src.Heroes.player import Player
 from game.src.cache import ImageCache
-import game.src.constants as constants
 from game.src.screen import screen_obj
 
 
@@ -19,7 +20,6 @@ class WindHashahin(Player):
         self.attack_damage = constants.PLAYER_ATTACK_DAMAGE
         self.knockback = constants.PLAYER_MAIN_KNOCKBACK + 10
 
-
         run = [f"image/Heros/Wind_hashahin/run/run_{i}.png" for i in range(1, 9)]
         self.run = ImageCache.get_images(run, (1.5, 1.5))
 
@@ -35,7 +35,3 @@ class WindHashahin(Player):
 
         self.rect = self.run[0].get_rect(topleft=(self.x, self.y))
         self.rect = pygame.Rect(self.x, self.y, self.rect.width - 30 * screen_obj.width_scale, self.rect.height)
-
-
-
-

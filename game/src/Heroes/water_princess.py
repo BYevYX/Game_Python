@@ -1,6 +1,6 @@
+import game.src.constants as constants
 from game.src.Heroes.super_player import SuperPlayer
 from game.src.cache import ImageCache
-import game.src.constants as constants
 from game.src.screen import screen_obj
 
 
@@ -36,7 +36,6 @@ class WaterPrincess(SuperPlayer):
         self.attack_range = constants.PLAYER_ATTACK_RANGE * 1.3 * screen_obj.width_scale
         self.attack_damage = constants.PLAYER_ATTACK_DAMAGE
         self.knockback = constants.PLAYER_MAIN_KNOCKBACK + 10
-
 
     def ability(self, game, *args):
         if self.current_hp < self.hp:

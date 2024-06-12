@@ -1,11 +1,13 @@
-import pygame
 import sys
-from game.src.screen import screen_obj
+
+import pygame
+
+import game.src.constants as constants
+import game.src.creater as creater
 from game.src.button import Button
 from game.src.labels import Label
 from game.src.platforms import MovingPlatform
-import game.src.constants as constants
-import game.src.creater as creater
+from game.src.screen import screen_obj
 
 
 class GameOn:

@@ -1,7 +1,8 @@
 import pygame
+
+import game.src.constants as constants
 from game.src.Heroes.player import Player
 from game.src.cache import ImageCache
-import game.src.constants as constants
 from game.src.screen import screen_obj
 
 
@@ -42,4 +43,3 @@ class FireKnight(Player):
                 self.y -= 60
             elif self.attack_animation_count == 7:
                 self.y += 60
-

@@ -31,5 +31,3 @@ class StandardHero(Player):
         self.attack_1 = ImageCache.get_images(attack_1, (1.2, 1.2))
 
         self.rect = self.run[0].get_rect(topleft=(self.x, self.y))
-
-

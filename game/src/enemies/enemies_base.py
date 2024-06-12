@@ -1,4 +1,5 @@
 import pygame
+
 import game.src.constants as constants
 from game.src.screen import screen_obj
 
@@ -42,7 +43,8 @@ class Enemy(pygame.sprite.Sprite):
     def draw(self, screen):
 
         if self.attack_direction == -1:
-            screen.blit(pygame.transform.flip(self.images[self.animation_count], True, False), (self.rect.x, self.rect.y))
+            screen.blit(pygame.transform.flip(self.images[self.animation_count], True, False),
+                        (self.rect.x, self.rect.y))
         elif self.attack_direction == 1:
             screen.blit(self.images[self.animation_count], (self.rect.x, self.rect.y))
 

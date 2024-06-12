@@ -1,6 +1,7 @@
 import pygame
-from game.src.enemies.enemies_base import CommonEnemy
+
 from game.src.cache import ImageCache
+from game.src.enemies.enemies_base import CommonEnemy
 from game.src.screen import screen_obj
 
 
@@ -51,8 +52,9 @@ class Snail(CommonEnemy):
 
         else:
             if self.speed < 0:
-                screen.blit(pygame.transform.flip(self.sniff[self.sniff_animation_count % len(self.sniff)], True, False),
-                            (self.rect.x, self.rect.y))
+                screen.blit(
+                    pygame.transform.flip(self.sniff[self.sniff_animation_count % len(self.sniff)], True, False),
+                    (self.rect.x, self.rect.y))
             else:
                 screen.blit(self.sniff[self.sniff_animation_count % len(self.sniff)], (self.rect.x, self.rect.y))
 

@@ -1,8 +1,8 @@
 import pygame
+
+import game.src.constants as constants
 from game.src.cache import ImageCache
 from game.src.screen import screen_obj
-import game.src.constants as constants
-
 
 
 class Shockwave(pygame.sprite.Sprite):
@@ -41,7 +41,6 @@ class Shockwave(pygame.sprite.Sprite):
         elif self.direction == 1:
             screen.blit(self.images[self.animation_count], self.position)
 
-
         self.animation_count += 1
         if self.animation_count == len(self.images):
             self.animation_count = 0
@@ -53,20 +52,17 @@ class Shockwave(pygame.sprite.Sprite):
         self.position[0] += self.velocity.x
         self.position[1] += self.velocity.y
 
-
         self.draw(screen)
         if damage_to == "player":
             self.deal_damage_player(game.player)
         else:
             self.deal_damage_enemy(game.enemies)
 
-
         if self.rect.x > screen_obj.width or self.rect.x < 0:
             self.kill()
             sprites.remove(self)
 
         pygame.draw.rect(screen, (255, 255, 255), (self.rect.x, self.rect.y, self.rect.width, self.rect.height))
-
 
     def move_sprite(self, direction):
         if direction != self.main_direction:

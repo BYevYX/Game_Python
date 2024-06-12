@@ -1,8 +1,8 @@
 import pygame
+
+import game.src.constants as constants
 from game.src.Heroes.player import Player
 from game.src.screen import screen_obj
-import game.src.constants as constants
-
 
 
 class SuperPlayer(Player):
@@ -37,8 +37,6 @@ class SuperPlayer(Player):
         self.ability_animation_count = 0
         self.ulta_animation_count = 0
 
-
-
     def draw(self, screen, keys, position=None):
 
         if not self.use_ability and not self.use_ulta:
@@ -72,7 +70,6 @@ class SuperPlayer(Player):
 
         self.check_animation_count()
 
-
     def check_animation_count(self):
         super().check_animation_count()
 
@@ -83,7 +80,6 @@ class SuperPlayer(Player):
             elif self.use_ulta:
                 self.ulta_animation_count += 1
 
-
         if self.ulta_animation_count >= len(self.ulta_images):
             self.ulta_animation_count = 0
             self.use_ulta = False
@@ -91,8 +87,6 @@ class SuperPlayer(Player):
         elif self.ability_animation_count >= len(self.ability_images):
             self.ability_animation_count = 0
             self.use_ability = False
-
-
 
     def ability(self, game, *args):
         self.use_ability = False
@@ -114,10 +108,12 @@ class SuperPlayer(Player):
     def move(self, keys, game):
         super().move(keys, game)
 
-        if keys[pygame.K_r] and (not self.is_jump or self.can_use_ability_flying) and pygame.time.get_ticks() - self.last_ability_time > self.ability_cooldown:
+        if keys[pygame.K_r] and (
+                not self.is_jump or self.can_use_ability_flying) and pygame.time.get_ticks() - self.last_ability_time > self.ability_cooldown:
             self.use_ability = True
             self.ability(game)
 
-        if keys[pygame.K_q] and not self.is_attacking and pygame.time.get_ticks() - self.last_ulta_time > self.ulta_cooldown:
+        if keys[
+            pygame.K_q] and not self.is_attacking and pygame.time.get_ticks() - self.last_ulta_time > self.ulta_cooldown:
             self.use_ulta = True
             self.ulta(game.enemies)

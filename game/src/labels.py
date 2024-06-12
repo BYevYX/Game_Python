@@ -12,7 +12,7 @@ class Label:
         if background_path:
             self.background = pygame.image.load(background_path).convert_alpha()
             self.background_rect = self.text_surface.get_rect(topleft=((width - self.background.get_width()) / 2,
-                                                                      (height - self.background.get_height()) / 2))
+                                                                       (height - self.background.get_height()) / 2))
             self.rect = self.text_surface.get_rect(center=(width / 2, height / 2 - self.background.get_height() / 4))
         else:
             self.rect = self.text_surface.get_rect(center=(width / 2, height / 2 - 100))
@@ -25,7 +25,3 @@ class Label:
 
     def draw_cursor(self, screen):
         screen.blit(self.cursor, pygame.mouse.get_pos())
-
-
-
-

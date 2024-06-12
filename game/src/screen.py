@@ -13,8 +13,8 @@ class Screen:
         self.width = width
         self.height = height
         if width != 960 and height != 600:
-            self.width_scale = width / 960# * 0.9
-            self.height_scale = height / 600# * 0.9
+            self.width_scale = width / 960  # * 0.9
+            self.height_scale = height / 600  # * 0.9
         else:
             self.width_scale = 1
             self.height_scale = 1

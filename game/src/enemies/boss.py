@@ -1,8 +1,9 @@
 import pygame
-from game.src.enemies.enemies_base import Enemy
+
 import game.src.constants as constants
-from game.src.screen import screen_obj
 from game.src.cache import ImageCache
+from game.src.enemies.enemies_base import Enemy
+from game.src.screen import screen_obj
 from game.src.shokwave import Shockwave
 
 
@@ -11,7 +12,6 @@ class StalkingEnemy(Enemy):
         super().__init__(x, y)
         self.can_fly = False
         self.distance = 0
-
 
     def stalk_update(self, player):
         # Вычисляем вектор направления к игроку
@@ -36,7 +36,8 @@ class StalkingEnemy(Enemy):
 
 class Boss(StalkingEnemy):
 
-    def __init__(self, x, y, image_paths_idle=None, image_paths_run=None, image_paths_attack=None, image_paths_death=None, image_paths_hit=None):
+    def __init__(self, x, y, image_paths_idle=None, image_paths_run=None, image_paths_attack=None,
+                 image_paths_death=None, image_paths_hit=None):
         if not image_paths_idle:
             image_paths_idle = [f"image/enemys/boss/idle/Idle_{i}.png" for i in range(1, 9)]
 
@@ -56,7 +57,6 @@ class Boss(StalkingEnemy):
         self.images_idle = ImageCache.get_images(image_paths_idle, (1.8, 1.8))
         self.images_attack = ImageCache.get_images(image_paths_attack, (1.8, 1.8))
         self.death_images = ImageCache.get_images(image_paths_death, (1.8, 1.8))
-
 
         super().__init__(x, y)
         self.images_hit = ImageCache.get_images(image_paths_hit, (1.8, 1.8))
@@ -126,7 +126,6 @@ class Boss(StalkingEnemy):
         elif self.attack_direction == 1:
             screen.blit(self.images_idle[self.idle_animation_count], (self.rect.x, self.rect.y))
 
-
     def draw(self, screen):
         if self.is_hit:
             self.draw_hit(screen)
@@ -192,5 +191,3 @@ class Boss(StalkingEnemy):
                     game.platforms.remove(gate)
 
                 game.gates.empty()
-
-

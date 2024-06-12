@@ -1,7 +1,10 @@
 import pygame
+
 import game.src.constants as constants
-from game.src.screen import screen_obj
 from game.src.cache import ImageCache
+from game.src.screen import screen_obj
+
+
 # from random import randint
 
 
@@ -37,7 +40,6 @@ class Platform(pygame.sprite.Sprite):
         self.rect.x += self.velocity
 
 
-
 class MovingPlatform(Platform):
     def __init__(self, x, y, width, height, up, to, slide_direction='x', image_type="moving_platform"):
         super().__init__(x, y, width, height, image_type)
@@ -65,7 +67,6 @@ class MovingPlatform(Platform):
             self.up += self.velocity
             self.to += self.velocity
 
-
     # @staticmethod
     # def grouper_random(levels, group=None):
     #     platforms = pygame.sprite.Group()
@@ -81,6 +82,3 @@ class MovingPlatform(Platform):
     #
     #
     #     return platforms
-
-
-

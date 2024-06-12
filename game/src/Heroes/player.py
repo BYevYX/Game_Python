@@ -1,8 +1,10 @@
-import pygame
 import time
-from game.src.screen import screen_obj
+
+import pygame
+
 import game.src.constants as constants
 from game.src.enemies.enemies_base import CommonEnemy
+from game.src.screen import screen_obj
 
 
 class Player(pygame.sprite.Sprite):
@@ -29,7 +31,6 @@ class Player(pygame.sprite.Sprite):
         self.const_delay_jump_animation = 0
         self.delay_animation = self.const_delay_animation
         self.delay_jump_animation = self.const_delay_jump_animation
-
 
         self.is_attacking = False
         self.attack_cooldown = constants.PLAYER_ATTACK_COOLDOWN
@@ -64,7 +65,6 @@ class Player(pygame.sprite.Sprite):
         )
 
         self.rect = pygame.Rect(self.x, self.y, 10, 10)
-
 
     def animate_hp(self, screen):
         for i in range(self.hp):
@@ -119,7 +119,6 @@ class Player(pygame.sprite.Sprite):
         else:
             self.x += 1
 
-
     def take_damage(self, damage=1, enemy=None):
         current_time = time.time()
         if not self.invincible:
@@ -150,9 +149,9 @@ class Player(pygame.sprite.Sprite):
             if int(current_time * 10) % 2 == 0:
                 image.set_alpha(255)  # Полностью видимый
             else:
-                image.set_alpha(0)    # Полностью прозрачный
+                image.set_alpha(0)  # Полностью прозрачный
         else:
-            image.set_alpha(255)      # Полностью видимый в обычном состоянии
+            image.set_alpha(255)  # Полностью видимый в обычном состоянии
 
     def check_damage(self, enemies):
         for group_enemies in enemies:
@@ -173,7 +172,6 @@ class Player(pygame.sprite.Sprite):
             for enemy in group:
                 if attack_rect.colliderect(enemy.rect):
                     enemy.take_damage(self.attack_damage)
-
 
     def draw(self, screen, keys, position=None):
         self.animate_hp(screen)
@@ -258,7 +256,8 @@ class Player(pygame.sprite.Sprite):
             self.on_ground = False
             self.y_velocity = -self.jump_height
 
-        if keys[pygame.K_f] and not self.is_attacking and pygame.time.get_ticks() - self.last_attack_time > self.attack_cooldown:
+        if keys[
+            pygame.K_f] and not self.is_attacking and pygame.time.get_ticks() - self.last_attack_time > self.attack_cooldown:
             self.is_attacking = True
             self.attack(game.enemies)
 
@@ -308,4 +307,4 @@ class Player(pygame.sprite.Sprite):
         self.check_damage(game.enemies)
         self.check_invincibility()
 
-        #pygame.draw.rect(screen, (255, 255, 255), (self.rect.x, self.rect.y, self.rect.width, self.rect.height))
+        # pygame.draw.rect(screen, (255, 255, 255), (self.rect.x, self.rect.y, self.rect.width, self.rect.height))

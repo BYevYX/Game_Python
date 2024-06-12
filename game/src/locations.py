@@ -1,8 +1,8 @@
 import pygame
-from game.src.screen import screen_obj
+
 import game.src.constants as constants
 from game.src.cache import ImageCache
-
+from game.src.screen import screen_obj
 
 pygame.mixer.init()
 
@@ -11,7 +11,8 @@ class Locations:
 
     def __init__(self, background_paths, sound_path, scale):
 
-        self.backgrounds = [[pygame.transform.scale(pygame.image.load(background_path).convert_alpha(), scale), 0] for background_path in background_paths]
+        self.backgrounds = [[pygame.transform.scale(pygame.image.load(background_path).convert_alpha(), scale), 0] for
+                            background_path in background_paths]
 
         self.background_speed = constants.BACKGROUND_SPEED * screen_obj.width_scale
 
@@ -22,8 +23,6 @@ class Locations:
             screen.blit(background[0], (background[1], 0))
             screen.blit(background[0], (background[1] + screen_obj.width, 0))
             screen.blit(background[0], (background[1] - screen_obj.width, 0))
-
-
 
     def move_background(self, direction):
         if direction == 'right':
@@ -69,13 +68,3 @@ class PartialBackground:
             self.x += -self.background_speed
         elif direction == 'left':
             self.x += self.background_speed
-
-
-
-
-
-
-
-
-
-

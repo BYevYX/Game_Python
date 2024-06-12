@@ -1,14 +1,16 @@
-import pygame
 import sys
-from game.src.button import Button
-from game.src.screen import screen_obj
+
+import pygame
+
 import game.src.constants as constants
-from game.src.game_start import GameOn
-from game.src.Heroes.standard_hero import StandardHero
 from game.src.Heroes.fire_knight import FireKnight
-from game.src.Heroes.wind_hashahin import WindHashahin
-from game.src.Heroes.water_princess import WaterPrincess
 from game.src.Heroes.leaf_ranger import LeafRanger
+from game.src.Heroes.standard_hero import StandardHero
+from game.src.Heroes.water_princess import WaterPrincess
+from game.src.Heroes.wind_hashahin import WindHashahin
+from game.src.button import Button
+from game.src.game_start import GameOn
+from game.src.screen import screen_obj
 
 
 class Menu:
@@ -25,7 +27,8 @@ class Menu:
 
     WIDTH = screen_obj.width
     HEIGHT = screen_obj.height
-    main_background = pygame.transform.scale(pygame.image.load("image/UI/Panel/Window/Big.png").convert_alpha(), (WIDTH, HEIGHT))
+    main_background = pygame.transform.scale(pygame.image.load("image/UI/Panel/Window/Big.png").convert_alpha(),
+                                             (WIDTH, HEIGHT))
 
     @staticmethod
     def draw_menu(menu_obj, screen):
@@ -113,8 +116,10 @@ class MainMenu(Menu):
 
         self.start_button = Button(Menu.WIDTH / 2 - (252 / 2), 200, 252, 74, "image/UI/Buttons/PlayText/Default@3x.png",
                                    "Play", "image/UI/Buttons/PlayText/Hover@3x.png", "sound/knopka-schelchok.mp3")
-        self.settings_button = Button(Menu.WIDTH / 2 - (252 / 2), 300, 252, 74, "image/UI/Buttons/PlayText/Default@3x.png",
-                                      "Settings", "image/UI/Buttons/PlayText/Hover@3x.png", "sound/knopka-schelchok.mp3")
+        self.settings_button = Button(Menu.WIDTH / 2 - (252 / 2), 300, 252, 74,
+                                      "image/UI/Buttons/PlayText/Default@3x.png",
+                                      "Settings", "image/UI/Buttons/PlayText/Hover@3x.png",
+                                      "sound/knopka-schelchok.mp3")
         self.exit_button = Button(Menu.WIDTH / 2 - (252 / 2), 400, 252, 74, "image/UI/Buttons/PlayText/Default@3x.png",
                                   "Exit", "image/UI/Buttons/PlayText/Hover@3x.png", "sound/knopka-schelchok.mp3")
         self.buttons = [self.start_button, self.settings_button, self.exit_button]
@@ -142,8 +147,6 @@ class MainMenu(Menu):
                 self.is_restart = GameOn(player).start(screen)
 
 
-
-
 class SettingsMenu(Menu):
 
     def __init__(self):
@@ -164,7 +167,7 @@ class SettingsMenu(Menu):
     def handle_events(self, event, screen, running):
 
         if (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE or
-           event.type == pygame.USEREVENT and event.button == self.back_button):
+                event.type == pygame.USEREVENT and event.button == self.back_button):
             self.fade(screen)
             running[0] = False
 
@@ -178,12 +181,18 @@ class VideoMenu(Menu):
     def __init__(self):
         super().__init__()
 
-        self.resolution1_button = Button(Menu.WIDTH / 2 - (252 / 2), 200, 252, 74, "image/UI/Buttons/PlayText/Default@3x.png",
-                                         "960x600", "image/UI/Buttons/PlayText/Hover@3x.png", "sound/knopka-schelchok.mp3")
-        self.resolution2_button = Button(Menu.WIDTH / 2 - (252 / 2), 300, 252, 74, "image/UI/Buttons/PlayText/Default@3x.png",
-                                         "1280x800", "image/UI/Buttons/PlayText/Hover@3x.png", "sound/knopka-schelchok.mp3")
-        self.resolution3_button = Button(Menu.WIDTH / 2 - (252 / 2), 400, 252, 74, "image/UI/Buttons/PlayText/Default@3x.png",
-                                         "Full screen", "image/UI/Buttons/PlayText/Hover@3x.png", "sound/knopka-schelchok.mp3")
+        self.resolution1_button = Button(Menu.WIDTH / 2 - (252 / 2), 200, 252, 74,
+                                         "image/UI/Buttons/PlayText/Default@3x.png",
+                                         "960x600", "image/UI/Buttons/PlayText/Hover@3x.png",
+                                         "sound/knopka-schelchok.mp3")
+        self.resolution2_button = Button(Menu.WIDTH / 2 - (252 / 2), 300, 252, 74,
+                                         "image/UI/Buttons/PlayText/Default@3x.png",
+                                         "1280x800", "image/UI/Buttons/PlayText/Hover@3x.png",
+                                         "sound/knopka-schelchok.mp3")
+        self.resolution3_button = Button(Menu.WIDTH / 2 - (252 / 2), 400, 252, 74,
+                                         "image/UI/Buttons/PlayText/Default@3x.png",
+                                         "Full screen", "image/UI/Buttons/PlayText/Hover@3x.png",
+                                         "sound/knopka-schelchok.mp3")
         self.back_button = Button(self.WIDTH / 2 - (252 / 2), 500, 252, 74, "image/UI/Buttons/PlayText/Default@3x.png",
                                   "Back", "image/UI/Buttons/PlayText/Hover@3x.png", "sound/knopka-schelchok.mp3")
         self.buttons = [self.resolution1_button, self.resolution2_button, self.resolution3_button, self.back_button]
@@ -193,7 +202,7 @@ class VideoMenu(Menu):
     def handle_events(self, event, screen, running):
 
         if (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE or
-           event.type == pygame.USEREVENT and event.button == self.back_button):
+                event.type == pygame.USEREVENT and event.button == self.back_button):
             self.fade(screen)
             running[0] = False
 
@@ -239,7 +248,7 @@ class SelectorMenu(Menu):
             height = 200 * screen_obj.height_scale
 
             self.buttons.append(Button(x, y, width, height, "image/UI/Buttons/PlayText/Default@3x.png", obj["name"],
-                                "image/UI/Buttons/PlayText/Hover@3x.png", "sound/knopka-schelchok.mp3"))
+                                       "image/UI/Buttons/PlayText/Hover@3x.png", "sound/knopka-schelchok.mp3"))
 
             self.returned.append(obj["returned"])
 
@@ -264,7 +273,6 @@ class SelectorMenu(Menu):
 
 class SelectorCharacter(SelectorMenu):
     def __init__(self):
-
         super().__init__(
             {"name": "Standard hero", "returned": StandardHero},
             {"name": "Fire Knight", "returned": FireKnight},

@@ -1,6 +1,6 @@
-from game.src.enemies.enemies_base import CommonEnemy
-from game.src.cache import ImageCache
 import game.src.constants as constants
+from game.src.cache import ImageCache
+from game.src.enemies.enemies_base import CommonEnemy
 from game.src.screen import screen_obj
 
 
@@ -40,7 +40,6 @@ class Sculwolf(CommonEnemy):
         self.current_hp = 80
         self.const_delay_death_animation = 1
         self.const_delay_animation = 1
-
 
     def jump(self):
         if 7 <= self.animation_count <= 9:
