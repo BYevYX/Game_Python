@@ -14,6 +14,12 @@ class Player(pygame.sprite.Sprite):
     attack_1 = []
 
     def __init__(self, x, y):
+        """
+
+        :rtype: object
+        :param x:
+        :param y:
+        """
         super().__init__()
         self.x = x
         self.y = y
@@ -67,12 +73,21 @@ class Player(pygame.sprite.Sprite):
         self.rect = pygame.Rect(self.x, self.y, 10, 10)
 
     def animate_hp(self, screen):
+        """
+
+        :rtype: object
+        :param screen:
+        """
         for i in range(self.hp):
             screen.blit(self.hp_image[0], (40 + i * 50, 30))
             if i < self.current_hp:
                 screen.blit(self.hp_image[1], (2 * self.heart_scale + 40 + i * 50, 30 + 2 * self.heart_scale))
 
     def check_animation_count(self):
+        """
+        :rtype: object
+
+        """
         self.delay_animation += 1
         self.delay_jump_animation += 1
 
@@ -106,6 +121,11 @@ class Player(pygame.sprite.Sprite):
                 self.jump_animation_count = 0
 
     def correction(self):
+        """
+
+        :rtype: object
+        :return:
+        """
         if not self.can_right and not self.can_left:
             self.can_left = True
             self.can_right = True
@@ -120,6 +140,12 @@ class Player(pygame.sprite.Sprite):
             self.x += 1
 
     def take_damage(self, damage=1, enemy=None):
+        """
+
+        :rtype: object
+        :param damage:
+        :param enemy:
+        """
         current_time = time.time()
         if not self.invincible:
             self.current_hp -= damage
@@ -138,11 +164,20 @@ class Player(pygame.sprite.Sprite):
                     self.y += self.knockback
 
     def check_invincibility(self):
+        """
+        :rtype: object
+
+        """
         current_time = time.time()
         if self.invincible and (current_time - self.last_hit_time) > self.invincibility_duration:
             self.invincible = False
 
     def blink(self, image):
+        """
+
+        :rtype: object
+        :param image:
+        """
         if self.invincible:
             # Мерцание
             current_time = time.time()
@@ -154,12 +189,22 @@ class Player(pygame.sprite.Sprite):
             image.set_alpha(255)  # Полностью видимый в обычном состоянии
 
     def check_damage(self, enemies):
+        """
+
+        :rtype: object
+        :param enemies:
+        """
         for group_enemies in enemies:
             collided_enemy = pygame.sprite.spritecollideany(self, group_enemies)
             if collided_enemy:
                 self.take_damage(collided_enemy.damage, collided_enemy)
 
     def attack(self, enemies):
+        """
+
+        :rtype: object
+        :param enemies:
+        """
         self.last_attack_time = pygame.time.get_ticks()
 
         if self.attack_direction == 1:
@@ -174,6 +219,13 @@ class Player(pygame.sprite.Sprite):
                     enemy.take_damage(self.attack_damage)
 
     def draw(self, screen, keys, position=None):
+        """
+
+        :rtype: object
+        :param screen:
+        :param keys:
+        :param position:
+        """
         self.animate_hp(screen)
 
         if not position:
@@ -219,6 +271,12 @@ class Player(pygame.sprite.Sprite):
 
     @staticmethod
     def move_environment(direction, game):
+        """
+
+        :rtype: object
+        :param direction:
+        :param game:
+        """
         game.main_location.move_background(direction)
         for platform in game.platforms:
             platform.move_platform(direction)
@@ -236,6 +294,12 @@ class Player(pygame.sprite.Sprite):
                 boss.move_sprites(direction)
 
     def move(self, keys, game):
+        """
+
+        :rtype: object
+        :param keys:
+        :param game:
+        """
         self.correction()
         if (keys[pygame.K_LEFT] or keys[pygame.K_a]) and self.can_left:
             self.can_right = True
@@ -270,6 +334,11 @@ class Player(pygame.sprite.Sprite):
             self.y += self.y_velocity
 
     def check_collisions(self, platforms):
+        """
+
+        :rtype: object
+        :param platforms:
+        """
         player_rect = pygame.Rect(self.x, self.y, self.rect.width, self.rect.height)
 
         self.on_ground = False
@@ -299,6 +368,12 @@ class Player(pygame.sprite.Sprite):
                         self.can_left = False
 
     def update(self, screen, game):
+        """
+
+        :rtype: object
+        :param screen:
+        :param game:
+        """
         keys = pygame.key.get_pressed()
 
         self.move(keys, game)

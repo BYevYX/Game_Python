@@ -7,6 +7,16 @@ from game.src.screen import screen_obj
 
 class Shockwave(pygame.sprite.Sprite):
     def __init__(self, x, y, dx, dy, direction=1, type="fireball"):
+        """
+
+        :rtype: object
+        :param x: 
+        :param y: 
+        :param dx: 
+        :param dy: 
+        :param direction: 
+        :param type: 
+        """
         super().__init__()
         self.velocity = pygame.Vector2(direction * dx, dy)
         self.damage_dealt = False
@@ -35,6 +45,11 @@ class Shockwave(pygame.sprite.Sprite):
         self.rect.center = image_rect.center
 
     def draw(self, screen):
+        """
+
+        :rtype: object
+        :param screen: 
+        """
         if self.direction == -1:
             screen.blit(pygame.transform.flip(self.images[self.animation_count], True, False),
                         self.position)
@@ -46,6 +61,14 @@ class Shockwave(pygame.sprite.Sprite):
             self.animation_count = 0
 
     def update(self, screen, sprites, game, damage_to="player"):
+        """
+
+        :rtype: object
+        :param screen: 
+        :param sprites: 
+        :param game: 
+        :param damage_to: 
+        """
         self.rect.x += self.velocity.x
         self.rect.y += self.velocity.y
 
@@ -65,6 +88,11 @@ class Shockwave(pygame.sprite.Sprite):
         pygame.draw.rect(screen, (255, 255, 255), (self.rect.x, self.rect.y, self.rect.width, self.rect.height))
 
     def move_sprite(self, direction):
+        """
+
+        :rtype: object
+        :param direction: 
+        """
         if direction != self.main_direction:
             self.main_velocity *= -1
             self.main_direction = direction
@@ -73,12 +101,22 @@ class Shockwave(pygame.sprite.Sprite):
         self.position[0] += self.main_velocity
 
     def deal_damage_player(self, player):
+        """
+
+        :rtype: object
+        :param player: 
+        """
         if not self.damage_dealt:
             if pygame.sprite.collide_rect(self, player):
                 player.take_damage()
                 self.damage_dealt = True
 
     def deal_damage_enemy(self, enemies):
+        """
+
+        :rtype: object
+        :param enemies: 
+        """
         if not self.damage_dealt:
             for group in enemies:
                 for enemy in group:

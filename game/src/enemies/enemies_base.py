@@ -9,6 +9,12 @@ class Enemy(pygame.sprite.Sprite):
     death_images = []
 
     def __init__(self, x, y):
+        """
+
+        :rtype: object
+        :param x:
+        :param y:
+        """
         super().__init__()
         self.rect = self.images[0].get_rect()
         self.rect.x = x
@@ -31,6 +37,10 @@ class Enemy(pygame.sprite.Sprite):
         self.font = pygame.font.Font(None, 30)
 
     def update_animation(self):
+        """
+        :rtype: object
+
+        """
         if self.delay_animation == self.const_delay_animation:
             self.delay_animation = 0
             self.animation_count += 1
@@ -41,7 +51,11 @@ class Enemy(pygame.sprite.Sprite):
             self.animation_count = 0
 
     def draw(self, screen):
+        """
 
+        :rtype: object
+        :param screen:
+        """
         if self.attack_direction == -1:
             screen.blit(pygame.transform.flip(self.images[self.animation_count], True, False),
                         (self.rect.x, self.rect.y))
@@ -55,10 +69,22 @@ class Enemy(pygame.sprite.Sprite):
         self.update_animation()
 
     def take_damage(self, damage=constants.PLAYER_ATTACK_DAMAGE):
+        """
+
+        :rtype: object
+        :param damage:
+        """
         self.current_hp -= damage
         self.damage_texts.append((damage, 30))
 
     def death(self, group, screen):
+        """
+
+        :rtype: object
+        :param group:
+        :param screen:
+        :return:
+        """
         if self.current_hp > 0:
             return
 
@@ -76,11 +102,23 @@ class Enemy(pygame.sprite.Sprite):
             group.remove(self)
 
     def change_direction(self, direction):
+        """
+
+        :rtype: object
+        :param direction:
+        """
         if direction != self.velocity_direction:
             self.velocity *= -1
             self.velocity_direction = direction
 
     def update(self, screen, group, game=None):
+        """
+
+        :rtype: object
+        :param screen:
+        :param group:
+        :param game:
+        """
         self.damage_texts = [(dmg, time - 1) for dmg, time in self.damage_texts if time > 0]
 
         if not self.is_dead:
@@ -90,6 +128,12 @@ class Enemy(pygame.sprite.Sprite):
 
     @staticmethod
     def move_group(direction, groups):
+        """
+
+        :rtype: object
+        :param direction:
+        :param groups:
+        """
         for group in groups:
             for enemy in group:
                 enemy.change_direction(direction)
@@ -103,12 +147,23 @@ class Enemy(pygame.sprite.Sprite):
 class CommonEnemy(Enemy):
 
     def __init__(self, x, y, range_place=200 * screen_obj.width_scale):
+        """
+
+        :rtype: object
+        :param x:
+        :param y:
+        :param range_place:
+        """
         super().__init__(x, y)
 
         self.left = x
         self.right = x + range_place
 
     def move(self):
+        """
+        :rtype: object
+
+        """
         if self.rect.x >= self.right:
             self.speed = -self.speed
             self.attack_direction = -1
@@ -119,6 +174,13 @@ class CommonEnemy(Enemy):
         self.rect.x += self.speed
 
     def update(self, screen, group, game=None):
+        """
+
+        :rtype: object
+        :param screen:
+        :param group:
+        :param game:
+        """
         super().update(screen, group)
 
         self.move()

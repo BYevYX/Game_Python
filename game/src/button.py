@@ -3,6 +3,18 @@ import pygame
 
 class Button:
     def __init__(self, x, y, width, height, image_path, text=None, hover_image_path=None, sound_path=None):
+        """
+
+        :rtype: object
+        :param x:
+        :param y:
+        :param width:
+        :param height:
+        :param image_path:
+        :param text:
+        :param hover_image_path:
+        :param sound_path:
+        """
         self.x = x
         self.y = y
         self.width = width

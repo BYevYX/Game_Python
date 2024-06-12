@@ -8,6 +8,13 @@ from game.src.screen import screen_obj
 class Snail(CommonEnemy):
 
     def __init__(self, x, y, range_place=100 * screen_obj.width_scale):
+        """
+
+        :rtype: object
+        :param x:
+        :param y:
+        :param range_place:
+        """
         images_paths = [
             'image/enemys/ramses_snail/Walk/Spr_Walk_1.png',
             'image/enemys/ramses_snail/Walk/Spr_Walk_2.png',
@@ -38,10 +45,19 @@ class Snail(CommonEnemy):
         self.const_delay_animation = 2
 
     def move(self):
+        """
+        :rtype: object
+
+        """
         if self.is_walk:
             super().move()
 
     def draw(self, screen):
+        """
+
+        :rtype: object
+        :param screen:
+        """
         if self.is_walk:
             super().draw(screen)
             if self.animation_count == 0:

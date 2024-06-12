@@ -11,6 +11,15 @@ from game.src.screen import screen_obj
 class Platform(pygame.sprite.Sprite):
 
     def __init__(self, x, y, width, height, image_type="main_platform"):
+        """
+
+        :rtype: object
+        :param x: 
+        :param y: 
+        :param width: 
+        :param height: 
+        :param image_type: 
+        """
         super().__init__()
 
         platform_images = {
@@ -33,6 +42,11 @@ class Platform(pygame.sprite.Sprite):
         self.direction = "right"
 
     def move_platform(self, direction):
+        """
+
+        :rtype: object
+        :param direction: 
+        """
         if direction != self.direction:
             self.velocity *= -1
             self.direction = direction
@@ -42,6 +56,18 @@ class Platform(pygame.sprite.Sprite):
 
 class MovingPlatform(Platform):
     def __init__(self, x, y, width, height, up, to, slide_direction='x', image_type="moving_platform"):
+        """
+
+        :rtype: object
+        :param x: 
+        :param y: 
+        :param width: 
+        :param height: 
+        :param up: 
+        :param to: 
+        :param slide_direction: 
+        :param image_type: 
+        """
         super().__init__(x, y, width, height, image_type)
 
         self.up = up
@@ -50,6 +76,10 @@ class MovingPlatform(Platform):
         self.slide_velocity = constants.VELOCITY // 2
 
     def slide(self):
+        """
+        :rtype: object
+
+        """
         if self.slide_direction == 'x':
             self.rect.x += self.slide_velocity
             if self.rect.right > max(self.to, self.up) or self.rect.left < min(self.up, self.to):
@@ -61,6 +91,11 @@ class MovingPlatform(Platform):
                 self.slide_velocity *= -1
 
     def move_platform(self, direction):
+        """
+
+        :rtype: object
+        :param direction: 
+        """
         super().move_platform(direction)
 
         if self.slide_direction == 'x':

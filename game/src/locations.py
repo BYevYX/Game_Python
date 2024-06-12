@@ -10,7 +10,13 @@ pygame.mixer.init()
 class Locations:
 
     def __init__(self, background_paths, sound_path, scale):
+        """
 
+        :rtype: object
+        :param background_paths: 
+        :param sound_path: 
+        :param scale: 
+        """
         self.backgrounds = [[pygame.transform.scale(pygame.image.load(background_path).convert_alpha(), scale), 0] for
                             background_path in background_paths]
 
@@ -19,12 +25,22 @@ class Locations:
         self.sound = pygame.mixer.Sound(sound_path)
 
     def draw_background(self, screen):
+        """
+
+        :rtype: object
+        :param screen: 
+        """
         for background in self.backgrounds:
             screen.blit(background[0], (background[1], 0))
             screen.blit(background[0], (background[1] + screen_obj.width, 0))
             screen.blit(background[0], (background[1] - screen_obj.width, 0))
 
     def move_background(self, direction):
+        """
+
+        :rtype: object
+        :param direction: 
+        """
         if direction == 'right':
             self.background_speed = -constants.BACKGROUND_SPEED * screen_obj.width_scale
         elif direction == 'left':
@@ -41,7 +57,15 @@ class Locations:
 class PartialBackground:
 
     def __init__(self, x, y, width, height, image_name="brick_wall"):
+        """
 
+        :rtype: object
+        :param x: 
+        :param y: 
+        :param width: 
+        :param height: 
+        :param image_name: 
+        """
         bases_image_paths = {
             "brick_wall": "image/locations/backgrounds/brick background.png",
             "brown_brick_wall": "image/locations/backgrounds/brick background with brown.png",
@@ -61,9 +85,19 @@ class PartialBackground:
         self.background_speed = constants.PARTIAL_BACKGROUND_SPEED * screen_obj.width_scale
 
     def draw(self, screen):
+        """
+
+        :rtype: object
+        :param screen: 
+        """
         screen.blit(self.background, (self.x, self.y))
 
     def move_background(self, direction):
+        """
+
+        :rtype: object
+        :param direction: 
+        """
         if direction == 'right':
             self.x += -self.background_speed
         elif direction == 'left':

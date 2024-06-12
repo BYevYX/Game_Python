@@ -9,6 +9,12 @@ from game.src.shokwave import Shockwave
 
 class LeafRanger(SuperPlayer):
     def __init__(self, x, y):
+        """
+
+        :rtype: object
+        :param x:
+        :param y:
+        """
         run = [f"image/Heros/leaf_ranger/run/run_{i}.png" for i in range(1, 11)]
         self.run = ImageCache.get_images(run, (1.5, 1.5))
 
@@ -45,16 +51,34 @@ class LeafRanger(SuperPlayer):
         self.can_use_ability_flying = True
 
     def ability(self, game, *args):
+        """
+
+        :rtype: object
+        :param game:
+        :param args:
+        """
         self.create_arrow = True
 
     @staticmethod
     def move_environment(direction, game):
+        """
+
+        :rtype: object
+        :param direction:
+        :param game:
+        """
         super().move_environment(direction, game)
 
         for arrow in game.player.arrows:
             arrow.move_sprite(direction)
 
     def update(self, screen, game):
+        """
+
+        :rtype: object
+        :param screen:
+        :param game:
+        """
         super().update(screen, game)
 
         if self.ability_animation_count == len(self.ability_images) // 2 and self.create_arrow:

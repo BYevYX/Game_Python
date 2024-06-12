@@ -10,6 +10,14 @@ class SuperPlayer(Player):
     ulta_images = []
 
     def __init__(self, x, y, rect_x, rect_y):
+        """
+
+        :rtype: object
+        :param x:
+        :param y:
+        :param rect_x:
+        :param rect_y:
+        """
         super().__init__(x, y)
 
         image_rect = self.run[0].get_rect()
@@ -38,7 +46,14 @@ class SuperPlayer(Player):
         self.ulta_animation_count = 0
 
     def draw(self, screen, keys, position=None):
+        """
 
+        :rtype: object
+        :param screen:
+        :param keys:
+        :param position:
+        :return:
+        """
         if not self.use_ability and not self.use_ulta:
             super().draw(screen, keys, (self.rect.x - self.dx, self.rect.y - self.dy))
             return
@@ -71,6 +86,10 @@ class SuperPlayer(Player):
         self.check_animation_count()
 
     def check_animation_count(self):
+        """
+        :rtype: object
+
+        """
         super().check_animation_count()
 
         if self.delay_animation == 0:
@@ -89,9 +108,20 @@ class SuperPlayer(Player):
             self.use_ability = False
 
     def ability(self, game, *args):
+        """
+
+        :rtype: object
+        :param game:
+        :param args:
+        """
         self.use_ability = False
 
     def ulta(self, enemies):
+        """
+
+        :rtype: object
+        :param enemies:
+        """
         self.last_ulta_time = pygame.time.get_ticks()
 
         if self.attack_direction == 1:
@@ -106,6 +136,12 @@ class SuperPlayer(Player):
                     enemy.take_damage(self.ulta_damage)
 
     def move(self, keys, game):
+        """
+
+        :rtype: object
+        :param keys:
+        :param game:
+        """
         super().move(keys, game)
 
         if keys[pygame.K_r] and (

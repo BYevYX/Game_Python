@@ -3,6 +3,10 @@ import pygame
 
 class Screen:
     def __init__(self):
+        """
+        :rtype: object
+
+        """
         self.width = 960
         self.height = 600
         self.width_scale = 1
@@ -10,6 +14,12 @@ class Screen:
         self.screen = pygame.display.set_mode((self.width, self.height))
 
     def change_screen_size(self, width, height):
+        """
+
+        :rtype: object
+        :param width: 
+        :param height: 
+        """
         self.width = width
         self.height = height
         if width != 960 and height != 600:

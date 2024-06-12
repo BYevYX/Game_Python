@@ -3,7 +3,17 @@ import pygame
 
 class Label:
     def __init__(self, width, height, font_path, size, text, color=(0, 0, 0), background_path=None):
+        """
 
+        :rtype: object
+        :param width: 
+        :param height: 
+        :param font_path: 
+        :param size: 
+        :param text: 
+        :param color: 
+        :param background_path: 
+        """
         self.font = pygame.font.Font(font_path, size)
         self.text_surface = self.font.render(text, True, color)
 
@@ -18,10 +28,20 @@ class Label:
             self.rect = self.text_surface.get_rect(center=(width / 2, height / 2 - 100))
 
     def draw(self, screen):
+        """
+
+        :rtype: object
+        :param screen: 
+        """
         if self.background:
             screen.blit(self.background, self.background_rect)
 
         screen.blit(self.text_surface, self.rect)
 
     def draw_cursor(self, screen):
+        """
+
+        :rtype: object
+        :param screen: 
+        """
         screen.blit(self.cursor, pygame.mouse.get_pos())

@@ -10,6 +10,12 @@ class Npc(pygame.sprite.Sprite):
     animation_images = None
 
     def __init__(self, x, y):
+        """
+
+        :rtype: object
+        :param x: 
+        :param y: 
+        """
         super().__init__()
 
         self.direction = 'right'
@@ -26,9 +32,18 @@ class Npc(pygame.sprite.Sprite):
         self.has_shop = False
 
     def animation(self, screen):
+        """
+
+        :rtype: object
+        :param screen: 
+        """
         screen.blit(self.animation_images[self.animation_count], (self.rect.x, self.rect.y))
 
     def check_animation_count(self):
+        """
+        :rtype: object
+
+        """
         self.delay += 1
 
         if self.animation_count == len(self.animation_images) - 1:
@@ -38,6 +53,11 @@ class Npc(pygame.sprite.Sprite):
             self.animation_count += 1
 
     def move_npc(self, direction):
+        """
+
+        :rtype: object
+        :param direction: 
+        """
         if direction != self.direction:
             self.velocity *= -1
             self.direction = direction
@@ -45,12 +65,23 @@ class Npc(pygame.sprite.Sprite):
         self.rect.x += self.velocity
 
     def update(self, screen):
+        """
+
+        :rtype: object
+        :param screen: 
+        """
         self.animation(screen)
         self.check_animation_count()
 
 
 class Blacksmith(Npc):
     def __init__(self, x, y):
+        """
+
+        :rtype: object
+        :param x: 
+        :param y: 
+        """
         self.animation_images = [
             pygame.image.load('image/npc/blacksmith/BLACKSMITH_1.png').convert_alpha(),
             pygame.image.load('image/npc/blacksmith/BLACKSMITH_2.png').convert_alpha(),
@@ -73,6 +104,12 @@ class Blacksmith(Npc):
         }
 
     def open_shop(self, screen, player):
+        """
+
+        :rtype: object
+        :param screen: 
+        :param player: 
+        """
         font = pygame.font.Font(None, 36)
         y_offset = 50
         for item, price in self.shop_items.items():
@@ -99,6 +136,12 @@ class Blacksmith(Npc):
                         self.buy_item(player, 'Potion')
 
     def buy_item(self, player, item):
+        """
+
+        :rtype: object
+        :param player: 
+        :param item: 
+        """
         if item in self.shop_items:
             price = self.shop_items[item]
             if player.coins >= price:

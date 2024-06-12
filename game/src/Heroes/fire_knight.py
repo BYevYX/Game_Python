@@ -8,6 +8,12 @@ from game.src.screen import screen_obj
 
 class FireKnight(Player):
     def __init__(self, x, y):
+        """
+
+        :rtype: object
+        :param x:
+        :param y:
+        """
         super().__init__(x, y)
 
         self.hp = constants.PLAYER_HP_COUNT
@@ -36,6 +42,10 @@ class FireKnight(Player):
         self.rect = pygame.Rect(self.x, self.y, self.rect.width, self.rect.height)
 
     def check_animation_count(self):
+        """
+        :rtype: object
+
+        """
         super().check_animation_count()
 
         if self.delay_animation == 0:

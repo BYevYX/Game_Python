@@ -6,6 +6,13 @@ from game.src.screen import screen_obj
 
 class Sculwolf(CommonEnemy):
     def __init__(self, x, y, range_place=100 * screen_obj.width_scale):
+        """
+
+        :rtype: object
+        :param x:
+        :param y:
+        :param range_place:
+        """
         image_paths = [
             'image/enemys/sculwolf/move/Massacre Sprite Sheet_1.png',
             'image/enemys/sculwolf/move/Massacre Sprite Sheet_2.png',
@@ -42,11 +49,19 @@ class Sculwolf(CommonEnemy):
         self.const_delay_animation = 1
 
     def jump(self):
+        """
+        :rtype: object
+
+        """
         if 7 <= self.animation_count <= 9:
             self.rect.y -= self.jump_height
         elif 0 <= self.animation_count <= 1 or self.animation_count == 10:
             self.rect.y += self.jump_height
 
     def move(self):
+        """
+        :rtype: object
+
+        """
         super().move()
         self.jump()

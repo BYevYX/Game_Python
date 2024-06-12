@@ -9,11 +9,22 @@ from game.src.shokwave import Shockwave
 
 class StalkingEnemy(Enemy):
     def __init__(self, x, y):
+        """
+
+        :param x: 
+        :param y: 
+        :rtype: object
+        """
         super().__init__(x, y)
         self.can_fly = False
         self.distance = 0
 
     def stalk_update(self, player):
+        """
+
+        :rtype: object
+        :param player: 
+        """
         # Вычисляем вектор направления к игроку
         dx = player.rect.centerx - self.rect.centerx
         dy = player.rect.centery - self.rect.centery
@@ -38,6 +49,17 @@ class Boss(StalkingEnemy):
 
     def __init__(self, x, y, image_paths_idle=None, image_paths_run=None, image_paths_attack=None,
                  image_paths_death=None, image_paths_hit=None):
+        """
+
+        :rtype: object
+        :param x: 
+        :param y: 
+        :param image_paths_idle: 
+        :param image_paths_run: 
+        :param image_paths_attack: 
+        :param image_paths_death: 
+        :param image_paths_hit: 
+        """
         if not image_paths_idle:
             image_paths_idle = [f"image/enemys/boss/idle/Idle_{i}.png" for i in range(1, 9)]
 
@@ -81,12 +103,22 @@ class Boss(StalkingEnemy):
         self.fireballs = pygame.sprite.Group()
 
     def take_damage(self, damage=constants.PLAYER_ATTACK_DAMAGE):
+        """
+
+        :param damage: 
+        :rtype: object
+        """
         super().take_damage(damage)
         self.is_hit = True
         if self.current_hp < 0:
             self.current_hp = 0
 
     def fireball_attack(self):
+        """
+
+        :rtype: object
+        :return: 
+        """
         if not self.is_stop:
             return
 
@@ -95,10 +127,19 @@ class Boss(StalkingEnemy):
             self.fireballs.add(fireball)
 
     def move_sprites(self, direction):
+        """
+
+        :rtype: object
+        :param direction:
+        """
         for fireball in self.fireballs:
             fireball.move_sprite(direction)
 
     def update_animation(self):
+        """
+        :rtype: object
+
+        """
         super().update_animation()
 
         if self.delay_animation == 0:
@@ -113,6 +154,11 @@ class Boss(StalkingEnemy):
             self.attack_animation_count = 0
 
     def attack(self, screen):
+        """
+
+        :rtype: object
+        :param screen:
+        """
         if self.attack_direction == -1:
             screen.blit(pygame.transform.flip(self.images_attack[self.attack_animation_count], True, False),
                         (self.rect.x, self.rect.y))
@@ -120,6 +166,11 @@ class Boss(StalkingEnemy):
             screen.blit(self.images_attack[self.attack_animation_count], (self.rect.x, self.rect.y))
 
     def idle(self, screen):
+        """
+
+        :rtype: object
+        :param screen:
+        """
         if self.attack_direction == -1:
             screen.blit(pygame.transform.flip(self.images_idle[self.idle_animation_count], True, False),
                         (self.rect.x, self.rect.y))
@@ -127,6 +178,12 @@ class Boss(StalkingEnemy):
             screen.blit(self.images_idle[self.idle_animation_count], (self.rect.x, self.rect.y))
 
     def draw(self, screen):
+        """
+
+        :rtype: object
+        :param screen:
+        :return:
+        """
         if self.is_hit:
             self.draw_hit(screen)
             return
@@ -143,6 +200,11 @@ class Boss(StalkingEnemy):
         self.update_animation()
 
     def draw_boss_hp_bar(self, screen):
+        """
+
+        :rtype: object
+        :param screen:
+        """
         ratio = self.current_hp / self.max_hp
         x = 100 * screen_obj.width_scale
         y = 70 * screen_obj.height_scale
@@ -153,7 +215,11 @@ class Boss(StalkingEnemy):
         pygame.draw.rect(screen, (255, 0, 0), (x, y, width * ratio, height))
 
     def draw_hit(self, screen):
+        """
 
+        :rtype: object
+        :param screen:
+        """
         if self.attack_direction == -1:
             screen.blit(pygame.transform.flip(self.images_hit[self.hit_animation_count], True, False),
                         (self.rect.x, self.rect.y))
@@ -170,6 +236,13 @@ class Boss(StalkingEnemy):
         self.update_animation()
 
     def update(self, screen, group, game=None):
+        """
+
+        :rtype: object
+        :param screen:
+        :param group:
+        :param game:
+        """
         super().update(screen, group)
 
         if not self.is_stop and not self.is_hit:

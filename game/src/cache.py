@@ -6,6 +6,13 @@ class ImageCache:
 
     @staticmethod
     def get_images(paths, scale=None):
+        """
+
+        :rtype: object
+        :param paths:
+        :param scale:
+        :return:
+        """
         images = []
         for path in paths:
             if path not in ImageCache.cache:

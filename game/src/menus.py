@@ -16,7 +16,10 @@ from game.src.screen import screen_obj
 class Menu:
 
     def __init__(self):
+        """
+        :rtype: object
 
+        """
         self.MAX_FPS = constants.MAX_FPS
         self.clock = pygame.time.Clock()
         self.cursor = pygame.image.load("image/UI/cursor/cursor.png").convert_alpha()
@@ -32,7 +35,13 @@ class Menu:
 
     @staticmethod
     def draw_menu(menu_obj, screen):
+        """
 
+        :rtype: object
+        :param menu_obj: 
+        :param screen: 
+        :return: 
+        """
         pygame.mouse.set_visible(False)
 
         running = [True]
@@ -78,7 +87,11 @@ class Menu:
             pygame.display.flip()
 
     def fade(self, screen):
+        """
 
+        :rtype: object
+        :param screen: 
+        """
         running = True
         fade_alpha = 0  # уровень прозрачности
 
@@ -103,6 +116,10 @@ class Menu:
 
     @staticmethod
     def check_size():
+        """
+        :rtype: object
+
+        """
         if Menu.WIDTH != screen_obj.width:
             Menu.WIDTH = screen_obj.width
             Menu.HEIGHT = screen_obj.height
@@ -112,6 +129,10 @@ class Menu:
 class MainMenu(Menu):
 
     def __init__(self):
+        """
+        :rtype: object
+
+        """
         super().__init__()
 
         self.start_button = Button(Menu.WIDTH / 2 - (252 / 2), 200, 252, 74, "image/UI/Buttons/PlayText/Default@3x.png",
@@ -129,7 +150,13 @@ class MainMenu(Menu):
         self.settings_menu = SettingsMenu()
 
     def handle_events(self, event, screen, running):
+        """
 
+        :rtype: object
+        :param event: 
+        :param screen: 
+        :param running: 
+        """
         if event.type == pygame.USEREVENT:
 
             if event.button == self.exit_button:
@@ -150,6 +177,10 @@ class MainMenu(Menu):
 class SettingsMenu(Menu):
 
     def __init__(self):
+        """
+        :rtype: object
+
+        """
         super().__init__()
 
         self.audio_button = Button(Menu.WIDTH / 2 - (252 / 2), 200, 252, 74, "image/UI/Buttons/PlayText/Default@3x.png",
@@ -165,7 +196,13 @@ class SettingsMenu(Menu):
         self.video_menu = VideoMenu()
 
     def handle_events(self, event, screen, running):
+        """
 
+        :rtype: object
+        :param event: 
+        :param screen: 
+        :param running: 
+        """
         if (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE or
                 event.type == pygame.USEREVENT and event.button == self.back_button):
             self.fade(screen)
@@ -179,6 +216,10 @@ class SettingsMenu(Menu):
 class VideoMenu(Menu):
 
     def __init__(self):
+        """
+        :rtype: object
+
+        """
         super().__init__()
 
         self.resolution1_button = Button(Menu.WIDTH / 2 - (252 / 2), 200, 252, 74,
@@ -200,7 +241,13 @@ class VideoMenu(Menu):
         self.title = "Video Settings"
 
     def handle_events(self, event, screen, running):
+        """
 
+        :rtype: object
+        :param event: 
+        :param screen: 
+        :param running: 
+        """
         if (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE or
                 event.type == pygame.USEREVENT and event.button == self.back_button):
             self.fade(screen)
@@ -228,6 +275,11 @@ class VideoMenu(Menu):
 
 class SelectorMenu(Menu):
     def __init__(self, *args):
+        """
+
+        :rtype: object
+        :param args: 
+        """
         super().__init__()
 
         self.can_move_buttons = False
@@ -253,6 +305,14 @@ class SelectorMenu(Menu):
             self.returned.append(obj["returned"])
 
     def handle_events(self, event, screen, running):
+        """
+
+        :rtype: object
+        :param event: 
+        :param screen: 
+        :param running: 
+        :return: 
+        """
         if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
             self.fade(screen)
             running[0] = False
@@ -268,11 +328,21 @@ class SelectorMenu(Menu):
                     return self.returned[i](x, y)
 
     def choice(self, screen):
+        """
+
+        :rtype: object
+        :param screen: 
+        :return: 
+        """
         return self.draw_menu(self, screen)
 
 
 class SelectorCharacter(SelectorMenu):
     def __init__(self):
+        """
+        :rtype: object
+
+        """
         super().__init__(
             {"name": "Standard hero", "returned": StandardHero},
             {"name": "Fire Knight", "returned": FireKnight},

@@ -11,6 +11,11 @@ from game.src.screen import screen_obj
 
 
 def create_enemies():
+    """
+
+    :rtype: object
+    :return: 
+    """
     start = screen_obj.width
     sculwolfs_group = pygame.sprite.Group()
     sculwolfs_group.add(Sculwolf(start + screen_obj.width // 2 - 150 * screen_obj.width_scale,
@@ -48,6 +53,12 @@ def create_enemies():
 
 
 def add_boss(enemies):
+    """
+
+    :rtype: object
+    :param enemies: 
+    :return: 
+    """
     bosses = pygame.sprite.Group()
     bosses.add(Boss(screen_obj.width + 400 * screen_obj.width_scale, screen_obj.height - 150 * screen_obj.height_scale)
                )
@@ -58,6 +69,11 @@ def add_boss(enemies):
 
 
 def create_location():
+    """
+
+    :rtype: object
+    :return: 
+    """
     start = screen_obj.width
     main_location = Locations(["image/locations/backgrounds/01 background.png",
                                "image/locations/backgrounds/02 background.png",
@@ -114,6 +130,11 @@ def create_location():
 
 
 def create_platforms():
+    """
+
+    :rtype: object
+    :return: 
+    """
     start = screen_obj.width
     platforms = pygame.sprite.Group()
 
@@ -218,6 +239,12 @@ def create_platforms():
 
 
 def add_moving_platforms(platforms):
+    """
+
+    :rtype: object
+    :param platforms: 
+    :return: 
+    """
     start = screen_obj.width
 
     # движущиеся платформы в мини здании
@@ -239,6 +266,12 @@ def add_moving_platforms(platforms):
 
 
 def create_and_add_gates(platforms):
+    """
+
+    :rtype: object
+    :param platforms: 
+    :return: 
+    """
     gates = pygame.sprite.Group()
     gates.add(Platform(screen_obj.width // 2 - 100 * screen_obj.width_scale, 300, 40, 120, "gate"),
               Platform(screen_obj.width // 2 - 100 * screen_obj.width_scale, 400, 40, 160, "gate"),
@@ -250,6 +283,11 @@ def create_and_add_gates(platforms):
 
 
 def create_npc():
+    """
+
+    :rtype: object
+    :return: 
+    """
     npcs = pygame.sprite.Group()
 
     npcs.add(

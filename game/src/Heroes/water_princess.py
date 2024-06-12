@@ -6,6 +6,12 @@ from game.src.screen import screen_obj
 
 class WaterPrincess(SuperPlayer):
     def __init__(self, x, y):
+        """
+
+        :rtype: object
+        :param x:
+        :param y:
+        """
         run = [f"image/Heros/water_princess/02_walk/walk_{i}.png" for i in range(1, 11)]
         self.run = ImageCache.get_images(run, (1.5, 1.5))
 
@@ -38,5 +44,11 @@ class WaterPrincess(SuperPlayer):
         self.knockback = constants.PLAYER_MAIN_KNOCKBACK + 10
 
     def ability(self, game, *args):
+        """
+
+        :rtype: object
+        :param game:
+        :param args:
+        """
         if self.current_hp < self.hp:
             self.current_hp += 1

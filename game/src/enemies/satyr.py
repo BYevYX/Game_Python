@@ -7,6 +7,13 @@ from game.src.screen import screen_obj
 class Satyr(CommonEnemy):
 
     def __init__(self, x, y, range_place=100 * screen_obj.width_scale):
+        """
+
+        :rtype: object
+        :param x:
+        :param y:
+        :param range_place:
+        """
         image_paths = [
             'image/enemys/satyr/move/satyr-Sheet_1.png',
             'image/enemys/satyr/move/satyr-Sheet_2.png',

@@ -12,6 +12,11 @@ from game.src.screen import screen_obj
 
 class GameOn:
     def __init__(self, player):
+        """
+
+        :rtype: object
+        :param player: 
+        """
         self.clock = pygame.time.Clock()
         self.main_location, self.partial_backgrounds = creater.create_location()
         self.platforms = creater.create_platforms()
@@ -52,6 +57,12 @@ class GameOn:
                                          "Menu", "image/UI/Buttons/PlayText/Hover@3x.png", "sound/knopka-schelchok.mp3")
 
     def handle_events(self, screen, events):
+        """
+
+        :rtype: object
+        :param screen: 
+        :param events: 
+        """
         for event in events:
             if event.type == pygame.QUIT:
                 self.running = False
@@ -93,6 +104,11 @@ class GameOn:
                     btn.handle_event(event)
 
     def draw_back_and_platforms(self, screen):
+        """
+
+        :rtype: object
+        :param screen: 
+        """
         self.main_location.draw_background(screen)
 
         for part_back in self.partial_backgrounds:
@@ -101,9 +117,20 @@ class GameOn:
         self.platforms.draw(screen)
 
     def change_absolute_x(self, dx):
+        """
+
+        :rtype: object
+        :param dx: 
+        """
         self.absolute_x += dx
 
     def start(self, screen):
+        """
+
+        :rtype: object
+        :param screen: 
+        :return: 
+        """
         self.main_location.sound.play(-1)
 
         while self.running:

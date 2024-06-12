@@ -6,6 +6,12 @@ from game.src.screen import screen_obj
 
 class StandardHero(Player):
     def __init__(self, x, y):
+        """
+
+        :rtype: object
+        :param x:
+        :param y:
+        """
         super().__init__(x, y)
 
         self.hp = constants.PLAYER_HP_COUNT - 1
