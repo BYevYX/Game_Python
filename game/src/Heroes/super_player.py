@@ -144,13 +144,13 @@ class SuperPlayer(Player):
         """
         super().move(keys, game)
 
-        if (keys[pygame.K_r] and not self.use_ulta and
+        if (keys[pygame.K_r] and not self.use_ulta and not self.use_ability and
                 (not self.is_jump or self.can_use_ability_flying) and
                 pygame.time.get_ticks() - self.last_ability_time > self.ability_cooldown):
             self.use_ability = True
             self.ability(game)
 
-        if (keys[pygame.K_q] and not self.is_attacking and not self.use_ability and
+        if (keys[pygame.K_q] and not self.is_attacking and not self.use_ability and not self.use_ulta and
                 pygame.time.get_ticks() - self.last_ulta_time > self.ulta_cooldown):
             self.use_ulta = True
             self.ulta(game.enemies)
