@@ -138,7 +138,7 @@ class SuperPlayer(Player):
     def move(self, keys, game):
         """
 
-        :rtype: object
+        :rtype: None
         :param keys:
         :param game:
         """

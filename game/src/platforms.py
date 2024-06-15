@@ -58,7 +58,7 @@ class MovingPlatform(Platform):
     def __init__(self, x, y, width, height, up, to, slide_direction='x', image_type="moving_platform"):
         """
 
-        :rtype: object
+        :rtype: _SpriteSupportsGroup
         :param x: 
         :param y: 
         :param width: 
@@ -77,7 +77,7 @@ class MovingPlatform(Platform):
 
     def slide(self):
         """
-        :rtype: object
+        :rtype: None
 
         """
         if self.slide_direction == 'x':
@@ -93,7 +93,7 @@ class MovingPlatform(Platform):
     def move_platform(self, direction):
         """
 
-        :rtype: object
+        :rtype: None
         :param direction: 
         """
         super().move_platform(direction)

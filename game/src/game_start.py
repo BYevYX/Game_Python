@@ -59,7 +59,7 @@ class GameOn:
     def handle_events(self, screen, events):
         """
 
-        :rtype: object
+        :rtype: None
         :param screen: 
         :param events: 
         """
@@ -106,7 +106,7 @@ class GameOn:
     def draw_back_and_platforms(self, screen):
         """
 
-        :rtype: object
+        :rtype: None
         :param screen: 
         """
         self.main_location.draw_background(screen)
@@ -119,7 +119,7 @@ class GameOn:
     def change_absolute_x(self, dx):
         """
 
-        :rtype: object
+        :rtype: None
         :param dx: 
         """
         self.absolute_x += dx
@@ -127,7 +127,7 @@ class GameOn:
     def start(self, screen):
         """
 
-        :rtype: object
+        :rtype: bool
         :param screen: 
         :return: 
         """

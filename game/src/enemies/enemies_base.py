@@ -38,7 +38,7 @@ class Enemy(pygame.sprite.Sprite):
 
     def update_animation(self):
         """
-        :rtype: object
+        :rtype: None
 
         """
         if self.delay_animation == self.const_delay_animation:
@@ -53,7 +53,7 @@ class Enemy(pygame.sprite.Sprite):
     def draw(self, screen):
         """
 
-        :rtype: object
+        :rtype: None
         :param screen:
         """
         if self.attack_direction == -1:
@@ -71,7 +71,7 @@ class Enemy(pygame.sprite.Sprite):
     def take_damage(self, damage=constants.PLAYER_ATTACK_DAMAGE):
         """
 
-        :rtype: object
+        :rtype: None
         :param damage:
         """
         self.current_hp -= damage
@@ -80,7 +80,7 @@ class Enemy(pygame.sprite.Sprite):
     def death(self, group, screen):
         """
 
-        :rtype: object
+        :rtype: None
         :param group:
         :param screen:
         :return:
@@ -104,7 +104,7 @@ class Enemy(pygame.sprite.Sprite):
     def change_direction(self, direction):
         """
 
-        :rtype: object
+        :rtype: None
         :param direction:
         """
         if direction != self.velocity_direction:
@@ -114,7 +114,7 @@ class Enemy(pygame.sprite.Sprite):
     def update(self, screen, group, game=None):
         """
 
-        :rtype: object
+        :rtype: None
         :param screen:
         :param group:
         :param game:
@@ -130,7 +130,7 @@ class Enemy(pygame.sprite.Sprite):
     def move_group(direction, groups):
         """
 
-        :rtype: object
+        :rtype: None
         :param direction:
         :param groups:
         """
@@ -149,7 +149,7 @@ class CommonEnemy(Enemy):
     def __init__(self, x, y, range_place=200 * screen_obj.width_scale):
         """
 
-        :rtype: object
+        :rtype: None
         :param x:
         :param y:
         :param range_place:
@@ -161,7 +161,7 @@ class CommonEnemy(Enemy):
 
     def move(self):
         """
-        :rtype: object
+        :rtype: None
 
         """
         if self.rect.x >= self.right:
@@ -176,7 +176,7 @@ class CommonEnemy(Enemy):
     def update(self, screen, group, game=None):
         """
 
-        :rtype: object
+        :rtype: None
         :param screen:
         :param group:
         :param game:

@@ -27,7 +27,7 @@ class Locations:
     def draw_background(self, screen):
         """
 
-        :rtype: object
+        :rtype: None
         :param screen: 
         """
         for background in self.backgrounds:
@@ -38,7 +38,7 @@ class Locations:
     def move_background(self, direction):
         """
 
-        :rtype: object
+        :rtype: None
         :param direction: 
         """
         if direction == 'right':
@@ -87,7 +87,7 @@ class PartialBackground:
     def draw(self, screen):
         """
 
-        :rtype: object
+        :rtype: None
         :param screen: 
         """
         screen.blit(self.background, (self.x, self.y))
@@ -95,7 +95,7 @@ class PartialBackground:
     def move_background(self, direction):
         """
 
-        :rtype: object
+        :rtype: None
         :param direction: 
         """
         if direction == 'right':

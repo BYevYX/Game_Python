@@ -30,7 +30,7 @@ class Label:
     def draw(self, screen):
         """
 
-        :rtype: object
+        :rtype: None
         :param screen: 
         """
         if self.background:
@@ -41,7 +41,7 @@ class Label:
     def draw_cursor(self, screen):
         """
 
-        :rtype: object
+        :rtype: None
         :param screen: 
         """
         screen.blit(self.cursor, pygame.mouse.get_pos())

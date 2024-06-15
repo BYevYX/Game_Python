@@ -46,7 +46,7 @@ class WaterPrincess(SuperPlayer):
     def ability(self, game, *args):
         """
 
-        :rtype: object
+        :rtype: None
         :param game:
         :param args:
         """

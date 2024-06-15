@@ -16,7 +16,7 @@ class Screen:
     def change_screen_size(self, width, height):
         """
 
-        :rtype: object
+        :rtype: None
         :param width: 
         :param height: 
         """

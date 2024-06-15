@@ -53,7 +53,7 @@ class LeafRanger(SuperPlayer):
     def ability(self, game, *args):
         """
 
-        :rtype: object
+        :rtype: None
         :param game:
         :param args:
         """
@@ -63,7 +63,7 @@ class LeafRanger(SuperPlayer):
     def move_environment(direction, game):
         """
 
-        :rtype: object
+        :rtype: None
         :param direction:
         :param game:
         """
@@ -75,7 +75,7 @@ class LeafRanger(SuperPlayer):
     def update(self, screen, game):
         """
 
-        :rtype: object
+        :rtype: None
         :param screen:
         :param game:
         """

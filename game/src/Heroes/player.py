@@ -75,7 +75,7 @@ class Player(pygame.sprite.Sprite):
     def animate_hp(self, screen):
         """
 
-        :rtype: object
+        :rtype: None
         :param screen:
         """
         for i in range(self.hp):
@@ -85,7 +85,7 @@ class Player(pygame.sprite.Sprite):
 
     def check_animation_count(self):
         """
-        :rtype: object
+        :rtype: None
 
         """
         self.delay_animation += 1
@@ -123,8 +123,7 @@ class Player(pygame.sprite.Sprite):
     def correction(self):
         """
 
-        :rtype: object
-        :return:
+        :rtype: None
         """
         if not self.can_right and not self.can_left:
             self.can_left = True
@@ -142,7 +141,7 @@ class Player(pygame.sprite.Sprite):
     def take_damage(self, damage=1, enemy=None):
         """
 
-        :rtype: object
+        :rtype: None
         :param damage:
         :param enemy:
         """
@@ -165,7 +164,7 @@ class Player(pygame.sprite.Sprite):
 
     def check_invincibility(self):
         """
-        :rtype: object
+        :rtype: None
 
         """
         current_time = time.time()
@@ -175,7 +174,7 @@ class Player(pygame.sprite.Sprite):
     def blink(self, image):
         """
 
-        :rtype: object
+        :rtype: None
         :param image:
         """
         if self.invincible:
@@ -191,7 +190,7 @@ class Player(pygame.sprite.Sprite):
     def check_damage(self, enemies):
         """
 
-        :rtype: object
+        :rtype: None
         :param enemies:
         """
         for group_enemies in enemies:
@@ -202,7 +201,7 @@ class Player(pygame.sprite.Sprite):
     def attack(self, enemies):
         """
 
-        :rtype: object
+        :rtype: None
         :param enemies:
         """
         self.last_attack_time = pygame.time.get_ticks()
@@ -221,7 +220,7 @@ class Player(pygame.sprite.Sprite):
     def draw(self, screen, keys, position=None):
         """
 
-        :rtype: object
+        :rtype: None
         :param screen:
         :param keys:
         :param position:
@@ -273,7 +272,7 @@ class Player(pygame.sprite.Sprite):
     def move_environment(direction, game):
         """
 
-        :rtype: object
+        :rtype: None
         :param direction:
         :param game:
         """
@@ -296,7 +295,7 @@ class Player(pygame.sprite.Sprite):
     def move(self, keys, game):
         """
 
-        :rtype: object
+        :rtype: None
         :param keys:
         :param game:
         """
@@ -336,7 +335,7 @@ class Player(pygame.sprite.Sprite):
     def check_collisions(self, platforms):
         """
 
-        :rtype: object
+        :rtype: None
         :param platforms:
         """
         player_rect = pygame.Rect(self.x, self.y, self.rect.width, self.rect.height)
@@ -370,7 +369,7 @@ class Player(pygame.sprite.Sprite):
     def update(self, screen, game):
         """
 
-        :rtype: object
+        :rtype: None
         :param screen:
         :param game:
         """

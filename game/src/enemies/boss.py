@@ -106,7 +106,7 @@ class Boss(StalkingEnemy):
         """
 
         :param damage: 
-        :rtype: object
+        :rtype: None
         """
         super().take_damage(damage)
         self.is_hit = True
@@ -116,8 +116,7 @@ class Boss(StalkingEnemy):
     def fireball_attack(self):
         """
 
-        :rtype: object
-        :return: 
+        :rtype: None
         """
         if not self.is_stop:
             return
@@ -129,7 +128,7 @@ class Boss(StalkingEnemy):
     def move_sprites(self, direction):
         """
 
-        :rtype: object
+        :rtype: None
         :param direction:
         """
         for fireball in self.fireballs:
@@ -137,7 +136,7 @@ class Boss(StalkingEnemy):
 
     def update_animation(self):
         """
-        :rtype: object
+        :rtype: None
 
         """
         super().update_animation()
@@ -156,7 +155,7 @@ class Boss(StalkingEnemy):
     def attack(self, screen):
         """
 
-        :rtype: object
+        :rtype: None
         :param screen:
         """
         if self.attack_direction == -1:
@@ -168,7 +167,7 @@ class Boss(StalkingEnemy):
     def idle(self, screen):
         """
 
-        :rtype: object
+        :rtype: None
         :param screen:
         """
         if self.attack_direction == -1:
@@ -180,9 +179,8 @@ class Boss(StalkingEnemy):
     def draw(self, screen):
         """
 
-        :rtype: object
+        :rtype: None
         :param screen:
-        :return:
         """
         if self.is_hit:
             self.draw_hit(screen)
@@ -202,7 +200,7 @@ class Boss(StalkingEnemy):
     def draw_boss_hp_bar(self, screen):
         """
 
-        :rtype: object
+        :rtype: None
         :param screen:
         """
         ratio = self.current_hp / self.max_hp
@@ -217,7 +215,7 @@ class Boss(StalkingEnemy):
     def draw_hit(self, screen):
         """
 
-        :rtype: object
+        :rtype: None
         :param screen:
         """
         if self.attack_direction == -1:
@@ -238,7 +236,7 @@ class Boss(StalkingEnemy):
     def update(self, screen, group, game=None):
         """
 
-        :rtype: object
+        :rtype: None
         :param screen:
         :param group:
         :param game:

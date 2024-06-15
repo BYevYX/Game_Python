@@ -34,14 +34,14 @@ class Npc(pygame.sprite.Sprite):
     def animation(self, screen):
         """
 
-        :rtype: object
+        :rtype: None
         :param screen: 
         """
         screen.blit(self.animation_images[self.animation_count], (self.rect.x, self.rect.y))
 
     def check_animation_count(self):
         """
-        :rtype: object
+        :rtype: None
 
         """
         self.delay += 1
@@ -55,7 +55,7 @@ class Npc(pygame.sprite.Sprite):
     def move_npc(self, direction):
         """
 
-        :rtype: object
+        :rtype: None
         :param direction: 
         """
         if direction != self.direction:
@@ -67,7 +67,7 @@ class Npc(pygame.sprite.Sprite):
     def update(self, screen):
         """
 
-        :rtype: object
+        :rtype: None
         :param screen: 
         """
         self.animation(screen)
@@ -106,7 +106,7 @@ class Blacksmith(Npc):
     def open_shop(self, screen, player):
         """
 
-        :rtype: object
+        :rtype: None
         :param screen: 
         :param player: 
         """
@@ -138,7 +138,7 @@ class Blacksmith(Npc):
     def buy_item(self, player, item):
         """
 
-        :rtype: object
+        :rtype: None
         :param player: 
         :param item: 
         """

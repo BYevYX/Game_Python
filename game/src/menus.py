@@ -37,7 +37,7 @@ class Menu:
     def draw_menu(menu_obj, screen):
         """
 
-        :rtype: object
+        :rtype: None | object
         :param menu_obj: 
         :param screen: 
         :return: 
@@ -89,7 +89,7 @@ class Menu:
     def fade(self, screen):
         """
 
-        :rtype: object
+        :rtype: None
         :param screen: 
         """
         running = True
@@ -117,7 +117,7 @@ class Menu:
     @staticmethod
     def check_size():
         """
-        :rtype: object
+        :rtype: None
 
         """
         if Menu.WIDTH != screen_obj.width:
@@ -152,7 +152,7 @@ class MainMenu(Menu):
     def handle_events(self, event, screen, running):
         """
 
-        :rtype: object
+        :rtype: None
         :param event: 
         :param screen: 
         :param running: 
@@ -198,7 +198,7 @@ class SettingsMenu(Menu):
     def handle_events(self, event, screen, running):
         """
 
-        :rtype: object
+        :rtype: None
         :param event: 
         :param screen: 
         :param running: 
@@ -243,7 +243,7 @@ class VideoMenu(Menu):
     def handle_events(self, event, screen, running):
         """
 
-        :rtype: object
+        :rtype: None
         :param event: 
         :param screen: 
         :param running: 

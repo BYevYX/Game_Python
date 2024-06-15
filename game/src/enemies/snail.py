@@ -46,7 +46,7 @@ class Snail(CommonEnemy):
 
     def move(self):
         """
-        :rtype: object
+        :rtype: None
 
         """
         if self.is_walk:
@@ -55,7 +55,7 @@ class Snail(CommonEnemy):
     def draw(self, screen):
         """
 
-        :rtype: object
+        :rtype: None
         :param screen:
         """
         if self.is_walk:

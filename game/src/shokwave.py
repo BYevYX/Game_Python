@@ -6,7 +6,7 @@ from game.src.screen import screen_obj
 
 
 class Shockwave(pygame.sprite.Sprite):
-    def __init__(self, x, y, dx, dy, direction=1, type="fireball"):
+    def __init__(self, x, y, dx, dy, direction=1, type_image="fireball"):
         """
 
         :rtype: object
@@ -15,7 +15,7 @@ class Shockwave(pygame.sprite.Sprite):
         :param dx: 
         :param dy: 
         :param direction: 
-        :param type: 
+        :param type_image:
         """
         super().__init__()
         self.velocity = pygame.Vector2(direction * dx, dy)
@@ -23,7 +23,7 @@ class Shockwave(pygame.sprite.Sprite):
         self.direction = direction
         self.animation_count = 0
 
-        if type == "fireball":
+        if type_image == "fireball":
             image_paths = [f"image/enemys/fireball/1_{i}.png" for i in range(61)]
         else:
             image_paths = ["image/Heros/leaf_ranger/arrow/arrow_.png"]
@@ -47,7 +47,7 @@ class Shockwave(pygame.sprite.Sprite):
     def draw(self, screen):
         """
 
-        :rtype: object
+        :rtype: None
         :param screen: 
         """
         if self.direction == -1:
@@ -63,9 +63,9 @@ class Shockwave(pygame.sprite.Sprite):
     def update(self, screen, sprites, game, damage_to="player"):
         """
 
-        :rtype: object
-        :param screen: 
-        :param sprites: 
+        :rtype: None
+        :param screen:
+        :param sprites:
         :param game: 
         :param damage_to: 
         """
@@ -85,13 +85,11 @@ class Shockwave(pygame.sprite.Sprite):
             self.kill()
             sprites.remove(self)
 
-        pygame.draw.rect(screen, (255, 255, 255), (self.rect.x, self.rect.y, self.rect.width, self.rect.height))
-
     def move_sprite(self, direction):
         """
 
-        :rtype: object
-        :param direction: 
+        :rtype: None
+        :param direction:
         """
         if direction != self.main_direction:
             self.main_velocity *= -1
@@ -103,8 +101,8 @@ class Shockwave(pygame.sprite.Sprite):
     def deal_damage_player(self, player):
         """
 
-        :rtype: object
-        :param player: 
+        :rtype: None
+        :param player:
         """
         if not self.damage_dealt:
             if pygame.sprite.collide_rect(self, player):
@@ -114,8 +112,8 @@ class Shockwave(pygame.sprite.Sprite):
     def deal_damage_enemy(self, enemies):
         """
 
-        :rtype: object
-        :param enemies: 
+        :rtype: None
+        :param enemies:
         """
         if not self.damage_dealt:
             for group in enemies:

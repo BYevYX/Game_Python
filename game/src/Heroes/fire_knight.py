@@ -43,7 +43,7 @@ class FireKnight(Player):
 
     def check_animation_count(self):
         """
-        :rtype: object
+        :rtype: None
 
         """
         super().check_animation_count()

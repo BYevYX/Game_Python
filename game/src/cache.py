@@ -8,7 +8,7 @@ class ImageCache:
     def get_images(paths, scale=None):
         """
 
-        :rtype: object
+        :rtype: list
         :param paths:
         :param scale:
         :return:

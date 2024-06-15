@@ -50,7 +50,7 @@ class Sculwolf(CommonEnemy):
 
     def jump(self):
         """
-        :rtype: object
+        :rtype: None
 
         """
         if 7 <= self.animation_count <= 9:
@@ -60,7 +60,7 @@ class Sculwolf(CommonEnemy):
 
     def move(self):
         """
-        :rtype: object
+        :rtype: None
 
         """
         super().move()

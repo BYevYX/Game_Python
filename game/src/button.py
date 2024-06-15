@@ -38,6 +38,11 @@ class Button:
         self.is_hovered = False
 
     def draw(self, screen):
+        """
+
+        :rtype: None
+        :param screen:
+        """
         current_image = self.hover_image if self.is_hovered else self.image
         screen.blit(current_image, self.rect.topleft)
 
@@ -48,15 +53,31 @@ class Button:
             screen.blit(text_surface, text_rect)
 
     def check_hover(self, mouse_pos):
+        """
+
+        :rtype: None
+        :param mouse_pos:
+        """
         self.is_hovered = self.rect.collidepoint(mouse_pos)
 
     def handle_event(self, event):
+        """
+
+        :rtype: None
+        :param event:
+        """
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and self.is_hovered:
             if self.sound:
                 self.sound.play()
             pygame.event.post(pygame.event.Event(pygame.USEREVENT, button=self))
 
     def set_pos(self, x, y=None):
+        """
+
+        :rtype: None
+        :param x:
+        :param y:
+        """
         self.x = x
         if y:
             self.y = y
