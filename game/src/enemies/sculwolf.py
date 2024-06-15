@@ -38,11 +38,11 @@ class Sculwolf(CommonEnemy):
             'image/enemys/sculwolf/deth/Massacre death_8.png',
         ]
 
-        self.images = ImageCache.get_images(image_paths, (screen_obj.width_scale, screen_obj.height_scale))
+        self.images = ImageCache.get_images(image_paths)
         super().__init__(x, y - 30 * screen_obj.height_scale, range_place)
 
         self.jump_height = constants.ENEMY_JUMP_HEIGHT * screen_obj.height_scale
-        self.death_images = ImageCache.get_images(death_paths, (screen_obj.width_scale, screen_obj.height_scale))
+        self.death_images = ImageCache.get_images(death_paths)
 
         self.current_hp = 80
         self.const_delay_death_animation = 1

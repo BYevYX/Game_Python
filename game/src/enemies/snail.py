@@ -33,11 +33,11 @@ class Snail(CommonEnemy):
             'image/enemys/ramses_snail/Track/Spr_Track_4.png',
         ]
 
-        self.images = ImageCache.get_images(images_paths, (2 * screen_obj.width_scale, 2 * screen_obj.height_scale))
+        self.images = ImageCache.get_images(images_paths, (2, 2))
         super().__init__(x, y - 30 * screen_obj.height_scale, range_place)
         self.current_hp = 60
 
-        self.sniff = ImageCache.get_images(sniff_paths, (2 * screen_obj.width_scale, 2 * screen_obj.height_scale))
+        self.sniff = ImageCache.get_images(sniff_paths, (2, 2))
         self.is_walk = True
         self.sniff_animation_count = 0
         self.walk_count = 0

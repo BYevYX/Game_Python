@@ -4,8 +4,9 @@ import pygame
 class Screen:
     def __init__(self):
         """
-        :rtype: object
+        Initialize the Screen object with default width, height, and scaling factors.
 
+        :rtype: object
         """
         self.width = 960
         self.height = 600
@@ -15,16 +16,17 @@ class Screen:
 
     def change_screen_size(self, width, height):
         """
+        Change the size of the screen and adjust scaling factors accordingly.
 
+        :param width: The new width of the screen.
+        :param height: The new height of the screen.
         :rtype: None
-        :param width: 
-        :param height: 
         """
         self.width = width
         self.height = height
         if width != 960 and height != 600:
-            self.width_scale = width / 960  # * 0.9
-            self.height_scale = height / 600  # * 0.9
+            self.width_scale = width / 960
+            self.height_scale = height / 600
         else:
             self.width_scale = 1
             self.height_scale = 1

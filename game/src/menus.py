@@ -1,5 +1,4 @@
 import sys
-
 import pygame
 
 import game.src.constants as constants
@@ -17,8 +16,9 @@ class Menu:
 
     def __init__(self):
         """
-        :rtype: object
+        Initialize the Menu object.
 
+        :rtype: object
         """
         self.MAX_FPS = constants.MAX_FPS
         self.clock = pygame.time.Clock()
@@ -36,11 +36,12 @@ class Menu:
     @staticmethod
     def draw_menu(menu_obj, screen):
         """
+        Draw the menu on the screen.
 
+        :param menu_obj: The menu object to be drawn.
+        :param screen: The screen surface to draw on.
         :rtype: None | object
-        :param menu_obj: 
-        :param screen: 
-        :return: 
+        :return: Result of menu interaction, if any.
         """
         pygame.mouse.set_visible(False)
 
@@ -88,12 +89,13 @@ class Menu:
 
     def fade(self, screen):
         """
+        Create a fade effect on the screen.
 
+        :param screen: The screen surface to draw on.
         :rtype: None
-        :param screen: 
         """
         running = True
-        fade_alpha = 0  # уровень прозрачности
+        fade_alpha = 0  # level of transparency
 
         while running:
 
@@ -117,8 +119,9 @@ class Menu:
     @staticmethod
     def check_size():
         """
-        :rtype: None
+        Check and update the menu size based on the screen size.
 
+        :rtype: None
         """
         if Menu.WIDTH != screen_obj.width:
             Menu.WIDTH = screen_obj.width
@@ -130,8 +133,9 @@ class MainMenu(Menu):
 
     def __init__(self):
         """
-        :rtype: object
+        Initialize the MainMenu object.
 
+        :rtype: object
         """
         super().__init__()
 
@@ -151,11 +155,12 @@ class MainMenu(Menu):
 
     def handle_events(self, event, screen, running):
         """
+        Handle events for the main menu.
 
+        :param event: The event to handle.
+        :param screen: The screen surface to draw on.
+        :param running: A list with a boolean indicating if the menu is running.
         :rtype: None
-        :param event: 
-        :param screen: 
-        :param running: 
         """
         if event.type == pygame.USEREVENT:
 
@@ -178,8 +183,9 @@ class SettingsMenu(Menu):
 
     def __init__(self):
         """
-        :rtype: object
+        Initialize the SettingsMenu object.
 
+        :rtype: object
         """
         super().__init__()
 
@@ -197,11 +203,12 @@ class SettingsMenu(Menu):
 
     def handle_events(self, event, screen, running):
         """
+        Handle events for the settings menu.
 
+        :param event: The event to handle.
+        :param screen: The screen surface to draw on.
+        :param running: A list with a boolean indicating if the menu is running.
         :rtype: None
-        :param event: 
-        :param screen: 
-        :param running: 
         """
         if (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE or
                 event.type == pygame.USEREVENT and event.button == self.back_button):
@@ -217,8 +224,9 @@ class VideoMenu(Menu):
 
     def __init__(self):
         """
-        :rtype: object
+        Initialize the VideoMenu object.
 
+        :rtype: object
         """
         super().__init__()
 
@@ -242,11 +250,12 @@ class VideoMenu(Menu):
 
     def handle_events(self, event, screen, running):
         """
+        Handle events for the video settings menu.
 
+        :param event: The event to handle.
+        :param screen: The screen surface to draw on.
+        :param running: A list with a boolean indicating if the menu is running.
         :rtype: None
-        :param event: 
-        :param screen: 
-        :param running: 
         """
         if (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE or
                 event.type == pygame.USEREVENT and event.button == self.back_button):
@@ -276,9 +285,10 @@ class VideoMenu(Menu):
 class SelectorMenu(Menu):
     def __init__(self, *args):
         """
+        Initialize the SelectorMenu object with a list of selectable items.
 
+        :param args: The list of selectable items.
         :rtype: object
-        :param args: 
         """
         super().__init__()
 
@@ -306,12 +316,13 @@ class SelectorMenu(Menu):
 
     def handle_events(self, event, screen, running):
         """
+        Handle events for the selector menu.
 
+        :param event: The event to handle.
+        :param screen: The screen surface to draw on.
+        :param running: A list with a boolean indicating if the menu is running.
         :rtype: object
-        :param event: 
-        :param screen: 
-        :param running: 
-        :return: 
+        :return: The selected item, if any.
         """
         if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
             self.fade(screen)
@@ -329,10 +340,11 @@ class SelectorMenu(Menu):
 
     def choice(self, screen):
         """
+        Display the choice menu.
 
+        :param screen: The screen surface to draw on.
         :rtype: object
-        :param screen: 
-        :return: 
+        :return: The result of the menu interaction, if any.
         """
         return self.draw_menu(self, screen)
 
@@ -340,8 +352,9 @@ class SelectorMenu(Menu):
 class SelectorCharacter(SelectorMenu):
     def __init__(self):
         """
-        :rtype: object
+        Initialize the SelectorCharacter object.
 
+        :rtype: object
         """
         super().__init__(
             {"name": "Standard hero", "returned": StandardHero},

@@ -9,16 +9,16 @@ from game.src.screen import screen_obj
 
 
 class Platform(pygame.sprite.Sprite):
-
     def __init__(self, x, y, width, height, image_type="main_platform"):
         """
+        Initialize the Platform object.
 
+        :param x: Initial x-coordinate of the platform.
+        :param y: Initial y-coordinate of the platform.
+        :param width: Width of the platform.
+        :param height: Height of the platform.
+        :param image_type: Type of image to use for the platform.
         :rtype: object
-        :param x: 
-        :param y: 
-        :param width: 
-        :param height: 
-        :param image_type: 
         """
         super().__init__()
 
@@ -43,9 +43,10 @@ class Platform(pygame.sprite.Sprite):
 
     def move_platform(self, direction):
         """
+        Move the platform in the specified direction.
 
+        :param direction: The direction to move the platform.
         :rtype: object
-        :param direction: 
         """
         if direction != self.direction:
             self.velocity *= -1
@@ -57,16 +58,17 @@ class Platform(pygame.sprite.Sprite):
 class MovingPlatform(Platform):
     def __init__(self, x, y, width, height, up, to, slide_direction='x', image_type="moving_platform"):
         """
+        Initialize the MovingPlatform object.
 
+        :param x: Initial x-coordinate of the moving platform.
+        :param y: Initial y-coordinate of the moving platform.
+        :param width: Width of the moving platform.
+        :param height: Height of the moving platform.
+        :param up: The upper bound for sliding.
+        :param to: The lower bound for sliding.
+        :param slide_direction: The direction of sliding ('x' or 'y').
+        :param image_type: Type of image to use for the moving platform.
         :rtype: _SpriteSupportsGroup
-        :param x: 
-        :param y: 
-        :param width: 
-        :param height: 
-        :param up: 
-        :param to: 
-        :param slide_direction: 
-        :param image_type: 
         """
         super().__init__(x, y, width, height, image_type)
 
@@ -77,8 +79,9 @@ class MovingPlatform(Platform):
 
     def slide(self):
         """
-        :rtype: None
+        Slide the moving platform in the specified direction.
 
+        :rtype: None
         """
         if self.slide_direction == 'x':
             self.rect.x += self.slide_velocity
@@ -92,9 +95,10 @@ class MovingPlatform(Platform):
 
     def move_platform(self, direction):
         """
+        Move the platform in the specified direction and adjust bounds for sliding.
 
+        :param direction: The direction to move the platform.
         :rtype: None
-        :param direction: 
         """
         super().move_platform(direction)
 

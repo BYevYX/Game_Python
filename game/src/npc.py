@@ -1,9 +1,9 @@
 import sys
-
 import pygame
 
 import game.src.constants as constants
 from game.src.screen import screen_obj
+from game.src.cache import ImageCache
 
 
 class Npc(pygame.sprite.Sprite):
@@ -11,10 +11,11 @@ class Npc(pygame.sprite.Sprite):
 
     def __init__(self, x, y):
         """
+        Initialize the NPC object.
 
+        :param x: Initial x-coordinate of the NPC.
+        :param y: Initial y-coordinate of the NPC.
         :rtype: object
-        :param x: 
-        :param y: 
         """
         super().__init__()
 
@@ -33,16 +34,18 @@ class Npc(pygame.sprite.Sprite):
 
     def animation(self, screen):
         """
+        Animate the NPC by blitting the current frame onto the screen.
 
+        :param screen: The screen surface to draw on.
         :rtype: None
-        :param screen: 
         """
         screen.blit(self.animation_images[self.animation_count], (self.rect.x, self.rect.y))
 
     def check_animation_count(self):
         """
-        :rtype: None
+        Update the animation frame count based on the delay.
 
+        :rtype: None
         """
         self.delay += 1
 
@@ -54,9 +57,10 @@ class Npc(pygame.sprite.Sprite):
 
     def move_npc(self, direction):
         """
+        Move the NPC in the specified direction.
 
+        :param direction: The direction to move the NPC.
         :rtype: None
-        :param direction: 
         """
         if direction != self.direction:
             self.velocity *= -1
@@ -66,9 +70,10 @@ class Npc(pygame.sprite.Sprite):
 
     def update(self, screen):
         """
+        Update the NPC's animation and position.
 
+        :param screen: The screen surface to draw on.
         :rtype: None
-        :param screen: 
         """
         self.animation(screen)
         self.check_animation_count()
@@ -77,20 +82,15 @@ class Npc(pygame.sprite.Sprite):
 class Blacksmith(Npc):
     def __init__(self, x, y):
         """
+        Initialize the Blacksmith object.
 
+        :param x: Initial x-coordinate of the blacksmith.
+        :param y: Initial y-coordinate of the blacksmith.
         :rtype: object
-        :param x: 
-        :param y: 
         """
-        self.animation_images = [
-            pygame.image.load('image/npc/blacksmith/BLACKSMITH_1.png').convert_alpha(),
-            pygame.image.load('image/npc/blacksmith/BLACKSMITH_2.png').convert_alpha(),
-            pygame.image.load('image/npc/blacksmith/BLACKSMITH_3.png').convert_alpha(),
-            pygame.image.load('image/npc/blacksmith/BLACKSMITH_4.png').convert_alpha(),
-            pygame.image.load('image/npc/blacksmith/BLACKSMITH_5.png').convert_alpha(),
-            pygame.image.load('image/npc/blacksmith/BLACKSMITH_6.png').convert_alpha(),
-            pygame.image.load('image/npc/blacksmith/BLACKSMITH_7.png').convert_alpha(),
-        ]
+
+        animation_images = [f'image/npc/blacksmith/BLACKSMITH_{i}.png' for i in range (1, 8)]
+        self.animation_images = ImageCache.get_images(animation_images)
 
         super().__init__(x, y)
 
@@ -105,10 +105,11 @@ class Blacksmith(Npc):
 
     def open_shop(self, screen, player):
         """
+        Open the shop interface, allowing the player to buy items.
 
+        :param screen: The screen surface to draw the shop interface on.
+        :param player: The player object interacting with the shop.
         :rtype: None
-        :param screen: 
-        :param player: 
         """
         font = pygame.font.Font(None, 36)
         y_offset = 50
@@ -137,10 +138,11 @@ class Blacksmith(Npc):
 
     def buy_item(self, player, item):
         """
+        Handle the logic for buying an item from the shop.
 
+        :param player: The player object buying the item.
+        :param item: The item to be bought.
         :rtype: None
-        :param player: 
-        :param item: 
         """
         if item in self.shop_items:
             price = self.shop_items[item]

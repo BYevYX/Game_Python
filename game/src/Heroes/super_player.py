@@ -39,7 +39,7 @@ class SuperPlayer(Player):
         self.use_ulta = False
         self.last_ulta_time = 0
         self.ulta_cooldown = constants.PLAYER_ULTA_COOLDOWN
-        self.ulta_range = constants.PLAYER_ULTA_RANGE
+        self.ulta_range = constants.PLAYER_ULTA_RANGE * screen_obj.width_scale
         self.ulta_damage = constants.PLAYER_ULTA_DAMAGE
 
         self.ability_animation_count = 0
@@ -63,7 +63,7 @@ class SuperPlayer(Player):
         if not position:
             position = (self.rect.x - self.dx, self.rect.y - self.dy)
 
-        if self.use_ability:
+        if self.use_ability and not self.use_ulta:
             if self.attack_direction == 1:
                 image = self.ability_images[self.ability_animation_count]
                 self.blink(image)
@@ -73,7 +73,7 @@ class SuperPlayer(Player):
                 self.blink(image)
                 screen.blit(image, position)
 
-        if self.use_ulta:
+        if self.use_ulta and not self.use_ability:
             if self.attack_direction == 1:
                 image = self.ulta_images[self.ulta_animation_count]
                 self.blink(image)
@@ -144,12 +144,13 @@ class SuperPlayer(Player):
         """
         super().move(keys, game)
 
-        if keys[pygame.K_r] and (
-                not self.is_jump or self.can_use_ability_flying) and pygame.time.get_ticks() - self.last_ability_time > self.ability_cooldown:
+        if (keys[pygame.K_r] and not self.use_ulta and
+                (not self.is_jump or self.can_use_ability_flying) and
+                pygame.time.get_ticks() - self.last_ability_time > self.ability_cooldown):
             self.use_ability = True
             self.ability(game)
 
-        if keys[
-            pygame.K_q] and not self.is_attacking and pygame.time.get_ticks() - self.last_ulta_time > self.ulta_cooldown:
+        if (keys[pygame.K_q] and not self.is_attacking and not self.use_ability and
+                pygame.time.get_ticks() - self.last_ulta_time > self.ulta_cooldown):
             self.use_ulta = True
             self.ulta(game.enemies)

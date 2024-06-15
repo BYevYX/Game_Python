@@ -1,5 +1,7 @@
 import pygame
 
+from game.src.screen import screen_obj
+
 
 class ImageCache:
     cache = {}
@@ -20,8 +22,12 @@ class ImageCache:
 
             if scale:
                 images.append(pygame.transform.scale(ImageCache.cache[path],
-                                                     (ImageCache.cache[path].get_width() * scale[0],
-                                                      ImageCache.cache[path].get_height() * scale[1])))
+                                                     (ImageCache.cache[path].get_width() * scale[
+                                                         0] * screen_obj.width_scale,
+                                                      ImageCache.cache[path].get_height() * scale[
+                                                          1] * screen_obj.height_scale)))
             else:
-                images.append(ImageCache.cache[path])
+                images.append(pygame.transform.scale(ImageCache.cache[path],
+                                                     (ImageCache.cache[path].get_width() * screen_obj.width_scale,
+                                                      ImageCache.cache[path].get_height() * screen_obj.height_scale)))
         return images

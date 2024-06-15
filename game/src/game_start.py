@@ -1,7 +1,5 @@
 import sys
-
 import pygame
-
 import game.src.constants as constants
 import game.src.creater as creater
 from game.src.button import Button
@@ -13,9 +11,10 @@ from game.src.screen import screen_obj
 class GameOn:
     def __init__(self, player):
         """
+        Initialize the GameOn class.
 
+        :param player: The player object.
         :rtype: object
-        :param player: 
         """
         self.clock = pygame.time.Clock()
         self.main_location, self.partial_backgrounds = creater.create_location()
@@ -58,10 +57,11 @@ class GameOn:
 
     def handle_events(self, screen, events):
         """
+        Handle game events.
 
+        :param screen: The screen surface to draw on.
+        :param events: The list of events to handle.
         :rtype: None
-        :param screen: 
-        :param events: 
         """
         for event in events:
             if event.type == pygame.QUIT:
@@ -105,9 +105,10 @@ class GameOn:
 
     def draw_back_and_platforms(self, screen):
         """
+        Draw the background and platforms on the screen.
 
+        :param screen: The screen surface to draw on.
         :rtype: None
-        :param screen: 
         """
         self.main_location.draw_background(screen)
 
@@ -118,23 +119,24 @@ class GameOn:
 
     def change_absolute_x(self, dx):
         """
+        Change the absolute x-coordinate by a given amount.
 
+        :param dx: The amount to change the absolute x-coordinate by.
         :rtype: None
-        :param dx: 
         """
-        self.absolute_x += dx
+        self.absolute_x += dx * screen_obj.width_scale
 
     def start(self, screen):
         """
+        Start the game loop.
 
+        :param screen: The screen surface to draw on.
+        :return: Whether the game was restarted.
         :rtype: bool
-        :param screen: 
-        :return: 
         """
         self.main_location.sound.play(-1)
 
         while self.running:
-
             self.draw_back_and_platforms(screen)
 
             for platform in self.platforms:
@@ -142,7 +144,6 @@ class GameOn:
                     platform.slide()
 
             if self.gameplay and not self.pause:
-
                 for enemy_group in self.enemies:
                     enemy_group.update(screen, enemy_group, self)
 
@@ -157,7 +158,6 @@ class GameOn:
                     self.bosses = creater.add_boss(self.enemies)
                     self.is_boss_created = True
                     self.gates = creater.create_and_add_gates(self.platforms)
-
             else:
                 self.main_location.sound.stop()
 
@@ -176,7 +176,6 @@ class GameOn:
                 self.lose_label.draw_cursor(screen)
 
             pygame.display.update()
-
             self.handle_events(screen, pygame.event.get())
 
             if self.is_restart:
@@ -184,5 +183,4 @@ class GameOn:
 
             pygame.time.delay(constants.DELAY)
             self.clock.tick(constants.MAX_FPS)
-
             pygame.display.flip()

@@ -11,11 +11,12 @@ class Locations:
 
     def __init__(self, background_paths, sound_path, scale):
         """
+        Initialize the Locations object.
 
+        :param background_paths: List of paths to background images.
+        :param sound_path: Path to the sound file for the location.
+        :param scale: Tuple containing the width and height to scale the backgrounds to.
         :rtype: object
-        :param background_paths: 
-        :param sound_path: 
-        :param scale: 
         """
         self.backgrounds = [[pygame.transform.scale(pygame.image.load(background_path).convert_alpha(), scale), 0] for
                             background_path in background_paths]
@@ -26,9 +27,10 @@ class Locations:
 
     def draw_background(self, screen):
         """
+        Draw the background on the screen.
 
+        :param screen: The screen surface to draw on.
         :rtype: None
-        :param screen: 
         """
         for background in self.backgrounds:
             screen.blit(background[0], (background[1], 0))
@@ -37,16 +39,17 @@ class Locations:
 
     def move_background(self, direction):
         """
+        Move the background in the specified direction.
 
+        :param direction: The direction to move the background ('right' or 'left').
         :rtype: None
-        :param direction: 
         """
         if direction == 'right':
             self.background_speed = -constants.BACKGROUND_SPEED * screen_obj.width_scale
         elif direction == 'left':
             self.background_speed = constants.BACKGROUND_SPEED * screen_obj.width_scale
 
-        for (i, background) in enumerate(self.backgrounds):
+        for i, background in enumerate(self.backgrounds):
 
             if background[1] <= -screen_obj.width or background[1] >= screen_obj.width:
                 background[1] = 0
@@ -58,13 +61,14 @@ class PartialBackground:
 
     def __init__(self, x, y, width, height, image_name="brick_wall"):
         """
+        Initialize the PartialBackground object.
 
+        :param x: The x-coordinate of the background's position.
+        :param y: The y-coordinate of the background's position.
+        :param width: The width to scale the background to.
+        :param height: The height to scale the background to.
+        :param image_name: The name of the image to use for the background (default is "brick_wall").
         :rtype: object
-        :param x: 
-        :param y: 
-        :param width: 
-        :param height: 
-        :param image_name: 
         """
         bases_image_paths = {
             "brick_wall": "image/locations/backgrounds/brick background.png",
@@ -86,17 +90,19 @@ class PartialBackground:
 
     def draw(self, screen):
         """
+        Draw the partial background on the screen.
 
+        :param screen: The screen surface to draw on.
         :rtype: None
-        :param screen: 
         """
         screen.blit(self.background, (self.x, self.y))
 
     def move_background(self, direction):
         """
+        Move the partial background in the specified direction.
 
+        :param direction: The direction to move the background ('right' or 'left').
         :rtype: None
-        :param direction: 
         """
         if direction == 'right':
             self.x += -self.background_speed

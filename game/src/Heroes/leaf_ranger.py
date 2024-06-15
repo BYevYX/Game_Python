@@ -57,7 +57,8 @@ class LeafRanger(SuperPlayer):
         :param game:
         :param args:
         """
-        self.create_arrow = True
+        if self.ability_animation_count == 0 and not self.use_ulta:
+            self.create_arrow = True
 
     @staticmethod
     def move_environment(direction, game):
