@@ -1,19 +1,75 @@
-import pygame
+"""
+Module: game.src.enemies.snail
 
+This module defines the Snail class, which represents an enemy Snail in the game.
+
+Attributes:
+- images (list): List of walking animation images for the snail.
+- sniff (list): List of sniffing animation images for the snail.
+- is_walk (bool): Flag indicating if the snail is currently walking.
+- sniff_animation_count (int): Counter for sniffing animation frames.
+- walk_count (int): Counter for walk cycles.
+- const_delay_animation (int): Constant delay between animation frames.
+
+Methods:
+- __init__(self, x, y, range_place=100 * screen_obj.width_scale):
+    Initializes the Snail with specific attributes and animations.
+- move(self):
+    Moves the snail if it is currently in walking mode.
+- draw(self, screen):
+    Draws the snail on the screen, handling walking and sniffing animations.
+
+Usage:
+from game.src.enemies.snail import Snail
+
+# Example initialization of a Snail enemy
+snail = Snail(x=200, y=400)
+
+Notes:
+- This class assumes that constants, pygame,
+ImageCache, CommonEnemy, and other necessary modules are correctly imported and initialized.
+- Adjustments to image paths, scaling factors,
+and game mechanics should be made as per specific game requirements.
+- Ensure all necessary image files are correctly linked and available in the specified paths.
+
+"""
 from game.src.cache import ImageCache
 from game.src.enemies.enemies_base import CommonEnemy
 from game.src.screen import screen_obj
+import pygame
 
 
 class Snail(CommonEnemy):
+    """
+    Class representing a Snail enemy in the game.
+
+    Attributes:
+        images (list): List of walking animation images for the snail.
+        sniff (list): List of sniffing animation images for the snail.
+        is_walk (bool): Flag indicating if the snail is currently walking.
+        sniff_animation_count (int): Counter for sniffing animation frames.
+        walk_count (int): Counter for walk cycles.
+        const_delay_animation (int): Constant delay between animation frames.
+
+    Methods:
+        __init__(self, x, y, range_place=100 * screen_obj.width_scale):
+            Initializes the Snail with specific attributes and animations.
+
+        move(self):
+            Moves the snail if it is currently in walking mode.
+
+        draw(self, screen):
+            Draws the snail on the screen, handling walking and sniffing animations.
+    """
 
     def __init__(self, x, y, range_place=100 * screen_obj.width_scale):
         """
+        Initialize the Snail with specific attributes and animations.
 
-        :rtype: object
-        :param x:
-        :param y:
-        :param range_place:
+        Args:
+            x (int): The x-coordinate of the Snail's initial position.
+            y (int): The y-coordinate of the Snail's initial position.
+            range_place (int): The range in which the snail can move horizontally.
         """
         images_paths = [
             'image/enemys/ramses_snail/Walk/Spr_Walk_1.png',
@@ -46,17 +102,19 @@ class Snail(CommonEnemy):
 
     def move(self):
         """
-        :rtype: None
+        Move the snail if it is currently walking.
 
+        Overrides the method from the base class CommonEnemy.
         """
         if self.is_walk:
             super().move()
 
     def draw(self, screen):
         """
+        Draw the snail on the screen, handling walking and sniffing animations.
 
-        :rtype: None
-        :param screen:
+        Args:
+            screen (pygame.Surface): The Pygame screen surface to draw on.
         """
         if self.is_walk:
             super().draw(screen)
@@ -65,7 +123,6 @@ class Snail(CommonEnemy):
             if self.walk_count == 3:
                 self.walk_count = 0
                 self.is_walk = False
-
         else:
             if self.speed < 0:
                 screen.blit(

@@ -1,18 +1,83 @@
-import pygame
+"""
+Module: game.src.Heroes.fire_knight
 
-import game.src.constants as constants
+This module defines the FireKnight class, which represents a character inheriting from Player.
+
+Attributes:
+- run (list): List of running animation images for the Fire Knight.
+- stay_images (list): List of idle (standing) animation images for the Fire Knight.
+- jump (list): List of jumping animation images for the Fire Knight.
+- attack_1 (list): List of primary attack animation images for the Fire Knight.
+- hp (int): Hit points (health) of the Fire Knight.
+- current_hp (int): Current hit points (health) of the Fire Knight.
+- const_delay_animation (int): Constant delay between animation frames for the Fire Knight.
+- const_delay_jump_animation (int):
+    Constant delay between jump animation frames for the Fire Knight.
+- attack_range (float): Range of the Fire Knight's attack.
+- attack_damage (int): Damage inflicted by the Fire Knight's attack.
+- knockback (int): Knockback effect on enemies when hit by the Fire Knight.
+- rect (pygame.Rect): Rectangle representing the Fire Knight's position and size.
+
+Methods:
+- __init__(self, x, y):
+    Initializes the Fire Knight with specific attributes and animations.
+- check_animation_count(self):
+    Checks and updates the animation count, and adjusts position during attack animations.
+
+Usage:
+from game.src.Heroes.fire_knight import FireKnight
+
+# Example initialization of the Fire Knight character
+fire_knight = FireKnight(x=150, y=300)
+
+Notes:
+- This class assumes that constants, pygame,
+ImageCache, Player, and other necessary modules are correctly imported and initialized.
+- Adjustments to image paths, scaling factors,
+and game mechanics should be made as per specific game requirements.
+- Ensure all necessary image files are correctly linked and available in the specified paths.
+
+"""
+from game.src import constants
 from game.src.Heroes.player import Player
 from game.src.cache import ImageCache
 from game.src.screen import screen_obj
+import pygame
 
 
 class FireKnight(Player):
+    """
+    Class representing the Fire Knight character, inheriting from Player.
+
+    Attributes:
+        run (list): List of running animation images.
+        stay_images (list): List of idle (standing) animation images.
+        jump (list): List of jumping animation images.
+        attack_1 (list): List of primary attack animation images.
+        hp (int): Hit points (health) of the Fire Knight.
+        current_hp (int): Current hit points (health) of the Fire Knight.
+        const_delay_animation (int): Constant delay between animation frames.
+        const_delay_jump_animation (int): Constant delay between jump animation frames.
+        attack_range (float): Range of the Fire Knight's attack.
+        attack_damage (int): Damage inflicted by the Fire Knight's attack.
+        knockback (int): Knockback effect on enemies when hit by the Fire Knight.
+        rect (pygame.Rect): Rectangle representing the Fire Knight's position and size.
+
+    Methods:
+        __init__(self, x, y):
+            Initializes the FireKnight with specific attributes and animations.
+
+        check_animation_count(self):
+            Checks and updates the animation count, and adjusts position during attack animations.
+    """
+
     def __init__(self, x, y):
         """
+        Initialize the Fire Knight with specific attributes and animations.
 
-        :rtype: object
-        :param x:
-        :param y:
+        Args:
+            x (int): The x-coordinate of the Fire Knight's initial position.
+            y (int): The y-coordinate of the Fire Knight's initial position.
         """
         super().__init__(x, y)
 
@@ -43,8 +108,10 @@ class FireKnight(Player):
 
     def check_animation_count(self):
         """
-        :rtype: None
+        Check and update the animation count, and adjust position during attack animations.
 
+        Overrides the base class method to add specific behavior for
+        Fire Knight's attack animations.
         """
         super().check_animation_count()
 
@@ -53,3 +120,4 @@ class FireKnight(Player):
                 self.y -= 60
             elif self.attack_animation_count == 7:
                 self.y += 60
+                

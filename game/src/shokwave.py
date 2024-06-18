@@ -1,11 +1,51 @@
-import pygame
+"""
+A class representing a shockwave sprite in a Pygame-based game.
 
-import game.src.constants as constants
+Attributes:
+- velocity: A vector indicating the movement speed and direction of the shockwave.
+- damage_dealt: Boolean indicating if damage has already been dealt by the shockwave.
+- direction: Direction of the shockwave (1 for right, -1 for left).
+- animation_count: Counter for animation frames of the shockwave.
+
+Methods:
+- __init__(self, x, y, dx, dy, direction=1, type_image="fireball"):
+    Initializes the shockwave with given parameters.
+- draw(self, screen): Draws the shockwave on the specified screen surface.
+- update(self, screen, sprites, game, damage_to="player"):
+    Updates the position of the shockwave and checks for collisions.
+- move_sprite(self, direction): Moves the shockwave sprite in the specified direction.
+- deal_damage_player(self, player): Deals damage to the player if collision occurs.
+- deal_damage_enemy(self, enemies): Deals damage to enemies if collision occurs.
+"""
+
+from game.src import constants
 from game.src.cache import ImageCache
 from game.src.screen import screen_obj
 
+import pygame
+
 
 class Shockwave(pygame.sprite.Sprite):
+    """
+    A class representing a shockwave sprite in a Pygame-based game.
+
+    Attributes:
+    - velocity: A vector indicating the movement speed and direction of the shockwave.
+    - damage_dealt: Boolean indicating if damage has already been dealt by the shockwave.
+    - direction: Direction of the shockwave (1 for right, -1 for left).
+    - animation_count: Counter for animation frames of the shockwave.
+
+    Methods:
+    - __init__(self, x, y, dx, dy, direction=1, type_image="fireball"):
+        Initializes the shockwave with given parameters.
+    - draw(self, screen): Draws the shockwave on the specified screen surface.
+    - update(self, screen, sprites, game, damage_to="player"):
+        Updates the position of the shockwave and checks for collisions.
+    - move_sprite(self, direction): Moves the shockwave sprite in the specified direction.
+    - deal_damage_player(self, player): Deals damage to the player if collision occurs.
+    - deal_damage_enemy(self, enemies): Deals damage to enemies if collision occurs.
+    """
+
     def __init__(self, x, y, dx, dy, direction=1, type_image="fireball"):
         """
         Initialize the Shockwave object.

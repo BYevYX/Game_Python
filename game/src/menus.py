@@ -1,7 +1,92 @@
-import sys
-import pygame
+"""
+This module defines classes for various menus and menu-related functionality in a Pygame-based game.
 
-import game.src.constants as constants
+Classes:
+- Menu: Represents a basic menu with common menu operations and attributes.
+- MainMenu: Represents the main menu of the game, inheriting from Menu.
+- SettingsMenu: Represents the settings menu of the game, inheriting from Menu.
+- VideoMenu: Represents the video settings menu, inheriting from Menu.
+- SelectorMenu: Represents a menu with selectable items, inheriting from Menu.
+- SelectorCharacter:
+    Represents a specific selector menu for choosing character types, inheriting from SelectorMenu.
+
+Attributes and Methods:
+- Menu Class:
+    Attributes:
+    - MAX_FPS (int): Maximum frames per second for the menu.
+    - clock (pygame.time.Clock): Pygame clock object for timing.
+    - cursor (pygame.Surface): Surface for the cursor image.
+    - is_restart (bool): Flag indicating if the menu should restart.
+    - can_move_buttons (bool): Flag indicating if buttons can be moved.
+    - title (str): Title of the menu.
+    - WIDTH (int): Width of the menu screen.
+    - HEIGHT (int): Height of the menu screen.
+    - main_background (pygame.Surface): Background surface for the menu.
+
+    Methods:
+    - draw_menu(menu_obj, screen): Draws the menu on the screen.
+    - fade(screen): Creates a fade effect on the screen.
+    - check_size(): Checks and updates the menu size based on the screen size.
+
+- MainMenu Class (Inherits from Menu):
+    Attributes:
+    - start_button (Button): Button for starting the game.
+    - settings_button (Button): Button for accessing settings.
+    - exit_button (Button): Button for exiting the game.
+    - buttons (list): List of all buttons in the main menu.
+    - title (str): Title of the main menu.
+    - settings_menu (SettingsMenu): Settings menu object.
+
+    Methods:
+    - handle_events(event, screen, running): Handle events specific to the main menu.
+
+- SettingsMenu Class (Inherits from Menu):
+    Attributes:
+    - audio_button (Button): Button for audio settings.
+    - video_button (Button): Button for video settings.
+    - back_button (Button): Button for returning to the previous menu.
+    - buttons (list): List of all buttons in the settings menu.
+    - title (str): Title of the settings menu.
+    - video_menu (VideoMenu): Video settings menu object.
+
+    Methods:
+    - handle_events(event, screen, running): Handle events specific to the settings menu.
+
+- VideoMenu Class (Inherits from Menu):
+    Attributes:
+    - resolution1_button (Button): Button for selecting 960x600 resolution.
+    - resolution2_button (Button): Button for selecting 1280x800 resolution.
+    - resolution3_button (Button): Button for selecting fullscreen resolution.
+    - back_button (Button): Button to return to the previous menu.
+    - buttons (list): List of buttons in the video settings menu.
+    - title (str): Title of the menu, set to "Video Settings".
+
+    Methods:
+    - handle_events(event, screen, running): Handle events specific to the video settings menu.
+
+- SelectorMenu Class (Inherits from Menu):
+    Attributes:
+    - can_move_buttons (bool): Flag indicating if buttons can be moved.
+    - title (str): Title of the menu.
+    - buttons (list): List of buttons in the menu.
+    - returned (list): List of returned values corresponding to each button.
+
+    Methods:
+    - handle_events(event, screen, running): Handle events specific to the selector menu.
+    - choice(screen): Display the choice menu and handle interaction.
+
+- SelectorCharacter Class (Inherits from SelectorMenu):
+    Attributes:
+    Inherits attributes from SelectorMenu.
+
+    Methods:
+    - __init__(): Initialize the SelectorCharacter object.
+"""
+
+# Import statements for game dependencies
+# (constants, various hero classes, Button, GameOn, screen_obj, sys, pygame)
+import sys
+from game.src import constants
 from game.src.Heroes.fire_knight import FireKnight
 from game.src.Heroes.leaf_ranger import LeafRanger
 from game.src.Heroes.standard_hero import StandardHero
@@ -10,9 +95,32 @@ from game.src.Heroes.wind_hashahin import WindHashahin
 from game.src.button import Button
 from game.src.game_start import GameOn
 from game.src.screen import screen_obj
+import pygame
 
 
 class Menu:
+    """
+        A class representing a menu in a game.
+
+        Attributes:
+            MAX_FPS (int): Maximum frames per second for the menu.
+            clock (pygame.time.Clock): Pygame clock object for timing.
+            cursor (pygame.Surface): Surface for the cursor image.
+            is_restart (bool): Flag indicating if the menu should restart.
+            can_move_buttons (bool): Flag indicating if buttons can be moved.
+            title (str): Title of the menu.
+            WIDTH (int): Width of the menu screen.
+            HEIGHT (int): Height of the menu screen.
+            main_background (pygame.Surface): Background surface for the menu.
+
+        Methods:
+            draw_menu(menu_obj, screen):
+                Draws the menu on the screen.
+            fade(screen):
+                Creates a fade effect on the screen.
+            check_size():
+                Checks and updates the menu size based on the screen size.
+        """
 
     def __init__(self):
         """
@@ -130,6 +238,21 @@ class Menu:
 
 
 class MainMenu(Menu):
+    """
+        A class representing the main menu in a game, inherits from Menu.
+
+        Attributes:
+            start_button (Button): Button for starting the game.
+            settings_button (Button): Button for accessing settings.
+            exit_button (Button): Button for exiting the game.
+            buttons (list): List of all buttons in the main menu.
+            title (str): Title of the main menu.
+            settings_menu (SettingsMenu): Settings menu object.
+
+        Methods:
+            handle_events(event, screen, running):
+                Handle events specific to the main menu.
+        """
 
     def __init__(self):
         """
@@ -180,6 +303,21 @@ class MainMenu(Menu):
 
 
 class SettingsMenu(Menu):
+    """
+        A class representing the settings menu in a game, inherits from Menu.
+
+        Attributes:
+            audio_button (Button): Button for audio settings.
+            video_button (Button): Button for video settings.
+            back_button (Button): Button for returning to previous menu.
+            buttons (list): List of all buttons in the settings menu.
+            title (str): Title of the settings menu.
+            video_menu (VideoMenu): Video settings menu object.
+
+        Methods:
+            handle_events(event, screen, running):
+                Handle events specific to the settings menu.
+        """
 
     def __init__(self):
         """
@@ -221,6 +359,22 @@ class SettingsMenu(Menu):
 
 
 class VideoMenu(Menu):
+    """
+        VideoMenu class represents the menu for video settings.
+
+        Attributes:
+            resolution1_button (Button): Button for selecting 960x600 resolution.
+            resolution2_button (Button): Button for selecting 1280x800 resolution.
+            resolution3_button (Button): Button for selecting fullscreen resolution.
+            back_button (Button): Button to return to the previous menu.
+            buttons (list): List of buttons in the video settings menu.
+            title (str): Title of the menu, set to "Video Settings".
+
+        Methods:
+            __init__(): Initialize the VideoMenu object.
+            handle_events(event, screen, running):
+                Handle events specific to the video settings menu.
+        """
 
     def __init__(self):
         """
@@ -283,6 +437,21 @@ class VideoMenu(Menu):
 # }
 
 class SelectorMenu(Menu):
+    """
+        SelectorMenu class represents a menu with selectable items.
+
+        Attributes:
+            can_move_buttons (bool): Flag indicating if buttons can be moved.
+            title (str): Title of the menu.
+            buttons (list): List of buttons in the menu.
+            returned (list): List of returned values corresponding to each button.
+
+        Methods:
+            __init__(*args): Initialize the SelectorMenu object with a list of selectable items.
+            handle_events(event, screen, running): Handle events specific to the selector menu.
+            choice(screen): Display the choice menu and handle interaction.
+        """
+
     def __init__(self, *args):
         """
         Initialize the SelectorMenu object with a list of selectable items.
@@ -350,6 +519,16 @@ class SelectorMenu(Menu):
 
 
 class SelectorCharacter(SelectorMenu):
+    """
+        SelectorCharacter class represents a menu for selecting character types.
+
+        Attributes:
+            Inherits attributes from SelectorMenu.
+
+        Methods:
+            __init__(): Initialize the SelectorCharacter object.
+        """
+
     def __init__(self):
         """
         Initialize the SelectorCharacter object.
@@ -365,4 +544,5 @@ class SelectorCharacter(SelectorMenu):
 
         )
 
-# можно переписать в клас не наследующий от меню но копирующий его и исполбзующий его статический метод
+# можно переписать в клас не наследующий от меню но копирующий его и
+# исполбзующий его статический метод

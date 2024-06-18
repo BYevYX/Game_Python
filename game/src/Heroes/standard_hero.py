@@ -1,16 +1,78 @@
+"""
+Module: game.src.Heroes.standard_hero
+
+This module defines the StandardHero character class,
+inheriting from Player, with specific attributes and animations.
+
+Attributes:
+- run (list): List of images for the standard hero's running animation.
+- stay_images (list): List of images for the standard hero's idle animation.
+- jump (list): List of images for the standard hero's jumping animation.
+- attack_1 (list): List of images for the standard hero's attack animation.
+- hp (int): Maximum health points of the standard hero.
+- current_hp (int): Current health points of the standard hero.
+- const_delay_animation (int): Animation delay for standard hero's general animations.
+- const_delay_jump_animation (int): Animation delay for standard hero's jump animation.
+- attack_range (float): Attack range of the standard hero.
+- attack_damage (int): Damage inflicted by the standard hero's attacks.
+- knockback (int): Knockback effect of the standard hero's attacks.
+- rect (pygame.Rect): Rectangle representing the standard hero's position and size on screen.
+
+Methods:
+- __init__(self, x, y):
+    Initializes the StandardHero with specific attributes and animations.
+
+Usage:
+from game.src.Heroes.standard_hero import StandardHero
+
+# Example initialization of the StandardHero character
+standard_hero = StandardHero(x=100, y=200)
+
+Notes:
+- This class assumes that the constants, Player class,
+ImageCache, and screen_obj are correctly imported and initialized.
+- Adjustments to image paths or scaling factors
+in ImageCache.get_images calls should be made as per specific game requirements.
+- Ensure all necessary image files are correctly linked and available in the specified paths.
+
+"""
 from game.src.Heroes.player import Player
 from game.src.cache import ImageCache
-import game.src.constants as constants
+from game.src import constants
 from game.src.screen import screen_obj
 
 
 class StandardHero(Player):
-    def __init__(self, x, y):
+    """
+        A class representing a standard hero character, inheriting from Player.
+
+        Attributes:
+            run (list): List of images for the standard hero's running animation.
+            stay_images (list): List of images for the standard hero's idle animation.
+            jump (list): List of images for the standard hero's jumping animation.
+            attack_1 (list): List of images for the standard hero's attack animation.
+            hp (int): Maximum health points of the standard hero.
+            current_hp (int): Current health points of the standard hero.
+            const_delay_animation (int): Animation delay for standard hero's general animations.
+            const_delay_jump_animation (int): Animation delay for standard hero's jump animation.
+            attack_range (float): Attack range of the standard hero.
+            attack_damage (int): Damage inflicted by the standard hero's attacks.
+            knockback (int): Knockback effect of the standard hero's attacks.
+            rect (pygame.Rect):
+                Rectangle representing the standard hero's position and size on screen.
+
+        Methods:
+            __init__(self, x, y):
+                Initializes the StandardHero with specific attributes and animations.
         """
 
+    def __init__(self, x, y):
+        """
+        Initialize the StandardHero with specific attributes and animations.
+
+        :param x: The x-coordinate of the StandardHero's initial position.
+        :param y: The y-coordinate of the StandardHero's initial position.
         :rtype: object
-        :param x:
-        :param y:
         """
         super().__init__(x, y)
 

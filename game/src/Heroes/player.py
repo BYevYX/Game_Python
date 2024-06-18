@@ -1,13 +1,154 @@
+"""
+Module: game.src.Heroes.player
+
+This module defines the Player character class for the game.
+
+Attributes:
+- run (list): List of images for running animation.
+- stay_images (list): List of images for standing animation.
+- jump (list): List of images for jumping animation.
+- attack_1 (list): List of images for attack animation.
+- x (int): X-coordinate of the player's current position.
+- y (int): Y-coordinate of the player's current position.
+- attack_direction (int): Direction of the player's attack (-1 for left, 1 for right).
+- hp (int): Total hit points (health) of the player.
+- current_hp (int): Current hit points (health) of the player.
+- heart_scale (float): Scale factor for the heart images.
+- run_animation_count (int): Index of the current frame in run animation.
+- stay_animation_count (int): Index of the current frame in stay animation.
+- jump_animation_count (int): Index of the current frame in jump animation.
+- attack_animation_count (int): Index of the current frame in attack animation.
+- const_delay_animation (int): Constant delay between animation frames.
+- const_delay_jump_animation (int): Constant delay between jump animation frames.
+- delay_animation (int): Current delay between animation frames.
+- delay_jump_animation (int): Current delay between jump animation frames.
+- is_attacking (bool): Flag indicating if the player is currently attacking.
+- attack_cooldown (int): Cooldown period between attacks.
+- last_attack_time (int): Timestamp of the last attack.
+- attack_range (float): Range of the player's attack.
+- attack_damage (int): Damage inflicted by the player's attack.
+- knockback (int): Knockback effect on enemies when hit by the player.
+- invincible (bool): Flag indicating if the player is currently invincible.
+- invincibility_duration (float): Duration of invincibility after being hit.
+- last_hit_time (float): Timestamp of the last time the player was hit.
+- is_jump (bool): Flag indicating if the player is currently jumping.
+- on_ground (bool): Flag indicating if the player is currently on the ground.
+- jump_height (float): Height of the player's jump.
+- y_velocity (float): Vertical velocity of the player.
+- max_fall_speed (float): Maximum falling speed of the player.
+- can_left (bool): Flag indicating if the player can move left.
+- can_right (bool): Flag indicating if the player can move right.
+- coins (int): Amount of coins collected by the player.
+- inventory (list): List of items in the player's inventory.
+- hp_image (tuple): Tuple of heart images for displaying player's health.
+- rect (pygame.Rect): Rectangular area representing the player in the game world.
+
+Methods:
+- __init__(self, x, y):
+    Initializes the Player with specific attributes and animations.
+- animate_hp(self, screen):
+    Animate the player's HP on the screen.
+- check_animation_count(self):
+    Update the animation counts and reset if necessary.
+- correction(self):
+    Correct the player's position if needed.
+- take_damage(self, damage=1, enemy=None):
+    Handle the player taking damage.
+- check_invincibility(self):
+    Check and update the player's invincibility status.
+- blink(self, image):
+    Make the player blink when invincible.
+- check_damage(self, enemies):
+    Check for collisions with enemies and apply damage.
+- attack(self, enemies):
+    Handle the player's attack action.
+- draw(self, screen, keys, position=None):
+    Draw the player on the screen.
+- move_environment(direction, game):
+    Move the environment based on the player's movement direction.
+- move(self, keys, game):
+    Handle the player's movement.
+- check_collisions(self, platforms):
+    Check for collisions with platforms.
+- update(self, screen, game):
+    Update the player's state.
+
+Usage:
+from game.src.Heroes.player import Player
+
+# Example initialization of the Player character
+player = Player(x=100, y=200)
+
+Notes:
+- This class assumes that constants, pygame,
+and other necessary modules are correctly imported and initialized.
+- Adjustments to image paths, scaling factors,
+and game mechanics should be made as per specific game requirements.
+- Ensure all necessary image files are correctly linked and available in the specified paths.
+
+"""
 import time
-
-import pygame
-
-import game.src.constants as constants
+from game.src import constants
 from game.src.enemies.enemies_base import CommonEnemy
 from game.src.screen import screen_obj
+import pygame
 
 
 class Player(pygame.sprite.Sprite):
+    """
+        Class representing the player character in the game.
+
+        Attributes:
+            run (list): List of images for running animation.
+            stay_images (list): List of images for standing animation.
+            jump (list): List of images for jumping animation.
+            attack_1 (list): List of images for attack animation.
+
+            x (int): X-coordinate of the player's current position.
+            y (int): Y-coordinate of the player's current position.
+            attack_direction (int): Direction of the player's attack (-1 for left, 1 for right).
+            hp (int): Total hit points (health) of the player.
+            current_hp (int): Current hit points (health) of the player.
+            heart_scale (float): Scale factor for the heart images.
+
+            run_animation_count (int): Index of the current frame in run animation.
+            stay_animation_count (int): Index of the current frame in stay animation.
+            jump_animation_count (int): Index of the current frame in jump animation.
+            attack_animation_count (int): Index of the current frame in attack animation.
+
+            const_delay_animation (int): Constant delay between animation frames.
+            const_delay_jump_animation (int): Constant delay between jump animation frames.
+            delay_animation (int): Current delay between animation frames.
+            delay_jump_animation (int): Current delay between jump animation frames.
+
+            is_attacking (bool): Flag indicating if the player is currently attacking.
+            attack_cooldown (int): Cooldown period between attacks.
+            last_attack_time (int): Timestamp of the last attack.
+            attack_range (float): Range of the player's attack.
+            attack_damage (int): Damage inflicted by the player's attack.
+            knockback (int): Knockback effect on enemies when hit by the player.
+
+            invincible (bool): Flag indicating if the player is currently invincible.
+            invincibility_duration (float): Duration of invincibility after being hit.
+            last_hit_time (float): Timestamp of the last time the player was hit.
+
+            is_jump (bool): Flag indicating if the player is currently jumping.
+            on_ground (bool): Flag indicating if the player is currently on the ground.
+            jump_height (float): Height of the player's jump.
+            y_velocity (float): Vertical velocity of the player.
+            max_fall_speed (float): Maximum falling speed of the player.
+
+            can_left (bool): Flag indicating if the player can move left.
+            can_right (bool): Flag indicating if the player can move right.
+
+            coins (int): Amount of coins collected by the player.
+            inventory (list): List of items in the player's inventory.
+
+            hp_image (tuple): Tuple of heart images for displaying player's health.
+
+            rect (pygame.Rect): Rectangular area representing the player in the game world.
+        """
+
     run = []
     stay_images = []
     jump = []
@@ -15,10 +156,11 @@ class Player(pygame.sprite.Sprite):
 
     def __init__(self, x, y):
         """
+        Initialize the Player with specific attributes and animations.
 
+        :param x: The x-coordinate of the Player's initial position.
+        :param y: The y-coordinate of the Player's initial position.
         :rtype: object
-        :param x:
-        :param y:
         """
         super().__init__()
         self.x = x
@@ -46,7 +188,7 @@ class Player(pygame.sprite.Sprite):
         self.knockback = constants.PLAYER_MAIN_KNOCKBACK
 
         self.invincible = False
-        self.invincibility_duration = constants.PLAYER_INVISIBILITY_DURATION  # В секундах
+        self.invincibility_duration = constants.PLAYER_INVISIBILITY_DURATION  # In seconds
         self.last_hit_time = 0
 
         self.is_jump = False
@@ -74,9 +216,10 @@ class Player(pygame.sprite.Sprite):
 
     def animate_hp(self, screen):
         """
+        Animate the player's HP on the screen.
 
+        :param screen: The Pygame screen surface.
         :rtype: None
-        :param screen:
         """
         for i in range(self.hp):
             screen.blit(self.hp_image[0], (40 + i * 50, 30))
@@ -85,8 +228,9 @@ class Player(pygame.sprite.Sprite):
 
     def check_animation_count(self):
         """
-        :rtype: None
+        Update the animation counts and reset if necessary.
 
+        :rtype: None
         """
         self.delay_animation += 1
         self.delay_jump_animation += 1
@@ -122,6 +266,7 @@ class Player(pygame.sprite.Sprite):
 
     def correction(self):
         """
+        Correct the player's position if needed.
 
         :rtype: None
         """
@@ -134,16 +279,16 @@ class Player(pygame.sprite.Sprite):
 
         if self.x > screen_obj.width // 2:
             self.x -= 1
-
         else:
             self.x += 1
 
     def take_damage(self, damage=1, enemy=None):
         """
+        Handle the player taking damage.
 
+        :param damage: The amount of damage to take.
+        :param enemy: The enemy causing the damage.
         :rtype: None
-        :param damage:
-        :param enemy:
         """
         current_time = time.time()
         if not self.invincible:
@@ -164,8 +309,9 @@ class Player(pygame.sprite.Sprite):
 
     def check_invincibility(self):
         """
-        :rtype: None
+        Check and update the player's invincibility status.
 
+        :rtype: None
         """
         current_time = time.time()
         if self.invincible and (current_time - self.last_hit_time) > self.invincibility_duration:
@@ -173,25 +319,26 @@ class Player(pygame.sprite.Sprite):
 
     def blink(self, image):
         """
+        Make the player blink when invincible.
 
+        :param image: The current image of the player.
         :rtype: None
-        :param image:
         """
         if self.invincible:
-            # Мерцание
             current_time = time.time()
             if int(current_time * 10) % 2 == 0:
-                image.set_alpha(255)  # Полностью видимый
+                image.set_alpha(255)  # Fully visible
             else:
-                image.set_alpha(0)  # Полностью прозрачный
+                image.set_alpha(0)  # Fully transparent
         else:
-            image.set_alpha(255)  # Полностью видимый в обычном состоянии
+            image.set_alpha(255)  # Fully visible in normal state
 
     def check_damage(self, enemies):
         """
+        Check for collisions with enemies and apply damage.
 
+        :param enemies: The list of enemy groups.
         :rtype: None
-        :param enemies:
         """
         for group_enemies in enemies:
             collided_enemy = pygame.sprite.spritecollideany(self, group_enemies)
@@ -200,14 +347,14 @@ class Player(pygame.sprite.Sprite):
 
     def attack(self, enemies):
         """
+        Handle the player's attack action.
 
+        :param enemies: The list of enemy groups.
         :rtype: None
-        :param enemies:
         """
         self.last_attack_time = pygame.time.get_ticks()
 
         if self.attack_direction == 1:
-
             attack_rect = pygame.Rect(self.rect.x, self.rect.y, self.rect.width + self.attack_range, self.rect.height)
         else:
             attack_rect = pygame.Rect(self.rect.x, self.rect.y, -self.attack_range, self.rect.height)
@@ -219,11 +366,12 @@ class Player(pygame.sprite.Sprite):
 
     def draw(self, screen, keys, position=None):
         """
+        Draw the player on the screen.
 
+        :param screen: The Pygame screen surface.
+        :param keys: The current state of all keyboard buttons.
+        :param position: The position to draw the player at.
         :rtype: None
-        :param screen:
-        :param keys:
-        :param position:
         """
         self.animate_hp(screen)
 
@@ -271,10 +419,11 @@ class Player(pygame.sprite.Sprite):
     @staticmethod
     def move_environment(direction, game):
         """
+        Move the environment based on the player's movement direction.
 
+        :param direction: The direction to move the environment ('left' or 'right').
+        :param game: The game instance containing environment elements.
         :rtype: None
-        :param direction:
-        :param game:
         """
         game.main_location.move_background(direction)
         for platform in game.platforms:
@@ -294,10 +443,11 @@ class Player(pygame.sprite.Sprite):
 
     def move(self, keys, game):
         """
+        Handle the player's movement.
 
+        :param keys: The current state of all keyboard buttons.
+        :param game: The game instance.
         :rtype: None
-        :param keys:
-        :param game:
         """
         self.correction()
         if (keys[pygame.K_LEFT] or keys[pygame.K_a]) and self.can_left:
@@ -319,8 +469,8 @@ class Player(pygame.sprite.Sprite):
             self.on_ground = False
             self.y_velocity = -self.jump_height
 
-        if keys[
-            pygame.K_f] and not self.is_attacking and pygame.time.get_ticks() - self.last_attack_time > self.attack_cooldown:
+        if (keys[pygame.K_f] and not self.is_attacking and
+                pygame.time.get_ticks() - self.last_attack_time > self.attack_cooldown):
             self.is_attacking = True
             self.attack(game.enemies)
 
@@ -334,7 +484,9 @@ class Player(pygame.sprite.Sprite):
 
     def check_collisions(self, platforms):
         """
+        Check for collisions with platforms.
 
+        :param platforms: The list of platforms.
         :rtype: None
         :param platforms:
         """
@@ -368,10 +520,11 @@ class Player(pygame.sprite.Sprite):
 
     def update(self, screen, game):
         """
+        Update the player's state.
 
+        :param screen: The Pygame screen surface.
+        :param game: The game instance.
         :rtype: None
-        :param screen:
-        :param game:
         """
         keys = pygame.key.get_pressed()
 
@@ -381,4 +534,5 @@ class Player(pygame.sprite.Sprite):
         self.check_damage(game.enemies)
         self.check_invincibility()
 
-        # pygame.draw.rect(screen, (255, 255, 255), (self.rect.x, self.rect.y, self.rect.width, self.rect.height))
+        # pygame.draw.rect(screen, (255, 255, 255),
+        # (self.rect.x, self.rect.y, self.rect.width, self.rect.height))

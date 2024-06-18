@@ -1,12 +1,72 @@
-import sys
-import pygame
+"""
+This module defines classes for non-playable characters (NPCs) in a Pygame-based game.
 
-import game.src.constants as constants
+Classes:
+- Npc: Represents a basic NPC with movement and animation capabilities.
+- Blacksmith: Represents a specialized NPC with additional shop interface functionality.
+
+Attributes and Methods:
+- Npc Class:
+    Attributes:
+    - animation_images: List of images for animating the NPC.
+    - direction: Current direction of movement ('right' or 'left').
+    - velocity: Speed of movement.
+    - animation_count: Index of the current animation frame.
+    - const_delay: Constant delay between animation frames.
+    - delay: Current delay count for animation frame change.
+    - rect: Rectangle defining the position and size of the NPC.
+    - has_shop: Boolean indicating if the NPC has a shop interface.
+
+    Methods:
+    - __init__(self, x, y): Initializes the NPC object.
+    - animation(self, screen): Animates the NPC by blitting the current frame onto the screen.
+    - check_animation_count(self): Updates the animation frame count based on the delay.
+    - move_npc(self, direction): Moves the NPC in the specified direction.
+    - update(self, screen): Updates the NPC's animation and position.
+
+- Blacksmith Class (Inherits from Npc):
+    Attributes:
+    - animation_images: List of images for animating the blacksmith.
+    - const_delay: Constant delay between animation frames.
+    - has_shop: Boolean indicating if the blacksmith has a shop interface.
+    - shop_items: Dictionary mapping items available for sale to their prices.
+
+    Methods:
+    - __init__(self, x, y): Initializes the Blacksmith object.
+    - open_shop(self, screen, player): Opens the shop interface for the player to buy items.
+    - buy_item(self, player, item): Handles the logic for buying an item from the shop.
+"""
+
+# Import statements for game dependencies (constants, screen_obj, ImageCache, sys, pygame)
+import sys
+from game.src import constants
 from game.src.screen import screen_obj
 from game.src.cache import ImageCache
+import pygame
 
 
 class Npc(pygame.sprite.Sprite):
+    """
+        A class representing a non-playable character (NPC) in a Pygame-based game.
+
+        Attributes:
+        - animation_images: List of images for animating the NPC.
+        - direction: Current direction of movement ('right' or 'left').
+        - velocity: Speed of movement.
+        - animation_count: Index of the current animation frame.
+        - const_delay: Constant delay between animation frames.
+        - delay: Current delay count for animation frame change.
+        - rect: Rectangle defining the position and size of the NPC.
+        - has_shop: Boolean indicating if the NPC has a shop interface.
+
+        Methods:
+        - __init__(self, x, y): Initializes the NPC object.
+        - animation(self, screen): Animates the NPC by blitting the current frame onto the screen.
+        - check_animation_count(self): Updates the animation frame count based on the delay.
+        - move_npc(self, direction): Moves the NPC in the specified direction.
+        - update(self, screen): Updates the NPC's animation and position.
+        """
+
     animation_images = None
 
     def __init__(self, x, y):
@@ -80,6 +140,21 @@ class Npc(pygame.sprite.Sprite):
 
 
 class Blacksmith(Npc):
+    """
+        A class representing a blacksmith NPC with a shop interface in a Pygame-based game.
+
+        Attributes:
+        - animation_images: List of images for animating the blacksmith.
+        - const_delay: Constant delay between animation frames.
+        - has_shop: Boolean indicating if the blacksmith has a shop interface.
+        - shop_items: Dictionary mapping items available for sale to their prices.
+
+        Methods:
+        - __init__(self, x, y): Initializes the Blacksmith object.
+        - open_shop(self, screen, player): Opens the shop interface for the player to buy items.
+        - buy_item(self, player, item): Handles the logic for buying an item from the shop.
+        """
+
     def __init__(self, x, y):
         """
         Initialize the Blacksmith object.
@@ -89,7 +164,7 @@ class Blacksmith(Npc):
         :rtype: object
         """
 
-        animation_images = [f'image/npc/blacksmith/BLACKSMITH_{i}.png' for i in range (1, 8)]
+        animation_images = [f'image/npc/blacksmith/BLACKSMITH_{i}.png' for i in range(1, 8)]
         self.animation_images = ImageCache.get_images(animation_images)
 
         super().__init__(x, y)

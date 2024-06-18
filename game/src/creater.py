@@ -1,4 +1,50 @@
-import pygame
+"""
+Module: game.src.creater
+
+This module contains functions for creating various game elements such as enemies, locations,
+platforms, moving platforms, gates, and NPCs using Pygame.
+
+Functions:
+- create_enemies():
+    Create groups of enemies for the game.
+
+- add_boss(enemies):
+    Add a boss to the list of enemies.
+
+- create_location():
+    Create the game location with backgrounds and partial backgrounds.
+
+- create_platforms():
+    Create and return all static platforms for the game.
+
+- add_moving_platforms(platforms):
+    Add moving platforms to the existing group of platforms.
+
+- create_and_add_gates(platforms):
+    Create and add gates to the existing group of platforms.
+
+- create_npc():
+    Create and return NPCs for the game.
+
+Dependencies:
+- External dependencies:
+  - pygame: Library for game development in Python with multimedia capabilities.
+
+- Internal dependencies:
+  - game.src.enemies.boss: Imports Boss class for creating boss enemies.
+  - game.src.enemies.satyr: Imports Satyr class for creating Satyr enemies.
+  - game.src.enemies.sculwolf: Imports Sculwolf class for creating Sculwolf enemies.
+  - game.src.enemies.snail: Imports Snail class for creating Snail enemies.
+  - game.src.locations: Imports Locations and PartialBackground classes for managing game locations.
+  - game.src.npc: Imports Blacksmith class for creating NPCs.
+  - game.src.platforms: Imports Platform and MovingPlatform classes for managing platforms.
+  - game.src.screen: Imports screen_obj for managing screen properties.
+
+Usage:
+Import this module to access functions for creating enemies, locations,
+platforms, moving platforms, gates,
+and NPCs required for initializing and setting up the game environment.
+"""
 
 from game.src.enemies.boss import Boss
 from game.src.enemies.satyr import Satyr
@@ -8,13 +54,15 @@ from game.src.locations import Locations, PartialBackground
 from game.src.npc import Blacksmith
 from game.src.platforms import Platform, MovingPlatform
 from game.src.screen import screen_obj
+import pygame
 
 
 def create_enemies():
     """
+    Create groups of enemies for the game.
 
     :rtype: list
-    :return: 
+    :return: A list containing groups of Sculwolfs, Satyrs, and Snails.
     """
     start = screen_obj.width
 
@@ -60,10 +108,11 @@ def create_enemies():
 
 def add_boss(enemies):
     """
+    Add a boss to the list of enemies.
 
     :rtype: _SpriteSupportsGroup
-    :param enemies: 
-    :return: 
+    :param enemies: List of enemy groups.
+    :return: Group containing the boss.
     """
     bosses = pygame.sprite.Group()
     boss_tuple = (
@@ -78,9 +127,10 @@ def add_boss(enemies):
 
 def create_location():
     """
+    Create the game location with backgrounds and partial backgrounds.
 
     :rtype: list
-    :return: 
+    :return: A list containing the main location and partial backgrounds.
     """
     start = screen_obj.width
     main_location = Locations(["image/locations/backgrounds/01 background.png",
@@ -139,9 +189,10 @@ def create_location():
 
 def create_platforms():
     """
+    Create and return all static platforms for the game.
 
     :rtype: _SpriteSupportsGroup
-    :return: 
+    :return: Group containing all static platforms.
     """
     start = screen_obj.width
     platforms = pygame.sprite.Group()
@@ -251,10 +302,11 @@ def create_platforms():
 
 def add_moving_platforms(platforms):
     """
+    Add moving platforms to the existing group of platforms.
 
     :rtype: _SpriteSupportsGroup
-    :param platforms: 
-    :return: 
+    :param platforms: Group of existing platforms.
+    :return: Group containing both static and moving platforms.
     """
     start = screen_obj.width
 
@@ -279,10 +331,11 @@ def add_moving_platforms(platforms):
 
 def create_and_add_gates(platforms):
     """
+    Create and add gates to the existing group of platforms.
 
     :rtype: _SpriteSupportsGroup
-    :param platforms: 
-    :return: 
+    :param platforms: Group of existing platforms.
+    :return: Group containing the gates.
     """
     gates = pygame.sprite.Group()
     gates_tuple = (
@@ -298,9 +351,10 @@ def create_and_add_gates(platforms):
 
 def create_npc():
     """
+    Create and return NPCs for the game.
 
     :rtype: _SpriteSupportsGroup
-    :return: 
+    :return: Group containing the NPCs.
     """
     npcs = pygame.sprite.Group()
     npcs_tuple = (

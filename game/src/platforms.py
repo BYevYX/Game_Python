@@ -1,14 +1,67 @@
-import pygame
+"""
+Module defining classes for platform objects in a Pygame-based game.
 
-import game.src.constants as constants
+Classes:
+- Platform: Represents static platforms in the game.
+- MovingPlatform:
+    Subclass of Platform, represents platforms that can slide horizontally or vertically.
+
+Attributes and Methods:
+- Platform:
+  Attributes:
+  - image: Surface object representing the platform's image.
+  - rect: Rect object representing the position and size of the platform.
+  - velocity: Horizontal movement speed of the platform.
+  - direction: Direction of movement ('right' or 'left').
+
+  Methods:
+  - __init__(self, x, y, width, height, image_type="main_platform"): Initializes a Platform object.
+  - move_platform(self, direction): Moves the platform horizontally in the specified direction.
+
+- MovingPlatform:
+  Attributes:
+  - up: Upper bound for sliding.
+  - to: Lower bound for sliding.
+  - slide_direction: Direction of sliding ('x' or 'y').
+  - slide_velocity: Speed of sliding movement.
+
+  Methods:
+  - __init__(self, x, y, width, height, up, to, slide_direction='x', image_type="moving_platform"):
+    Initializes a MovingPlatform object.
+  - slide(self):
+      Slides the platform within specified bounds based on slide_direction.
+  - move_platform(self, direction):
+      Moves the platform horizontally in the specified direction and adjusts slide bounds.
+
+This module provides definitions for
+both static and moving platforms used within the game environment,
+allowing for varied platform behaviors and appearances based on specified parameters.
+"""
+
+from game.src import constants
 from game.src.cache import ImageCache
 from game.src.screen import screen_obj
-
+import pygame
 
 # from random import randint
 
 
 class Platform(pygame.sprite.Sprite):
+    """
+    A class representing platforms in a Pygame-based game.
+
+    Attributes:
+    - image: Surface object representing the platform's image.
+    - rect: Rect object representing the position and size of the platform.
+    - velocity: Horizontal movement speed of the platform.
+    - direction: Direction of movement ('right' or 'left').
+
+    Methods:
+    - __init__(self, x, y, width, height, image_type="main_platform"): 
+        Initializes the Platform object.
+    - move_platform(self, direction): Moves the platform horizontally in the specified direction.
+    """
+
     def __init__(self, x, y, width, height, image_type="main_platform"):
         """
         Initialize the Platform object.
@@ -56,7 +109,29 @@ class Platform(pygame.sprite.Sprite):
 
 
 class MovingPlatform(Platform):
-    def __init__(self, x, y, width, height, up, to, slide_direction='x', image_type="moving_platform"):
+    """
+    Class:
+    MovingPlatform:
+    Attributes:
+    - up: Upper bound for sliding.
+    - to: Lower bound for sliding.
+    - slide_direction: Direction of sliding ('x' or 'y').
+    - slide_velocity: Speed of sliding movement.
+
+    Methods:
+    - __init__(self, x, y, width, height, up, to, slide_direction='x',
+               image_type="moving_platform"):
+    Initializes the MovingPlatform object.
+    - slide(self): Slides the platform within specified bounds based on slide_direction.
+    - move_platform(self, direction):
+        Moves the platform horizontally in the specified direction and adjusts slide bounds.
+
+    This docstring provides an overview of the `Platform` class and its `MovingPlatform` subclass,
+    describing their attributes and methods for clarity and reference.
+    """
+
+    def __init__(self, x, y, width, height, up, to, slide_direction='x',
+                 image_type="moving_platform"):
         """
         Initialize the MovingPlatform object.
 
@@ -117,7 +192,8 @@ class MovingPlatform(Platform):
     #
     #     for i in range(levels):
     #         for j in range(0, screen_obj.width, 330):
-    #             platforms.add(Platform(j + randint(-70, 70), (i + 0.7) * randint(130, 140), 20 * randint(9, 10), 30))
+    #             platforms.add(Platform(j + randint(-70, 70),
+    #                           (i + 0.7) * randint(130, 140), 20 * randint(9, 10), 30))
     #
     #
     #     return platforms

@@ -1,27 +1,123 @@
-import pygame
+"""
+Module: game.src.Heroes.super_player
 
-import game.src.constants as constants
+This module defines the SuperPlayer character class,
+inheriting from Player, with enhanced abilities and animations.
+
+Attributes:
+- ability_images (list): List of images for the SuperPlayer's ability animation.
+- ulta_images (list): List of images for the SuperPlayer's ultimate attack animation.
+- use_ability (bool): Flag indicating if the ability is currently in use.
+- last_ability_time (int): Timestamp of the last time the ability was used.
+- ability_cooldown (int): Cooldown time for using the ability again.
+- can_use_ability_flying (bool): Flag indicating if the ability can be used while jumping/flying.
+- use_ulta (bool): Flag indicating if the ultimate attack is currently in use.
+- last_ulta_time (int): Timestamp of the last time the ultimate attack was used.
+- ulta_cooldown (int): Cooldown time for using the ultimate attack again.
+- ulta_range (float): Range of the ultimate attack.
+- ulta_damage (int): Damage inflicted by the ultimate attack.
+- ability_animation_count (int): Animation frame counter for ability animation.
+- ulta_animation_count (int): Animation frame counter for ultimate attack animation.
+
+Methods:
+- __init__(self, x, y, rect_x, rect_y):
+    Initializes the SuperPlayer with specific attributes and animations.
+
+- draw(self, screen, keys, position=None):
+    Draws the SuperPlayer on the screen, handling ability and ultimate attack animations.
+
+- check_animation_count(self):
+    Updates the animation frame counters for abilities and ultimate attacks.
+
+- ability(self, game, *args):
+    Perform the SuperPlayer's ability. Should be overridden in subclasses.
+
+- ulta(self, enemies):
+    Perform the SuperPlayer's ultimate attack, dealing damage to enemies within range.
+
+- move(self, keys, game):
+    Move the SuperPlayer based on input keys and
+    game state, handling ability and ultimate attack activation.
+
+Usage:
+from game.src.Heroes.super_player import SuperPlayer
+
+# Example initialization of the SuperPlayer character
+super_player = SuperPlayer(x=200, y=300, rect_x=50, rect_y=50)
+
+Notes:
+- This class assumes that the constants, Player class,
+ImageCache, and screen_obj are correctly imported and initialized.
+- Adjustments to image paths or scaling factors
+in ImageCache.get_images calls should be made as per specific game requirements.
+- Ensure all necessary image files are correctly linked and available in the specified paths.
+
+"""
+from game.src import constants
 from game.src.Heroes.player import Player
 from game.src.screen import screen_obj
+import pygame
 
 
 class SuperPlayer(Player):
+    """
+        A class representing a super player character, inheriting from Player.
+
+        Attributes:
+            ability_images (list): List of images for the SuperPlayer's ability animation.
+            ulta_images (list): List of images for the SuperPlayer's ultimate attack animation.
+            use_ability (bool): Flag indicating if the ability is currently in use.
+            last_ability_time (int): Timestamp of the last time the ability was used.
+            ability_cooldown (int): Cooldown time for using the ability again.
+            can_use_ability_flying (bool):
+                Flag indicating if the ability can be used while jumping/flying.
+            use_ulta (bool): Flag indicating if the ultimate attack is currently in use.
+            last_ulta_time (int): Timestamp of the last time the ultimate attack was used.
+            ulta_cooldown (int): Cooldown time for using the ultimate attack again.
+            ulta_range (float): Range of the ultimate attack.
+            ulta_damage (int): Damage inflicted by the ultimate attack.
+            ability_animation_count (int): Animation frame counter for ability animation.
+            ulta_animation_count (int): Animation frame counter for ultimate attack animation.
+
+        Methods:
+            __init__(self, x, y, rect_x, rect_y):
+                Initializes the SuperPlayer with specific attributes and animations.
+
+            draw(self, screen, keys, position=None):
+                Draws the SuperPlayer on the screen,
+                handling ability and ultimate attack animations.
+
+            check_animation_count(self):
+                Updates the animation frame counters for abilities and ultimate attacks.
+
+            ability(self, game, *args):
+                Perform the SuperPlayer's ability. Should be overridden in subclasses.
+
+            ulta(self, enemies):
+                Perform the SuperPlayer's ultimate attack, dealing damage to enemies within range.
+
+            move(self, keys, game):
+                Move the SuperPlayer based on input keys and game state,
+                handling ability and ultimate attack activation.
+        """
+
     ability_images = []
     ulta_images = []
 
     def __init__(self, x, y, rect_x, rect_y):
         """
+        Initialize the SuperPlayer with specific attributes and animations.
 
+        :param x: The x-coordinate of the SuperPlayer's initial position.
+        :param y: The y-coordinate of the SuperPlayer's initial position.
+        :param rect_x: The width of the SuperPlayer's collision rectangle.
+        :param rect_y: The height of the SuperPlayer's collision rectangle.
         :rtype: object
-        :param x:
-        :param y:
-        :param rect_x:
-        :param rect_y:
         """
         super().__init__(x, y)
 
         image_rect = self.run[0].get_rect()
-        # Центрирование изображения
+        # Center the image
         image_rect.center = (screen_obj.width // 2, screen_obj.height - 200 * screen_obj.height_scale)
 
         small_rect_size = (rect_x * screen_obj.width_scale, rect_y * screen_obj.height_scale)
@@ -47,12 +143,12 @@ class SuperPlayer(Player):
 
     def draw(self, screen, keys, position=None):
         """
+        Draw the SuperPlayer on the screen, handling ability and ulta animations.
 
+        :param screen: The screen surface to draw the SuperPlayer on.
+        :param keys: The current state of all keyboard buttons.
+        :param position: The position to draw the SuperPlayer. Defaults to None.
         :rtype: object
-        :param screen:
-        :param keys:
-        :param position:
-        :return:
         """
         if not self.use_ability and not self.use_ulta:
             super().draw(screen, keys, (self.rect.x - self.dx, self.rect.y - self.dy))
@@ -87,8 +183,9 @@ class SuperPlayer(Player):
 
     def check_animation_count(self):
         """
-        :rtype: object
+        Update the animation frame counters for abilities and ulta.
 
+        :rtype: object
         """
         super().check_animation_count()
 
@@ -109,23 +206,25 @@ class SuperPlayer(Player):
 
     def ability(self, game, *args):
         """
+        Perform the SuperPlayer's ability.
+        By default, this does nothing and should be overridden in subclasses.
 
+        :param game: The game context in which the ability is used.
+        :param args: Additional arguments for the ability.
         :rtype: object
-        :param game:
-        :param args:
         """
         self.use_ability = False
 
     def ulta(self, enemies):
         """
+        Perform the SuperPlayer's ulta attack, dealing damage to enemies within range.
 
+        :param enemies: A list of enemy groups to check for collisions with the ulta attack.
         :rtype: object
-        :param enemies:
         """
         self.last_ulta_time = pygame.time.get_ticks()
 
         if self.attack_direction == 1:
-
             attack_rect = pygame.Rect(self.rect.x, self.rect.y, self.rect.width + self.ulta_range, self.rect.height)
         else:
             attack_rect = pygame.Rect(self.rect.x, self.rect.y, -self.ulta_range, self.rect.height)
@@ -137,10 +236,12 @@ class SuperPlayer(Player):
 
     def move(self, keys, game):
         """
+        Move the SuperPlayer based on input keys and game state,
+        handling ability and ulta activation.
 
+        :param keys: The current state of all keyboard buttons.
+        :param game: The game context.
         :rtype: None
-        :param keys:
-        :param game:
         """
         super().move(keys, game)
 

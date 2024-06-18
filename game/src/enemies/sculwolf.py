@@ -1,17 +1,75 @@
-import game.src.constants as constants
+"""
+Module: game.src.enemies.sculwolf
+
+This module defines the Sculwolf class, representing a Sculwolf enemy in the game.
+
+Attributes:
+- images (list): List of movement animation images for the Sculwolf.
+- death_images (list): List of death animation images for the Sculwolf.
+- jump_height (int): Height of the jump movement for the Sculwolf.
+- current_hp (int): Current hit points of the Sculwolf.
+- const_delay_death_animation (int): Constant delay for death animation frames.
+- const_delay_animation (int): Constant delay for regular animation frames.
+
+Methods:
+- __init__(self, x, y, range_place=100 * screen_obj.width_scale):
+    Initializes the Sculwolf with specific attributes and animations.
+- jump(self):
+    Implements the jump movement for the Sculwolf based on animation frame count.
+- move(self):
+    Moves the Sculwolf and handles jump movement if applicable.
+
+Usage:
+from game.src.enemies.sculwolf import Sculwolf
+
+# Example initialization of a Sculwolf enemy
+sculwolf = Sculwolf(x=300, y=500)
+
+Notes:
+- This class assumes that constants, pygame,
+ImageCache, CommonEnemy, and other necessary modules are correctly imported and initialized.
+- Adjustments to image paths, scaling factors,
+and game mechanics should be made as per specific game requirements.
+- Ensure all necessary image files are correctly linked and available in the specified paths.
+
+"""
+from game.src import constants
 from game.src.cache import ImageCache
 from game.src.enemies.enemies_base import CommonEnemy
 from game.src.screen import screen_obj
 
 
 class Sculwolf(CommonEnemy):
+    """
+    Class representing a Sculwolf enemy in the game.
+
+    Attributes:
+        images (list): List of movement animation images for the Sculwolf.
+        death_images (list): List of death animation images for the Sculwolf.
+        jump_height (int): Height of the jump movement for the Sculwolf.
+        current_hp (int): Current hit points of the Sculwolf.
+        const_delay_death_animation (int): Constant delay for death animation frames.
+        const_delay_animation (int): Constant delay for regular animation frames.
+
+    Methods:
+        __init__(self, x, y, range_place=100 * screen_obj.width_scale):
+            Initializes the Sculwolf with specific attributes and animations.
+
+        jump(self):
+            Implements the jump movement for the Sculwolf based on animation frame count.
+
+        move(self):
+            Moves the Sculwolf and handles jump movement if applicable.
+    """
+
     def __init__(self, x, y, range_place=100 * screen_obj.width_scale):
         """
+        Initialize the Sculwolf with specific attributes and animations.
 
-        :rtype: object
-        :param x:
-        :param y:
-        :param range_place:
+        Args:
+            x (int): The x-coordinate of the Sculwolf's initial position.
+            y (int): The y-coordinate of the Sculwolf's initial position.
+            range_place (int): The range in which the Sculwolf can move horizontally.
         """
         image_paths = [
             'image/enemys/sculwolf/move/Massacre Sprite Sheet_1.png',
@@ -50,8 +108,9 @@ class Sculwolf(CommonEnemy):
 
     def jump(self):
         """
-        :rtype: None
+        Implements the jump movement for the Sculwolf based on animation frame count.
 
+        Adjusts the y-coordinate of the Sculwolf's bounding rectangle to simulate a jumping motion.
         """
         if 7 <= self.animation_count <= 9:
             self.rect.y -= self.jump_height
@@ -60,8 +119,9 @@ class Sculwolf(CommonEnemy):
 
     def move(self):
         """
-        :rtype: None
+        Moves the Sculwolf and handles jump movement if applicable.
 
+        Overrides the move method from the base class CommonEnemy.
         """
         super().move()
         self.jump()

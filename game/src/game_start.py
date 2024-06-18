@@ -1,14 +1,98 @@
+"""
+This module implements the GameOn
+class for managing the main game loop, handling game events, gameplay mechanics,
+and user interface interactions using Pygame.
+
+Classes:
+- GameOn:
+    Manages the main game loop, game events, gameplay, and UI elements.
+
+    Attributes:
+    - clock (pygame.time.Clock): Pygame clock object for controlling FPS.
+    - main_location (Locations): Main game location object.
+    - partial_backgrounds (list): List of PartialBackground objects for additional backgrounds.
+    - platforms (pygame.sprite.Group): Group of platforms in the game.
+    - enemies (list): List of enemy groups in the game.
+    - gates (None or pygame.sprite.Group): Group of gates in the game.
+    - player (object): The player object.
+    - npcs (pygame.sprite.Group): Group of NPCs in the game.
+    - bosses (None or object): Bosses in the game.
+    - gameplay (bool): Flag indicating if the game is in active gameplay.
+    - pause (bool): Flag indicating if the game is paused.
+    - running (bool): Flag indicating if the game is running.
+    - is_restart (bool): Flag indicating if the game should restart.
+    - absolute_x (int): Absolute x-coordinate of the game world.
+    - is_boss_defeated (bool): Flag indicating if the boss is defeated.
+    - is_boss_created (bool): Flag indicating if the boss is created.
+    - lose_label (Label): Label object for displaying 'You Lose!' message.
+    - pause_label (Label): Label object for displaying 'Pause' message.
+    - restart_button (Button): Button object for restarting the game.
+    - continue_button (Button): Button object for continuing the game.
+    - menu_defeat_button (Button): Button object for returning to the main menu after defeat.
+
+    Methods:
+    - __init__(player):
+        Initializes the GameOn object with the specified player object.
+    - handle_events(screen, events):
+        Handles game events such as key presses and button clicks.
+    - draw_back_and_platforms(screen):
+        Draws the background and platforms on the screen.
+    - change_absolute_x(dx):
+        Changes the absolute x-coordinate by a given amount.
+    - start(screen):
+        Starts the game loop and manages game state transitions.
+
+Dependencies:
+- External dependencies:
+  - pygame: Library for game development in Python with multimedia capabilities.
+"""
+
 import sys
-import pygame
-import game.src.constants as constants
-import game.src.creater as creater
+from game.src import constants
+from game.src import creater
 from game.src.button import Button
 from game.src.labels import Label
 from game.src.platforms import MovingPlatform
 from game.src.screen import screen_obj
+import pygame
 
 
 class GameOn:
+    """
+        GameOn class manages the main game loop and handles game events, gameplay, and UI.
+
+        Attributes:
+            clock (pygame.time.Clock): Pygame clock object for controlling FPS.
+            main_location (Locations): Main game location object.
+            partial_backgrounds (list):
+                List of PartialBackground objects for additional backgrounds.
+            platforms (pygame.sprite.Group): Group of platforms in the game.
+            enemies (list): List of enemy groups in the game.
+            gates (None or pygame.sprite.Group): Group of gates in the game.
+            player (object): The player object.
+            npcs (pygame.sprite.Group): Group of NPCs in the game.
+            bosses (None or object): Bosses in the game.
+            gameplay (bool): Flag indicating if the game is in active gameplay.
+            pause (bool): Flag indicating if the game is paused.
+            running (bool): Flag indicating if the game is running.
+            is_restart (bool): Flag indicating if the game should restart.
+            absolute_x (int): Absolute x-coordinate of the game world.
+            is_boss_defeated (bool): Flag indicating if the boss is defeated.
+            is_boss_created (bool): Flag indicating if the boss is created.
+
+        Methods:
+            __init__(player):
+                Initializes the GameOn object.
+            handle_events(screen, events):
+                Handles game events such as key presses and button clicks.
+            draw_back_and_platforms(screen):
+                Draws the background and platforms on the screen.
+            change_absolute_x(dx):
+                Changes the absolute x-coordinate by a given amount.
+            start(screen):
+                Starts the game loop and manages game state transitions.
+        """
+
     def __init__(self, player):
         """
         Initialize the GameOn class.

@@ -1,7 +1,50 @@
+"""
+Module defining the Screen class for managing the display surface in a Pygame-based game.
+
+Classes:
+- Screen: Manages screen configuration, size adjustments, and scaling factors.
+
+Attributes and Methods of Screen class:
+Attributes:
+- width: Width of the screen.
+- height: Height of the screen.
+- width_scale: Scaling factor for width relative to a default width of 960.
+- height_scale: Scaling factor for height relative to a default height of 600.
+- screen: Pygame display surface representing the game screen.
+
+Methods:
+- __init__(self):
+    Initializes the Screen object with default width, height, and creates a Pygame display surface.
+- change_screen_size(self, width, height):
+    Changes the size of the screen and adjusts scaling factors accordingly.
+
+Usage:
+Create an instance of Screen using Screen() to manage and adjust the game screen size and scaling.
+
+Note: Requires the pygame library for display management.
+"""
+
 import pygame
 
 
 class Screen:
+    """
+    A class representing the screen configuration and management for a Pygame-based game.
+
+    Attributes:
+    - width: Width of the screen.
+    - height: Height of the screen.
+    - width_scale: Scaling factor for width relative to a default width of 960.
+    - height_scale: Scaling factor for height relative to a default height of 600.
+    - screen: Pygame display surface representing the game screen.
+
+    Methods:
+    - __init__(self): Initializes the Screen object with default width, height,
+    and creates a Pygame display surface.
+    - change_screen_size(self, width, height):
+        Changes the size of the screen and adjusts scaling factors accordingly.
+    """
+
     def __init__(self):
         """
         Initialize the Screen object with default width, height, and scaling factors.
