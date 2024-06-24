@@ -164,7 +164,7 @@ class GameOn:
 
             elif event.type == pygame.USEREVENT:
                 if event.button == self.restart_button or event.button == self.menu_defeat_button:
-                    self.main_location.sound.play()
+                    self.main_location.sound.stop()
                     self.gameplay = True
                     self.player.x = screen_obj.width // 2
                     self.player.y = screen_obj.height - 100 * screen_obj.height_scale
@@ -218,6 +218,7 @@ class GameOn:
         :return: Whether the game was restarted.
         :rtype: bool
         """
+        self.main_location.sound.set_volume(0.5)
         self.main_location.sound.play(-1)
 
         while self.running:
